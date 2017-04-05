@@ -5,7 +5,8 @@
 #include "TimeHelpers.hpp"
 
 const double tolerance = 0.00001;
-const size_t malla = 10000;
+const size_t malla = 3000;
+const int numespecies = 10;
 
 using Row = vector<real>;
 using Matrix = vector<Row>;
@@ -151,56 +152,78 @@ vector<Point> GenerateRandomPoints(int n, int resolution)
 	
 	result.reserve(n);
 	
+	Point Centro(random_real()*resolution, random_real()*resolution);
+	cout << "point2d("<< Centro << ")+";
 	while (result.size() < n)
 	{
-		result.emplace_back(random_real()*resolution, random_real()*resolution);
+		Point P(random_real()*resolution, random_real()*resolution);
+		if (P.Distance(Centro) < 1000)
+			result.emplace_back(P);
 	}
-
 	
 	return result;
 }
 
+Matrix CalculateGraph(const vector<vector<Point>>& E, double C)
+{
+	Matrix M(numespecies,Row(numespecies,0));
+
+	vector<Mu> X;
+	Chronometer T;
+	for (int i = 0; i < numespecies; ++i)
+	{
+		X.emplace_back(malla);
+		X[i].Realize(E[i],C);
+		cout << "Para la mu_" << i << " tardé " << T.Reset() << 's' << endl; 
+	}
+	
+	Row Area(numespecies,0);
+	for (int i = 0; i < numespecies; ++i)
+		Area[i] = X[i].Integrate();
+	
+	for (int i = 0; i < numespecies; ++i)
+	{
+		double areai = Area[i];
+		for (int j = i+1; j < numespecies; ++j)
+		{
+			double overlap = (X[i]*X[j]).Integrate();
+			double areaj = Area[j];
+			M[i][j] = overlap/areai;
+			M[j][i] = overlap/areaj;
+		}
+	}
+	return M;
+}
+
 int main() 
 {
-	
+	Chronometer total;
+	srand(time(NULL));
 	Chronometer T;
-    vector<Point> Especie1 = GenerateRandomPoints(1000,malla);
-    vector<Point> Especie2 = GenerateRandomPoints(684,malla);
-    vector<Point> Especie3 = GenerateRandomPoints(321,malla);
 	
-	Mu A(malla);
-	A.Realize(Especie1,0.005);
+	vector<vector<Point>> E(numespecies);
+	for (auto& e : E)
+		e = GenerateRandomPoints(120,malla);
 	
-	cout << "Para la malla 1 tardé " << T.Reset() << endl; 
-	
-	Mu B(malla);
-	B.Realize(Especie2,0.005);
-	
-	cout << "Para la malla 2 tardé " << T.Reset() << endl; 
-	
-	Mu C(malla);
-	C.Realize(Especie3,0.005);
-	
-	cout << "Para la malla 3 tardé " << T.Reset() << endl; 
+	cout << endl;
 
 	
-	double overlapAB = (A*B).Integrate();
-	double overlapBC = (B*C).Integrate();
-	double overlapCA = (C*A).Integrate();
+	cout << "Para generar los puntos tardé " << T.Reset() << endl; 
 	
-	double areaA = A.Integrate();
-	double areaB = B.Integrate();
-	double areaC = C.Integrate();
+	cout << setprecision(2);
+	auto M = CalculateGraph(E,0.01);
+	
+	for (int i = 0; i < numespecies; ++i)
+	{
+		for (int j = 0; j < numespecies; ++j)
+		{
+			cout << M[i][j] << '\t';
+		}
+		cout << endl;
+	}
 	
 	cout << "En calcular áreas me tardé " << T.Reset() << endl;
-	
-	cout << "La arista de A a B debería tener peso: " << overlapAB/areaA << endl;
-	cout << "La arista de B a A debería tener peso: " << overlapAB/areaB << endl;
-	cout << "La arista de B a C debería tener peso: " << overlapBC/areaB << endl;
-	cout << "La arista de C a B debería tener peso: " << overlapBC/areaC << endl;
-	cout << "La arista de C a A debería tener peso: " << overlapCA/areaC << endl;
-	cout << "La arista de A a C debería tener peso: " << overlapCA/areaA << endl;
-	
-	
+
+	cout << "Total time: " << total.Peek() << endl;
     return 0;
 }
