@@ -5,6 +5,7 @@
 #include "TimeHelpers.hpp"
 
 const double tolerance = 0.00001;
+const size_t malla = 10000;
 
 using Row = vector<real>;
 using Matrix = vector<Row>;
@@ -50,6 +51,19 @@ Mu operator+(const Mu& A, const Mu& B)
 	return C;
 }
 
+Mu operator*(const Mu& A, const Mu& B)
+{
+	Mu C(A.numrows());
+	for (size_t x = 0; x < C.numcols(); ++x)
+	{
+		for (size_t y = 0; y < C.numrows(); ++y)
+		{
+			C(x,y) = A(x,y)*B(x,y);
+		}
+	}
+	return C;
+}
+
 void Mu::Realize(const vector<Point>& P, real C)
 {
 	// TODO: Pasar lo de los puntos para afuera y dependiendo de C, ver qué debo modificar para cada punto.
@@ -65,7 +79,7 @@ void Mu::Realize(const vector<Point>& P, real C)
 	
 	double d = sqrt(-log(tolerance)/C);
 	long di = long(d+1);
-	cout << "di = " << di << endl;
+// 	cout << "di = " << di << endl;
 	for (const Point& p : P)
 	{
 		size_t minX = max(long(0),long(p.x)-di);
@@ -125,28 +139,49 @@ std::ostream& operator<<(std::ostream& os, const Mu& C)
 	return os;
 }
 
+real random_real()
+{
+	int r = rand();
+	return double(r)/RAND_MAX;
+}
 
+vector<Point> GenerateRandomPoints(int n, int resolution)
+{
+	vector<Point> result;
+	
+	result.reserve(n);
+	
+	while (result.size() < n)
+	{
+		result.emplace_back(random_real()*resolution, random_real()*resolution);
+	}
+
+	
+	return result;
+}
 
 int main() 
 {
 	
-	
-	
-    vector<Point> Especie1;
-	
-	Especie1.emplace_back(8,6);
-	Especie1.emplace_back(15,15);
-	Especie1.emplace_back(1,1);
-	Especie1.emplace_back(10000,8888);
-	Especie1.emplace_back(5236,145);
-	
-	
-	Mu A(10000);
 	Chronometer T;
-	A.Realize(Especie1,0.001);
-	cout << "Time taken for species 1: " << T.Reset() << 's' << endl;
 	
-	cout << A << endl;
+    vector<Point> Especie1 = GenerateRandomPoints(1000,malla);
+    vector<Point> Especie2 = GenerateRandomPoints(1000,malla);
+	
+	Mu A(malla);
+	A.Realize(Especie1,0.005);
+	
+	cout << "Para la malla 1 tardé " << T.Reset() << endl; 
+	
+	Mu B(malla);
+	B.Realize(Especie2,0.005);
+	
+	cout << "Para la malla 2 tardé " << T.Reset() << endl; 
+
+	
+	cout << "La arista de A a B debería tener peso: " << (A*B).Integrate()/A.Integrate() << endl;
+	cout << "La arista de B a A debería tener peso: " << (A*B).Integrate()/B.Integrate() << endl;
+	
 	
     return 0;
 }
