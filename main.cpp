@@ -164,9 +164,9 @@ int main()
 {
 	
 	Chronometer T;
-	
     vector<Point> Especie1 = GenerateRandomPoints(1000,malla);
-    vector<Point> Especie2 = GenerateRandomPoints(1000,malla);
+    vector<Point> Especie2 = GenerateRandomPoints(684,malla);
+    vector<Point> Especie3 = GenerateRandomPoints(321,malla);
 	
 	Mu A(malla);
 	A.Realize(Especie1,0.005);
@@ -177,10 +177,29 @@ int main()
 	B.Realize(Especie2,0.005);
 	
 	cout << "Para la malla 2 tardé " << T.Reset() << endl; 
+	
+	Mu C(malla);
+	C.Realize(Especie3,0.005);
+	
+	cout << "Para la malla 3 tardé " << T.Reset() << endl; 
 
 	
-	cout << "La arista de A a B debería tener peso: " << (A*B).Integrate()/A.Integrate() << endl;
-	cout << "La arista de B a A debería tener peso: " << (A*B).Integrate()/B.Integrate() << endl;
+	double overlapAB = (A*B).Integrate();
+	double overlapBC = (B*C).Integrate();
+	double overlapCA = (C*A).Integrate();
+	
+	double areaA = A.Integrate();
+	double areaB = B.Integrate();
+	double areaC = C.Integrate();
+	
+	cout << "En calcular áreas me tardé " << T.Reset() << endl;
+	
+	cout << "La arista de A a B debería tener peso: " << overlapAB/areaA << endl;
+	cout << "La arista de B a A debería tener peso: " << overlapAB/areaB << endl;
+	cout << "La arista de B a C debería tener peso: " << overlapBC/areaB << endl;
+	cout << "La arista de C a B debería tener peso: " << overlapBC/areaC << endl;
+	cout << "La arista de C a A debería tener peso: " << overlapCA/areaC << endl;
+	cout << "La arista de A a C debería tener peso: " << overlapCA/areaA << endl;
 	
 	
     return 0;
