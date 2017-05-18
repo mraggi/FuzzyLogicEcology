@@ -131,6 +131,7 @@ public:
 
 	void Scale(real factor) { x*=factor; y*=factor; }
 	void Scale(real xfactor, real yfactor) { x*=xfactor; y*=yfactor; }
+	void Scale(const Point& P) { x*=P.x; y*=P.y; }
 
 	real Distance(const Point & vec) const;
 	real DistanceSq(const Point & vec) const;
@@ -225,7 +226,7 @@ inline Point operator*(real num, const Point &vec)
 
 inline Point operator/(real num, const Point &vec)
 {
-	return Point(vec.x/num,vec.y/num);
+	return Point(num/vec.x,num/vec.y);
 }
 
 inline Point operator*(const Point &vec, real num)

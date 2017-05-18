@@ -3,10 +3,43 @@
 
 #include "Point.hpp"
 #include "TimeHelpers.hpp"
+#include "ReadFile.hpp"
 
-const double tolerance = 0.00001;
-const size_t malla = 3000;
-const int numespecies = 10;
+const real tolerance = 0.00001; //en el continuo original
+
+
+inline real MaximaLongitudQueNoEs0(real C)
+{
+	return sqrt(-log(tolerance)/C);
+}
+
+
+
+const size_t malla = 80;
+const real ConstanteEnContinuo = 2400000;
+
+real bordeEnContinuo = MaximaLongitudQueNoEs0(ConstanteEnContinuo);
+	
+	
+Point O;
+Point W;
+Point F;
+
+real ConstanteEnNormalizado;
+real b; // borde en normalizado
+Point B;
+
+real ConstanteEnMalla;
+real bordeEnMalla;
+
+template <class T> 
+std::ostream& operator<<(std::ostream& os, const vector<T>& rhs)
+{
+	for (const auto& x : rhs)
+		os << x << " ";
+	return os;
+}
+
 
 using Row = vector<real>;
 using Matrix = vector<Row>;
@@ -78,7 +111,7 @@ void Mu::Realize(const vector<Point>& P, real C)
 		}
 	}
 	
-	double d = sqrt(-log(tolerance)/C);
+	real d = MaximaLongitudQueNoEs0(C);
 	long di = long(d+1);
 // 	cout << "di = " << di << endl;
 	for (const Point& p : P)
@@ -121,12 +154,12 @@ real Mu::Integrate() const
 			result += m_M[x][y];
 		}
 	}
-	return result;
+	return result/(malla*malla);
 }
 
 std::ostream& operator<<(std::ostream& os, const Mu& C)
 {
-	const size_t maxtoprint = 20;
+	const size_t maxtoprint = 30;
 	os << '\n';
 	os << setprecision(3);
 	for (size_t x = 0; x < min(C.numcols(),maxtoprint); ++x)
@@ -143,7 +176,7 @@ std::ostream& operator<<(std::ostream& os, const Mu& C)
 real random_real()
 {
 	int r = rand();
-	return double(r)/RAND_MAX;
+	return real(r)/RAND_MAX;
 }
 
 vector<Point> GenerateRandomPoints(int n, int resolution)
@@ -164,9 +197,10 @@ vector<Point> GenerateRandomPoints(int n, int resolution)
 	return result;
 }
 
-Matrix CalculateGraph(const vector<vector<Point>>& E, double C)
+Matrix CalculateGraph(const vector<vector<Point>>& E, real C)
 {
-	Matrix M(numespecies,Row(numespecies,0));
+	int numespecies = E.size();
+	Matrix M(numespecies,Row(numespecies,1));
 
 	vector<Mu> X;
 	Chronometer T;
@@ -174,7 +208,9 @@ Matrix CalculateGraph(const vector<vector<Point>>& E, double C)
 	{
 		X.emplace_back(malla);
 		X[i].Realize(E[i],C);
-		cout << "Para la mu_" << i << " tardé " << T.Reset() << 's' << endl; 
+		cout << "Para la mu_" << i << " tardé " << T.Reset() << 's' << endl;
+// 		cout << E[i];
+// 		cout << X[i] << endl;
 	}
 	
 	Row Area(numespecies,0);
@@ -183,41 +219,134 @@ Matrix CalculateGraph(const vector<vector<Point>>& E, double C)
 	
 	for (int i = 0; i < numespecies; ++i)
 	{
-		double areai = Area[i];
+		real areai = Area[i];
 		for (int j = i+1; j < numespecies; ++j)
 		{
-			double overlap = (X[i]*X[j]).Integrate();
-			double areaj = Area[j];
+			real overlap = (X[i]*X[j]).Integrate();
+			real areaj = Area[j];
 			M[i][j] = overlap/areai;
 			M[j][i] = overlap/areaj;
+			if (M[i][j] < 0.01)
+				M[i][j] = 0.0;
+			if (M[j][i] < 0.01)
+				M[j][i] = 0.0;
 		}
 	}
 	return M;
 }
 
+vector<vector<Point>> Normalized(const vector<vector<Point>>& U)
+{
+	real minX = 9999999999;
+	real maxX = -9999999999;
+	real minY = 9999999999;
+	real maxY = -9999999999;
+	
+	for (auto& u : U)
+	{
+		for (auto& p : u)
+		{
+			real x = p.x;
+			real y = p.y;
+			if (x < minX)
+				minX = x;
+			if (y < minY)
+				minY = y;
+			if (x > maxX)
+				maxX = x;
+			if (y > maxY)
+				maxY = y;
+		}
+	}
+	
+	bordeEnContinuo = MaximaLongitudQueNoEs0(ConstanteEnContinuo);
+	
+	
+	O = Point(minX,minY);
+	W = Point(maxX,maxY);
+	F = W-O;
+	
+	ConstanteEnNormalizado = ConstanteEnContinuo/F.LengthSq();
+	
+	b = bordeEnContinuo/F.Length();
+	B = Point(b,b);
+	
+	ConstanteEnMalla = ConstanteEnNormalizado/(malla*malla);
+	bordeEnMalla = b*malla;
+	
+	cout << "O = " << O << " y W = " << W << endl;
+	
+	cout << "bordeEnContinuo = " << bordeEnContinuo << endl;
+	cout << "b = " << b << endl;
+	
+	vector<vector<Point>> E(U.size());
+	int i = 0;
+	for (auto& u : U)
+	{
+		for (auto& P : u)
+		{
+			Point S = (P-O);
+			S.Scale(1.0/F);
+			S += B;
+			S *= malla;
+			
+			cout << "Entonces, " << P << "|->" << S << endl;
+			
+			E[i].emplace_back(S);
+		}
+		++i;
+	}
+	return E;
+}
+
 int main() 
 {
+// 	vector<Point> HH = {Point(10,10), Point(20,20)};
+// 	vector<vector<Point>> RR = {HH};
+// 	RR = Normalized(RR);
+// 	Mu MM(malla);
+// 	MM.Realize(RR[0],Constante);
+// 	cout << MM << endl;
+// 	
+// 	return 0;
+	
+	auto R = ReadTableFromSTDIN("QuercusOaxaca.txt");
+	
+	auto U = QuercusExtractLocations(R);
+	
+	vector<vector<Point>> E;
+	E.reserve(U.size());
+	for (auto& u : U)
+	{
+		E.emplace_back(u.second);
+	}
+	
+	E = Normalized(E);
+	
+	int i = 0;
+	for (auto& u : U)
+	{
+		cout << u.first << " appears at " << E[i] << endl;
+		++i;
+	}
+	
+	int numespecies = U.size();
+	
 	Chronometer total;
 	srand(time(NULL));
 	Chronometer T;
 	
-	vector<vector<Point>> E(numespecies);
-	for (auto& e : E)
-		e = GenerateRandomPoints(120,malla);
+	cout << setprecision(1) << std::fixed;
 	
-	cout << endl;
-
 	
-	cout << "Para generar los puntos tardé " << T.Reset() << endl; 
 	
-	cout << setprecision(2);
-	auto M = CalculateGraph(E,0.01);
+	auto M = CalculateGraph(E,ConstanteEnMalla);
 	
 	for (int i = 0; i < numespecies; ++i)
 	{
 		for (int j = 0; j < numespecies; ++j)
 		{
-			cout << M[i][j] << '\t';
+			cout << 100*M[i][j] << '\t';
 		}
 		cout << endl;
 	}

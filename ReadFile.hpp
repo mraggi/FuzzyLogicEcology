@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <unordered_map>
 
 #include "Point.hpp"
 
@@ -15,22 +16,12 @@
 // 		int: # of points m_i in the species i, 
 //		(m_i lines, each with two space separated doubles: ) containing x and y coords
 
-vector<Point> ReadPointsFromSTDin(size_t n)
-{
-	vector<Point> P(n);
-	
-	for (auto& p : P)
-	{
-		cin >> p.x >> p.y;
-	}
-	
-	return P;
-}
+vector<Point> ReadPointsFromSTDin(size_t n);
 
-struct Species
-{
-	string name;
-	
-};
+vector<vector<string>> ReadTableFromSTDIN(const string& filename);
 
-vector<SpecimenData> ReadSpeciesFromStdin()
+
+unordered_map<string,vector<Point>> QuercusExtractLocations(const vector<vector<string>>& U);
+unordered_map<string,vector<Point>> LobataeExtractLocations(const vector<vector<string>>& U);
+unordered_map<string,vector<Point>> CentroExtractLocations(const vector<vector<string>>& U);
+
