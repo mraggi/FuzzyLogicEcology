@@ -260,3 +260,23 @@ bool operator<(const Point& A, const Point& B)
 		return false;
 	return (A.y >= B.y);
 }
+
+vector<Point> GenerateRandomPoints(int n, int resolution)
+{
+	vector<Point> result;
+	
+	result.reserve(n);
+	
+	double r = resolution;
+	
+	Point Centro(random_real(0.0,r), random_real(0.0,r));
+	cout << "point2d("<< Centro << ")+";
+	while (result.size() < n)
+	{
+		Point P(random_real(0.0,r), random_real(0.0,r));
+		if (P.Distance(Centro) < 1000)
+			result.emplace_back(P);
+	}
+	
+	return result;
+}
