@@ -81,3 +81,9 @@ int signof(const T& a)
 		return -1;
 	return 0;
 }
+/*
+
+double tolerancia_fisica(double numsigma)
+{
+	return exp(-numsigma*numsigma/2.0);
+}*/

@@ -26,14 +26,14 @@ public:
 // 		cout << "Cx = " << Cx << "/grado^2" << endl;
 		
 		real sigma = RangoVisibilidadEnKm;
-		cout << "sigma = " << sigma << "km" << endl;
+// 		cout << "sigma = " << sigma << "km" << endl;
 
 		Cx = 1/(2*sigma*sigma);
 		Cy = Cx;
-		cout << "Cx = " << Cx << "/km^2" << endl;
+// 		cout << "Cx = " << Cx << "/km^2" << endl;
 		bx = MaximaLongitudQueNoEs0(Cx);
 		by = MaximaLongitudQueNoEs0(Cy);
-		cout << "bx = " << bx << "km" << endl;
+// 		cout << "bx = " << bx << "km" << endl;
 		
 		auto UEnKilometros = UEnGrados;
 		for (auto& conjDePuntos : UEnKilometros)

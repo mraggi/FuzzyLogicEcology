@@ -8,28 +8,34 @@ Matrix GraphCalculator::CalculateGraph()
 
 	vector<Mu> X;
 	Chronometer T;
-
 	for (int i = 0; i < numespecies; ++i)
 	{
 		X.emplace_back(malla);
 		X[i].Realize(E[i],Cmx,Cmy);
-// 		cout << "Para la mu_" << i << " tardé " << T.Reset() << 's' << endl;
+		cout << "Para realizar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
 	}
 	
 	Row Area(numespecies,0);
 	for (int i = 0; i < numespecies; ++i)
 	{
 		Area[i] = X[i].Integrate();
-		cout << setprecision(12);
-		cout << "\tArea " << i << " = " << Area[i] << endl;
+// 		cout << setprecision(2);
+// 		cout << "\tArea " << i << " = " << Area[i] << endl;
+		cout << "Para integrar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
+
 	}
 	
+	Chronometer C;
+	
+	int total = (numespecies*(numespecies-1))/2;
+	int num = 0;
 	for (int i = 0; i < numespecies; ++i)
 	{
 // 		cout << i << ": " << X[i] << endl;
 		real areai = Area[i];
 		for (int j = i+1; j < numespecies; ++j)
 		{
+			
 			real overlap = (X[i]*X[j]).Integrate();
 			real areaj = Area[j];
 			if (areai != 0.0)
@@ -40,6 +46,11 @@ Matrix GraphCalculator::CalculateGraph()
 				M[i][j] = 0.0;
 			if (M[j][i] < 0.001)
 				M[j][i] = 0.0;
+			
+			++num;
+			double t = C.Peek();
+			cout << "Tiempo estimado: " << t*total/num - t << "s" << endl;
+			
 		}
 	}
 	return M;
@@ -72,19 +83,19 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 	O = Point(minX-bx,minY-by);
 	W = Point(maxX+bx,maxY+by);
 	F = W-O;
-	cout << "O = " << O << endl;
-	cout << "W = " << W << endl;
-	cout << "En km, F = " << F << endl;
+// 	cout << "O = " << O << endl;
+// 	cout << "W = " << W << endl;
+// 	cout << "En km, F = " << F << endl;
 	
 	Cnx = Cx*F.x*F.x;
 	Cny = Cx*F.y*F.y;
 	
-	cout << "Cnx = " << Cnx << endl;
+// 	cout << "Cnx = " << Cnx << endl;
 	
 	Cmx = Cnx/(malla*malla);
 	Cmy = Cny/(malla*malla);
 	
-	cout << "Cmx = " << Cmx << endl;
+// 	cout << "Cmx = " << Cmx << endl;
 // 	cout << "O = " << O << " y W = " << W << endl;
 	
 // 	cout << "bordeEnContinuo = " << bordeEnContinuo << endl;
@@ -99,14 +110,14 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 			
 			Point S = (P-O);
 			
-			cout << S << endl;
+// 			cout << S << endl;
 			
 			S.Scale(1.0/F);
 			S *= malla;
 			Q[i].emplace_back(S);
 		}
 		++i;
-		cout << "---------------------------------" << endl;
+// 		cout << "---------------------------------" << endl;
 	}
 	return Q;
 }

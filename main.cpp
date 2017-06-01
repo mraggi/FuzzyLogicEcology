@@ -6,8 +6,10 @@
 #include "ReadFile.hpp"
 #include "Mu.hpp"
 #include "GraphCalculator.hpp"
+#include "DiGraph.hpp"
 
-
+int malla = 7500;
+double visibilidad = 0.5;
 
 int main() 
 {
@@ -26,36 +28,44 @@ int main()
 	}
 	
 	vector<vector<Point>> E;
+	vector<string> names;
 	E.reserve(U.size());
 	for (auto& u : U)
 	{
 		E.emplace_back(u.second);
+		names.emplace_back(u.first);
 	}
 	
-// 	for (auto& e : E)
-// 	{
-// 		for (auto& p : e)
-// 		{
-// 			p *= ValorDe1Grado;
-// 		}
-// 	}
-	
-	GraphCalculator G(1000,0.1,E);
-	
+	GraphCalculator GC(malla,visibilidad,E);
 	int numespecies = U.size();
 	
 	Chronometer total;
 	srand(time(NULL));
 	Chronometer T;
 	
-	cout << setprecision(2) << std::fixed;
+	cout << setprecision(3) << std::fixed;
 	
-	auto M = G.CalculateGraph();
-	
+	auto M = GC.CalculateGraph();
 	cout << M << endl;
 	
-	cout << "En calcular áreas me tardé " << T.Reset() << endl;
+	cout << "En calcular la matriz me tardé " << T.Reset() << endl;
+	cout  << endl << "------------------------------" << endl << endl;
+
+	DiGraph D = DiGraph::FromAdjacencyMatrix(M,0.005);
+	D.set_names(names);
+	
+	auto edges = D.edges();
+	
+	sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b)
+	{
+		return a.weight() < b.weight();
+	});
+	for (auto e : edges)
+		cout << '\"' << D.get_name(e.from) << "\" ---> \"" << D.get_name(e.to)  << '\"' << " with weight " << e.weight() << endl;
 
 	cout << "Total time: " << total.Peek() << endl;
+	
+	cout << "Malla: " << malla << endl;
+	cout << "Visibilidad: " << visibilidad << endl;
     return 0;
 }

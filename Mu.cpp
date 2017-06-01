@@ -28,7 +28,7 @@ Mu operator*(const Mu& A, const Mu& B)
 	return C;
 }
 
-void Mu::Realize(const vector<Point>& P, real Cx, real Cy)
+void Mu::Realize(const vector<Point>& P, real Cmx, real Cmy)
 {
 	for (size_t x = 0; x < numcols(); ++x)
 	{
@@ -38,12 +38,15 @@ void Mu::Realize(const vector<Point>& P, real Cx, real Cy)
 		}
 	}
 	
-	real dx = MaximaLongitudQueNoEs0(Cx);
-	real dy = MaximaLongitudQueNoEs0(Cy);
-	long dxi = long(dx+1);
-	long dyi = long(dy+1);
+	real dx = MaximaLongitudQueNoEs0(Cmx);
+	real dy = MaximaLongitudQueNoEs0(Cmy);
+	long dxi = long(dx+2);
+	long dyi = long(dy+2);
 	
 // 	cout << "di = " << di << endl;
+	
+// 	cout << "Número de pixeles: " << 2*(dxi) << "*" << 2*dyi << " = " << 4*dxi*dyi << endl;
+	
 	for (const Point& p : P)
 	{
 	
@@ -52,13 +55,15 @@ void Mu::Realize(const vector<Point>& P, real Cx, real Cy)
 		size_t minY = max(long(0),long(p.y)-dyi);
 		size_t maxY = min(long(numrows()), long(p.y)+dyi);
 		
+		
+		
 		for (size_t x = minX; x < maxX; ++x)
 		{
 			for (size_t y = minY; y < maxY; ++y)
 			{
 				real XX = (p.x-x)*(p.x-x);
 				real YY = (p.y-y)*(p.y-y);
-				m_M[x][y] *= (1.0-exp(-Cx*XX - Cy*YY));
+				m_M[x][y] *= (1.0-exp(-Cmx*XX - Cmy*YY));
 			}
 		}
 		

@@ -9,7 +9,7 @@ using namespace std;
 using Row = vector<real>;
 using Matrix = vector<Row>;
 
-const real tolerance = 0.00000001; //en el continuo original
+const real tolerance = 0.0000000153; //en el continuo original
 
 
 inline real MaximaLongitudQueNoEs0(real C)
@@ -35,7 +35,7 @@ public:
 	size_t numcols() const { return m_M.size(); }
 	size_t numrows() const { return m_M.size(); }
 	
-	void Realize(const vector<Point>& P, real Cx, real Cy);
+	void Realize(const vector<Point>& P, real Cmx, real Cmy);
 	
 	real Integrate() const;
 	
