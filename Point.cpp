@@ -4,7 +4,7 @@ void Point::Normalize(void)
 {
 	if(x != 0 || y != 0)
 	{
-		real length = Length();
+		double length = Length();
 
 		x /= length;
 		y /= length;
@@ -20,64 +20,64 @@ Point Point::Normalized() const
 	return normalized;
 }
 
-real Point::Distance(const Point& vec) const
+double Point::Distance(const Point& vec) const
 {
-	real disX = vec.x - x;
-	real disY = vec.y - y;
+	double disX = vec.x - x;
+	double disY = vec.y - y;
 	return sqrt(disX*disX+disY*disY);
 }
 
-real Point::DistanceSq(const Point& vec) const
+double Point::DistanceSq(const Point& vec) const
 {
-	real disX = (vec.x - x);
-	real disY = (vec.y - y);
+	double disX = (vec.x - x);
+	double disY = (vec.y - y);
 	return disX*disX+disY*disY;
 }
 
-Point Point::VectorWithAngle(real t) const
+Point Point::VectorWithAngle(double t) const
 {
 	Point withAngle;
-	real r = Length();
+	double r = Length();
 	return Polar(r,t);
 }
 
-void Point::SetAngle(real t)
+void Point::SetAngle(double t)
 {
-	real r = Length();
+	double r = Length();
 	x = r*cos(t);
 	y = r*sin(t);
 }
 
-Point Point::Rotated(real t) const
+Point Point::Rotated(double t) const
 {
-	real SIN = sin(t);
-	real COS = cos(t);
+	double SIN = sin(t);
+	double COS = cos(t);
 	
-	real xprime = COS*x-SIN*y;
-	real yprime = SIN*x+COS*y;
+	double xprime = COS*x-SIN*y;
+	double yprime = SIN*x+COS*y;
 	return Point(xprime,yprime);
 }
 
-void Point::Rotate(real t)
+void Point::Rotate(double t)
 {
-	real SIN = sin(t);
-	real COS = cos(t);
+	double SIN = sin(t);
+	double COS = cos(t);
 	
-	real xprime = COS*x-SIN*y;
+	double xprime = COS*x-SIN*y;
 	
 	y = SIN*x+COS*y;
 	x = xprime;
 }
 
-void Point::Rotate(real SIN, real COS)
+void Point::Rotate(double SIN, double COS)
 {
-	real xprime = COS*x-SIN*y;
+	double xprime = COS*x-SIN*y;
 	
 	y = SIN*x+COS*y;
 	x = xprime;
 }
 
-Point Point::Rotated(real sint, real cost) const
+Point Point::Rotated(double sint, double cost) const
 {
 	Point a = *this;
 	a.Rotate(sint, cost);
@@ -85,21 +85,21 @@ Point Point::Rotated(real sint, real cost) const
 }
 
 
-void Point::SetLength(real r)
+void Point::SetLength(double r)
 {
 	Normalize();
 	x *= r;
 	y *= r;
 }
 
-void Point::SetLengthSq(real r2)
+void Point::SetLengthSq(double r2)
 {
-   real m = sqrt(r2/LengthSq());
+   double m = sqrt(r2/LengthSq());
 	x *= m;
    y *= m;
 }
 
-void Point::SetPolar(real r, real t)
+void Point::SetPolar(double r, double t)
 {
 	x=1;
 	y=1;
@@ -107,12 +107,12 @@ void Point::SetPolar(real r, real t)
 	SetLength(r);
 }
 
-Point Point::WithLength(real r) const
+Point Point::WithLength(double r) const
 {
 	return r*Normalized();
 }
 
-Point Point::WithLengthSq(real r2) const
+Point Point::WithLengthSq(double r2) const
 {
 	Point copy = *this;
 	copy.SetLengthSq(r2);
@@ -122,7 +122,7 @@ Point Point::WithLengthSq(real r2) const
 Point Point::Projection(const Point& H) const
 {
 	Point T(x,y);
-	real t = (T*H)/(H*H);
+	double t = (T*H)/(H*H);
 	Point proj = t*H;
 	return proj;
 }
@@ -190,13 +190,13 @@ bool Point::operator==(const Point& vec) const
 	return ((x == vec.x) && (y == vec.y));
 }
 
-void Point::Truncate(real r)
+void Point::Truncate(double r)
 {
 	if (LengthSq() > r*r)
 		SetLength(r);
 }
 
-Point Point::Truncated(real r) const
+Point Point::Truncated(double r) const
 {
 	if (LengthSq() > r*r)
 		return WithLength(r);
@@ -211,22 +211,22 @@ std::ostream& operator<<(std::ostream& os, const Point& rhs)
   return os;
 }
 
-Point Point::Polar(real r, real theta)
+Point Point::Polar(double r, double theta)
 {
 	return Point(r*cos(theta),r*sin(theta));
 }
 
-Point Point::RandomPoint(real maxLength)
+Point Point::RandomPoint(double maxLength)
 {
-	real r = random_real(0.0,maxLength);
-	real theta = random_real(-pi,pi);
+	double r = random_double(0.0,maxLength);
+	double theta = random_double(-pi,pi);
 	return Polar(r,theta);
 }
 
-Point Point::RandomPoint(real minLength, real maxLength)
+Point Point::RandomPoint(double minLength, double maxLength)
 {
-	real r = random_real((minLength),(maxLength));
-	real theta = random_real((-pi),(pi));
+	double r = random_double((minLength),(maxLength));
+	double theta = random_double((-pi),(pi));
 	return Polar(r,theta);
 }
 
@@ -242,13 +242,13 @@ Point Point::GlobalToLocal(const Point& origin,
 								 const Point& V) const
 {
 	Point L = *this - origin;
-	real determinant = (U.x*V.y - U.y*V.x);
+	double determinant = (U.x*V.y - U.y*V.x);
 	
 	//check to see if they U and V are linearly dependent
 	if (fabs(determinant) != 0) return L.Projection(U);
 	
-	real locx = (L.x*V.y - L.y*V.x)/determinant;
-	real locy = -(L.x*U.y - L.y*U.x)/determinant;
+	double locx = (L.x*V.y - L.y*V.x)/determinant;
+	double locy = -(L.x*U.y - L.y*U.x)/determinant;
 	return Point(locx,locy);
 }
 
@@ -269,11 +269,11 @@ vector<Point> GenerateRandomPoints(int n, int resolution)
 	
 	double r = resolution;
 	
-	Point Centro(random_real(0.0,r), random_real(0.0,r));
+	Point Centro(random_double(0.0,r), random_double(0.0,r));
 	cout << "point2d("<< Centro << ")+";
 	while (result.size() < n)
 	{
-		Point P(random_real(0.0,r), random_real(0.0,r));
+		Point P(random_double(0.0,r), random_double(0.0,r));
 		if (P.Distance(Centro) < 1000)
 			result.emplace_back(P);
 	}

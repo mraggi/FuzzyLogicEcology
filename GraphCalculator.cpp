@@ -12,15 +12,15 @@ Matrix GraphCalculator::CalculateGraph()
 	{
 		X.emplace_back(malla);
 		X[i].Realize(E[i],Cmx,Cmy);
-		cout << "Para realizar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
+		cout << "Para doubleizar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
 	}
 	
 	Row Area(numespecies,0);
 	for (int i = 0; i < numespecies; ++i)
 	{
 		Area[i] = X[i].Integrate();
-// 		cout << setprecision(2);
-// 		cout << "\tArea " << i << " = " << Area[i] << endl;
+		cout << setprecision(2);
+		cout << "\tArea " << i << " = " << Area[i] << endl;
 		cout << "Para integrar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
 
 	}
@@ -32,12 +32,12 @@ Matrix GraphCalculator::CalculateGraph()
 	for (int i = 0; i < numespecies; ++i)
 	{
 // 		cout << i << ": " << X[i] << endl;
-		real areai = Area[i];
+		double areai = Area[i];
 		for (int j = i+1; j < numespecies; ++j)
 		{
 			
-			real overlap = (X[i]*X[j]).Integrate();
-			real areaj = Area[j];
+			double overlap = (X[i]*X[j]).Integrate();
+			double areaj = Area[j];
 			if (areai != 0.0)
 				M[i][j] = overlap/areai;
 			if (areaj != 0.0)
@@ -58,18 +58,18 @@ Matrix GraphCalculator::CalculateGraph()
 
 vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U)
 {
-	real minX = 9999999999;
-	real maxX = -9999999999;
-	real minY = 9999999999;
-	real maxY = -9999999999;
+	double minX = 9999999999;
+	double maxX = -9999999999;
+	double minY = 9999999999;
+	double maxY = -9999999999;
 	
 	for (auto& u : U)
 	{
 		
 		for (auto p : u)
 		{
-			real x = p.x;
-			real y = p.y;
+			double x = p.x;
+			double y = p.y;
 			if (x < minX)
 				minX = x;
 			if (y < minY)

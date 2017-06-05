@@ -65,7 +65,7 @@ IntType random_int(IntType from, IntType thru)
  * @return A random integer in the range [from,thru), with uniform probability distribution
  */
 template <class FloatType = double>
-FloatType random_real(FloatType from, FloatType upto)
+FloatType random_double(FloatType from, FloatType upto)
 {
 	static std::uniform_real_distribution<> d {};
 	using parm_t = decltype(d)::param_type;

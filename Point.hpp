@@ -8,17 +8,15 @@
 
 using namespace std;
 
-using real = double;
+constexpr double pi = 3.1415926535897932384626433832795028841971694;
 
-const double pi = 3.1415926535897932384626433832795028841971694;
-
-inline real RadiansToDegrees(real angle)
+inline double RadiansToDegrees(double angle)
 {
     return angle*180.0/pi;
 }
 
 //Returns an angle that is between -pi and pi.
-inline real MakeValidAngle(real theta)
+inline double MakeValidAngle(double theta)
 {
     while (theta > pi) theta -= 2*pi;
     while (theta < -pi) theta += 2*pi;
@@ -26,10 +24,10 @@ inline real MakeValidAngle(real theta)
 }
 
 
-inline bool isAngleBetweenAngles(real a, real b1, real b2)
+inline bool isAngleBetweenAngles(double a, double b1, double b2)
 {
-	real c = MakeValidAngle(a-b1+pi);
-	real c2 = MakeValidAngle(b2-b1+pi);
+	double c = MakeValidAngle(a-b1+pi);
+	double c2 = MakeValidAngle(b2-b1+pi);
 	
 	return c2 <= c ;
 	
@@ -40,50 +38,50 @@ inline bool isAngleBetweenAngles(real a, real b1, real b2)
 class Point
 {
 public:
-	real x;
-	real y;
+	double x;
+	double y;
 
 	Point() : x(0), y(0) { }
-	explicit Point(real X, real Y) : x(X), y(Y) { }
+	explicit Point(double X, double Y) : x(X), y(Y) { }
 	Point(const Point& other) : x(other.x), y(other.y) { }
 	~Point() { }
 
 	void Zero(){x=0.0; y=0.0;}
 	bool isZero() const {return ((x*x + y*y) == 0);}
 
-	inline real Length() const   { return sqrt(x*x + y*y); }
-	inline real LengthSq() const { return x*x + y*y; }
+	inline double Length() const   { return sqrt(x*x + y*y); }
+	inline double LengthSq() const { return x*x + y*y; }
 
-	inline real Angle() const    { return atan2(y,x); }
-	inline real AngleTo(const Point& vec)const { return MakeValidAngle(vec.Angle()-Angle()); }
+	inline double Angle() const    { return atan2(y,x); }
+	inline double AngleTo(const Point& vec)const { return MakeValidAngle(vec.Angle()-Angle()); }
 
 	inline bool IsCloserToFirstThanSecond(const Point& A, const Point& B) const { return DistanceSq(A) < DistanceSq(B); }
 	
-	Point VectorWithAngle(real t) const; //std::vector of same length and angle t
-	void SetAngle(real t);
+	Point VectorWithAngle(double t) const; //std::vector of same length and angle t
+	void SetAngle(double t);
 
-	void Rotate(real t);
-	Point Rotated(real t) const;
+	void Rotate(double t);
+	Point Rotated(double t) const;
 	
-	void Rotate(real sint, real cost); //so that you don't calculate sin and cos again.
-	Point Rotated(real sint, real cost) const; //so that you don't calculate sin and cos again.
+	void Rotate(double sint, double cost); //so that you don't calculate sin and cos again.
+	Point Rotated(double sint, double cost) const; //so that you don't calculate sin and cos again.
 
 	void Normalize();
 	Point Normalized() const;
 
-	void Scale(real factor) { x*=factor; y*=factor; }
-	void Scale(real xfactor, real yfactor) { x*=xfactor; y*=yfactor; }
+	void Scale(double factor) { x*=factor; y*=factor; }
+	void Scale(double xfactor, double yfactor) { x*=xfactor; y*=yfactor; }
 	void Scale(const Point& P) { x*=P.x; y*=P.y; }
 
-	real Distance(const Point & vec) const;
-	real DistanceSq(const Point & vec) const;
+	double Distance(const Point & vec) const;
+	double DistanceSq(const Point & vec) const;
 
-	void SetLength(real r);
-	void SetLengthSq(real r2); //This computes sqrt only once, instead of twice
-	void SetPolar(real r, real t);
+	void SetLength(double r);
+	void SetLengthSq(double r2); //This computes sqrt only once, instead of twice
+	void SetPolar(double r, double t);
 
-	Point WithLength(real r) const;
-	Point WithLengthSq(real r) const;
+	Point WithLength(double r) const;
+	Point WithLengthSq(double r) const;
 
 	Point Projection(const Point& H) const;
 	Point ProjectionToLine(const Point& A, const Point& B) const;
@@ -96,8 +94,8 @@ public:
 	//This returns the projection if it's "positive" (wrt H) and returns 0 if it's negative
 	Point ForwardProjection(const Point& H) const;
 
-	void Truncate(real r);
-	Point Truncated(real r) const;
+	void Truncate(double r);
+	Point Truncated(double r) const;
 
 	//Returns a point with same length that is rotated pi/2 counter-clockwise
 	inline Point Perp() const    { return Point(-y, x); }
@@ -107,8 +105,8 @@ public:
 	const Point& operator=(const Point& other);
 	inline void operator+=(const Point &vec) { x += vec.x; y += vec.y;}
 	inline void operator-=(const Point &vec) { x -= vec.x; y -= vec.y;}
-	inline void operator*=(real num)            { x *= num; y *= num;}
-	inline void operator/=(real num)            { x /= num; y /= num;}
+	inline void operator*=(double num)            { x *= num; y *= num;}
+	inline void operator/=(double num)            { x /= num; y /= num;}
 	inline Point operator-(void) const { return Point(-x,-y); }
 
 	bool operator!=(const Point &vec) const;
@@ -143,9 +141,9 @@ public:
 										const Point& V) const;
 										
 	//Get the std::vector with length r, angle theta
-	static Point Polar(real r, real theta);
-	static Point RandomPoint(real maxLength);
-	static Point RandomPoint(real minLength, real maxLength);
+	static Point Polar(double r, double theta);
+	static Point RandomPoint(double maxLength);
+	static Point RandomPoint(double minLength, double maxLength);
 	
 };
 
@@ -161,28 +159,28 @@ inline Point operator-(const Point &vecA, const Point &vecB)
 }
 
 //Multiply and divide by scalars on both sides;
-inline Point operator*(real num, const Point &vec)
+inline Point operator*(double num, const Point &vec)
 {
 	return Point(num*vec.x,num*vec.y);
 }
 
-inline Point operator/(real num, const Point &vec)
+inline Point operator/(double num, const Point &vec)
 {
 	return Point(num/vec.x,num/vec.y);
 }
 
-inline Point operator*(const Point &vec, real num)
+inline Point operator*(const Point &vec, double num)
 {
 	return Point(num*vec.x,num*vec.y);
 }
 
-inline Point operator/(const Point &vec, real num)
+inline Point operator/(const Point &vec, double num)
 {
 	return Point(vec.x/num,vec.y/num);
 }
 
 //dot product
-inline real operator*(const Point &vecA, const Point &vecB)
+inline double operator*(const Point &vecA, const Point &vecB)
 {
 	return (vecA.x*vecB.x+vecA.y*vecB.y);
 }

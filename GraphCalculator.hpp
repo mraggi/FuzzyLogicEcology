@@ -5,16 +5,16 @@
 #include "ReadFile.hpp"
 #include "Point.hpp"
 
-const real RadioTierraEnKm = 6371.0;
-const real ValorDe1Grado = (2*pi*RadioTierraEnKm)/360.0;
+constexpr double RadioTierraEnKm = 6371.0;
+constexpr double ValorDe1Grado = (pi*RadioTierraEnKm)/180.0;
 
 class GraphCalculator
 {
 public:
-	GraphCalculator(size_t _malla, real RangoVisibilidadEnKm, const vector<vector<Point>>& UEnGrados) : malla(_malla)
+	GraphCalculator(size_t _malla, double RangoVisibilidadEnKm, const vector<vector<Point>>& UEnGrados) : malla(_malla)
 	{
 // 		cout << "Valor de 1 grado: " << ValorDe1Grado << endl;
-// 		real sigma = RangoVisibilidadEnKm/ValorDe1Grado;
+// 		double sigma = RangoVisibilidadEnKm/ValorDe1Grado;
 // 		cout << "sigma = " << sigma*ValorDe1Grado << "km" << endl;
 // 		
 // 		Cx = 1/(2*sigma*sigma);
@@ -25,7 +25,7 @@ public:
 // 		
 // 		cout << "Cx = " << Cx << "/grado^2" << endl;
 		
-		real sigma = RangoVisibilidadEnKm;
+		double sigma = RangoVisibilidadEnKm;
 // 		cout << "sigma = " << sigma << "km" << endl;
 
 		Cx = 1/(2*sigma*sigma);
@@ -55,17 +55,17 @@ public:
 private:
 	vector<vector<Point>> Normalized(const vector<vector<Point>>& U);
 	size_t malla;
-	real Cx; //constantes en continuo
-	real Cy;
+	double Cx; //constantes en continuo
+	double Cy;
 	
-	real Cnx; // constantes normalizada
-	real Cny;
+	double Cnx; // constantes normalizada
+	double Cny;
 	
-	real Cmx; //constantes en malla
-	real Cmy;
+	double Cmx; //constantes en malla
+	double Cmy;
 
-	real bx; //borde en continuo
-	real by; 
+	double bx; //borde en continuo
+	double by; 
 		
 	Point O;
 	Point W;

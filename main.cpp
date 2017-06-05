@@ -8,7 +8,7 @@
 #include "GraphCalculator.hpp"
 #include "DiGraph.hpp"
 
-int malla = 7500;
+int malla = 2000;
 double visibilidad = 0.5;
 
 int main() 
