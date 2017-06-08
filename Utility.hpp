@@ -81,6 +81,18 @@ int signof(const T& a)
 		return -1;
 	return 0;
 }
+
+
+using Row = vector<double>;
+using Matrix = vector<Row>;
+
+const double tolerance = 0.0000000153; //en el continuo original
+
+
+inline double MaximaLongitudQueNoEs0(double C)
+{
+	return sqrt(-log(tolerance)/C);
+}
 /*
 
 double tolerancia_fisica(double numsigma)

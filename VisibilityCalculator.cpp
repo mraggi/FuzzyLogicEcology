@@ -55,7 +55,7 @@ int main()
 	for (double visibilidad = 0.05; visibilidad < 1.5; visibilidad += 0.01)
 	{
 		GraphCalculator GC(malla,visibilidad,E);
-		int numespecies = U.size();
+		int numspecies = U.size();
 		
 		
 		

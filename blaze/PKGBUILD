@@ -1,0 +1,31 @@
+# Maintainer: Miguel Raggi <mraggi@gmail.com>
+
+pkgname=blaze
+pkgver=3.1
+pkgrel=1
+pkgdesc="Blaze is an open-source, high-performance C++ math library for dense and sparse arithmetic. With its state-of-the-art Smart Expression Template implementation Blaze combines the elegance and ease of use of a domain-specific language with HPC-grade performance, making it one of the most intuitive and fastest C++ math libraries available."
+arch=('x86_64')
+url="https://bitbucket.org/blaze-lib/blaze.git"
+license=('New (Revised) BSD license')
+# depends=('gcc')
+makedepends=('cmake' 'git')
+provides=('blaze')
+conflicts=('blaze')
+replaces=('blaze')
+# options=('debug')
+
+source=("git+https://bitbucket.org/blaze-lib/blaze.git")
+sha256sums=('SKIP')
+
+build() {
+    cd "$srcdir/blaze"
+    cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .
+    make
+}
+
+package() {
+    cd "$srcdir/blaze"
+
+    make DESTDIR="$pkgdir/" install
+}
+

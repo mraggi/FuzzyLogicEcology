@@ -8,11 +8,18 @@
 #include "GraphCalculator.hpp"
 #include "DiGraph.hpp"
 
-int malla = 2000;
+int malla = 6000;
 double visibilidad = 0.5;
 
 int main() 
 {
+#ifdef USE_GPU
+	cout << "Using following GPU: " << endl;
+	af::info();
+#else
+	cout << "Using the CPU!" << endl;
+#endif
+	
 	auto R = ReadTableFromSTDIN("QuercusOaxaca.txt");
 // 	auto R = ReadTableFromSTDIN("lobatae.txt");
 // 	auto R = ReadTableFromSTDIN("redes_centro.txt");
@@ -20,24 +27,31 @@ int main()
 	auto U = QuercusExtractLocations(R);
 // 	auto U = LobataeExtractLocations(R);
 // 	auto U = CentroExtractLocations(R);
-	int i = 0;
-	for (auto u : U)
+	
+	
+	vector< pair< string, vector<Point> > > V(U.begin(),U.end());
+	sort(V.begin(),V.end(),[](const auto& R, const auto& L)
 	{
-		cout << "# " << i << ' ' << u.first << endl;
+		return R.second.size() > L.second.size();
+	});
+	int i = 0;
+	for (auto v : V)
+	{
+		cout << "# " << i << ' ' << v.first << ": " << v.second.size() << endl;
 		++i;
 	}
 	
 	vector<vector<Point>> E;
 	vector<string> names;
-	E.reserve(U.size());
-	for (auto& u : U)
+	E.reserve(V.size());
+	for (auto& v : V)
 	{
-		E.emplace_back(u.second);
-		names.emplace_back(u.first);
+		E.emplace_back(v.second);
+		names.emplace_back(v.first);
 	}
 	
 	GraphCalculator GC(malla,visibilidad,E);
-	int numespecies = U.size();
+	int numspecies = U.size();
 	
 	Chronometer total;
 	srand(time(NULL));

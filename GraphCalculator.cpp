@@ -1,22 +1,23 @@
-#include "GraphCalculator.hpp"
 #include <iomanip>
+#include "GraphCalculator.hpp"
+#include "Mu.hpp"
 
 Matrix GraphCalculator::CalculateGraph()
 {
-	int numespecies = E.size();
-	Matrix M(numespecies,Row(numespecies,1));
+	int numspecies = E.size();
+	Matrix M(numspecies,Row(numspecies,1.0));
 
 	vector<Mu> X;
 	Chronometer T;
-	for (int i = 0; i < numespecies; ++i)
+	for (int i = 0; i < numspecies; ++i)
 	{
 		X.emplace_back(malla);
 		X[i].Realize(E[i],Cmx,Cmy);
 		cout << "Para doubleizar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
 	}
 	
-	Row Area(numespecies,0);
-	for (int i = 0; i < numespecies; ++i)
+	Row Area(numspecies,0);
+	for (int i = 0; i < numspecies; ++i)
 	{
 		Area[i] = X[i].Integrate();
 		cout << setprecision(2);
@@ -27,13 +28,13 @@ Matrix GraphCalculator::CalculateGraph()
 	
 	Chronometer C;
 	
-	int total = (numespecies*(numespecies-1))/2;
+	int total = (numspecies*(numspecies-1))/2;
 	int num = 0;
-	for (int i = 0; i < numespecies; ++i)
+	for (int i = 0; i < numspecies; ++i)
 	{
 // 		cout << i << ": " << X[i] << endl;
 		double areai = Area[i];
-		for (int j = i+1; j < numespecies; ++j)
+		for (int j = i+1; j < numspecies; ++j)
 		{
 			
 			double overlap = (X[i]*X[j]).Integrate();
