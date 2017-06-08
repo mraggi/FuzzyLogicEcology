@@ -66,7 +66,7 @@ Matrix GraphCalculator::CalculateGraph()
 	}
 	moddims(A,numspecies,malla*malla);
 	
-	af::array M = af::matmul(A,A.transpose());
+	af::array M = af::matmul(A,transpose(A));
 	
 	for (int i = 0; i < numspecies; ++i)
 	{
