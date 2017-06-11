@@ -45,13 +45,12 @@ void Realize(MatrixXd& A, const vector<Point>& P, int row, int N, double Cmx, do
 			A(row,index) += 1.0;
 		}
 	}
-	
 }
 
 
 Matrix GraphCalculator::CalculateGraph()
 {
-	omp_set_num_threads( blaze::getNumThreads() );
+	blaze::setNumThreads( blaze::getNumThreads() );
 	Chronometer T;
 	int numspecies = E.size();
 	
@@ -66,6 +65,10 @@ Matrix GraphCalculator::CalculateGraph()
 		for (int col = 0; col < A.columns(); ++col)
 			Area[species] += A(species,col);
 	}
+	
+	cout << "Number of nonzerose: " << double(A.nonZeros())/(numspecies*malla*malla) << endl;
+	
+// 	A = blaze::forEach(A,[](double d) { return d+1.0; });
 	
 	cout << "Finished creating matrix. Time taken: " << T.Reset() << endl;
 	

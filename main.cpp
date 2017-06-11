@@ -77,9 +77,10 @@ int main()
 	for (auto e : edges)
 		cout << '\"' << D.get_name(e.from) << "\" ---> \"" << D.get_name(e.to)  << '\"' << " with weight " << e.weight() << endl;
 
-	cout << "Total time: " << total.Peek() << endl;
 	
 	cout << "Malla: " << malla << endl;
 	cout << "Visibilidad: " << visibilidad << endl;
+
+	cout << "Total time: " << total.Peek() << endl;
     return 0;
 }
