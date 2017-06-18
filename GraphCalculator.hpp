@@ -4,49 +4,49 @@
 #include "ReadFile.hpp"
 #include "Point.hpp"
 
-constexpr double RadioTierraEnKm = 6371.0;
-constexpr double ValorDe1Grado = (pi*RadioTierraEnKm)/180.0;
+constexpr double EarthRadiusKm = 6371.0;
+constexpr double KmInADegree = (pi*EarthRadiusKm)/180.0;
 
 class GraphCalculator
 {
 public:
-	GraphCalculator(size_t _malla, double RangoVisibilidadEnKm, const vector<vector<Point>>& UEnGrados) : malla(_malla)
+	GraphCalculator(size_t _grid, double VisibilityRangeInKm, const vector<vector<Point>>& U) : grid(_grid)
 	{
-		double sigma = RangoVisibilidadEnKm;
+		double sigma = VisibilityRangeInKm;
 
 		Cx = 1/(2*sigma*sigma);
 		Cy = Cx;
-		bx = MaximaLongitudQueNoEs0(Cx);
-		by = MaximaLongitudQueNoEs0(Cy);
+		bx = MaxNonZeroDistance(Cx);
+		by = MaxNonZeroDistance(Cy);
 		
-		auto UEnKilometros = UEnGrados;
-		for (auto& conjDePuntos : UEnKilometros)
+		auto UinKm = U;
+		for (auto& conjDePuntos : UinKm)
 		{
 			for (auto& punto : conjDePuntos)
 			{
-				punto *= ValorDe1Grado;
+				punto *= KmInADegree;
 			
 			}
 		}
 			
-		E = Normalized(UEnKilometros);
+		E = Normalized(UinKm);
 	}
 	
 	Matrix CalculateGraph();
 	
 private:
 	vector<vector<Point>> Normalized(const vector<vector<Point>>& U);
-	size_t malla;
-	double Cx; //constantes en continuo
+	size_t grid;
+	double Cx; //in continuum
 	double Cy;
 	
-	double Cnx; // constantes normalizada
+	double Cnx; // in normalized continuum
 	double Cny;
 	
-	double Cmx; //constantes en malla
+	double Cmx; //in grid
 	double Cmy;
 
-	double bx; //borde en continuo
+	double bx; //border in continuum
 	double by; 
 		
 	Point O;

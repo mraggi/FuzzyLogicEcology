@@ -8,7 +8,7 @@
 #include "GraphCalculator.hpp"
 #include "DiGraph.hpp"
 
-int malla = 5000;
+int grid = 5000;
 double visibilidad = 1;
 
 int main() 
@@ -54,7 +54,7 @@ int main()
 	
 	for (double visibilidad = 0.05; visibilidad < 1.5; visibilidad += 0.01)
 	{
-		GraphCalculator GC(malla,visibilidad,E);
+		GraphCalculator GC(grid,visibilidad,E);
 		int numspecies = U.size();
 		
 		
@@ -86,7 +86,7 @@ int main()
 	
 	cout << "Total time: " << T.Peek() << endl;
 		
-	cout << "Malla: " << malla << endl;
+	cout << "Malla: " << grid << endl;
 	
     return 0;
 }

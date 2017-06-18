@@ -11,9 +11,9 @@ Matrix GraphCalculator::CalculateGraph()
 	Chronometer T;
 	for (int i = 0; i < numspecies; ++i)
 	{
-		X.emplace_back(malla);
+		X.emplace_back(grid);
 		X[i].Realize(E[i],Cmx,Cmy);
-		cout << "Para doubleizar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
+		cout << "Para realizar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
 	}
 	
 	Row Area(numspecies,0);
@@ -93,8 +93,8 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 	
 // 	cout << "Cnx = " << Cnx << endl;
 	
-	Cmx = Cnx/(malla*malla);
-	Cmy = Cny/(malla*malla);
+	Cmx = Cnx/(grid*grid);
+	Cmy = Cny/(grid*grid);
 	
 // 	cout << "Cmx = " << Cmx << endl;
 // 	cout << "O = " << O << " y W = " << W << endl;
@@ -114,7 +114,7 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 // 			cout << S << endl;
 			
 			S.Scale(1.0/F);
-			S *= malla;
+			S *= grid;
 			Q[i].emplace_back(S);
 		}
 		++i;

@@ -16,14 +16,10 @@ void Realize(MatrixXd& A, const vector<Point>& P, int row, int N, double Cmx, do
 			A(row,index) = -1.0;
 		}
 	}
-	double dx = MaximaLongitudQueNoEs0(Cmx);
-	double dy = MaximaLongitudQueNoEs0(Cmy);
+	double dx = MaxNonZeroDistance(Cmx);
+	double dy = MaxNonZeroDistance(Cmy);
 	long dxi = long(dx+1);
 	long dyi = long(dy+1);
-	
-// 	cout << "di = " << di << endl;
-	
-// 	cout << "Número de pixeles: " << 2*(dxi) << "*" << 2*dyi << " = " << 4*dxi*dyi << endl;
 	
 	for (const Point& p : P)
 	{
@@ -59,7 +55,7 @@ Matrix GraphCalculator::CalculateGraph()
 {
 	int numspecies = E.size();
 	
-	MatrixXd A(numspecies,malla*malla);
+	MatrixXd A(numspecies,grid*grid);
 	cout << "A.rows() = " << A.rows() << endl;
 	cout << "A.cols() = " << A.cols() << endl;
 	
@@ -67,7 +63,7 @@ Matrix GraphCalculator::CalculateGraph()
 	
 	for (int species = 0; species < numspecies; ++species)
 	{
-		Realize(A,E[species],species,malla,Cmx,Cmy);
+		Realize(A,E[species],species,grid,Cmx,Cmy);
 	}
 	
 	MatrixXd Area = A.rowwise().sum();
@@ -126,8 +122,8 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 	
 // 	cout << "Cnx = " << Cnx << endl;
 	
-	Cmx = Cnx/(malla*malla);
-	Cmy = Cny/(malla*malla);
+	Cmx = Cnx/(grid*grid);
+	Cmy = Cny/(grid*grid);
 	
 // 	cout << "Cmx = " << Cmx << endl;
 // 	cout << "O = " << O << " y W = " << W << endl;
@@ -147,7 +143,7 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 // 			cout << S << endl;
 			
 			S.Scale(1.0/F);
-			S *= malla;
+			S *= grid;
 			Q[i].emplace_back(S);
 		}
 		++i;

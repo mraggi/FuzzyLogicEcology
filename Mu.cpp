@@ -39,8 +39,8 @@ void Mu::Realize(const vector<Point>& P, double Cmx, double Cmy)
 			m_M[x][y] = -1.0;
 		}
 	}
-	double dx = MaximaLongitudQueNoEs0(Cmx);
-	double dy = MaximaLongitudQueNoEs0(Cmy);
+	double dx = MaxNonZeroDistance(Cmx);
+	double dy = MaxNonZeroDistance(Cmy);
 	long dxi = long(dx+2);
 	long dyi = long(dy+2);
 	

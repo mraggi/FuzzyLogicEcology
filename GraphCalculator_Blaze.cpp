@@ -9,8 +9,8 @@ using MatrixXd = blaze::DynamicMatrix<double>;
 
 void Realize(MatrixXd& A, const vector<Point>& P, int row, int N, double Cmx, double Cmy)
 {
-	double dx = MaximaLongitudQueNoEs0(Cmx);
-	double dy = MaximaLongitudQueNoEs0(Cmy);
+	double dx = MaxNonZeroDistance(Cmx);
+	double dy = MaxNonZeroDistance(Cmy);
 	long dxi = long(dx+1);
 	long dyi = long(dy+1);
 	
@@ -54,19 +54,19 @@ Matrix GraphCalculator::CalculateGraph()
 	Chronometer T;
 	int numspecies = E.size();
 	
-	MatrixXd A(numspecies,malla*malla,-1.0);
+	MatrixXd A(numspecies,grid*grid,-1.0);
 	
 	vector<double> Area(numspecies,0.0);
 	
 	#pragma omp parallel for
 	for (int species = 0; species < numspecies; ++species)
 	{
-		Realize(A,E[species],species,malla,Cmx,Cmy);
+		Realize(A,E[species],species,grid,Cmx,Cmy);
 		for (int col = 0; col < A.columns(); ++col)
 			Area[species] += A(species,col);
 	}
 	
-	cout << "Number of nonzerose: " << double(A.nonZeros())/(numspecies*malla*malla) << endl;
+	cout << "Number of nonzeros: " << double(A.nonZeros())/(numspecies*grid*grid) << endl;
 	
 // 	A = blaze::forEach(A,[](double d) { return d+1.0; });
 	
@@ -118,23 +118,12 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 	O = Point(minX-bx,minY-by);
 	W = Point(maxX+bx,maxY+by);
 	F = W-O;
-// 	cout << "O = " << O << endl;
-// 	cout << "W = " << W << endl;
-// 	cout << "En km, F = " << F << endl;
 	
 	Cnx = Cx*F.x*F.x;
 	Cny = Cx*F.y*F.y;
 	
-// 	cout << "Cnx = " << Cnx << endl;
-	
-	Cmx = Cnx/(malla*malla);
-	Cmy = Cny/(malla*malla);
-	
-// 	cout << "Cmx = " << Cmx << endl;
-// 	cout << "O = " << O << " y W = " << W << endl;
-	
-// 	cout << "bordeEnContinuo = " << bordeEnContinuo << endl;
-// 	cout << "b = " << b << endl;
+	Cmx = Cnx/(grid*grid);
+	Cmy = Cny/(grid*grid);
 	
 	vector<vector<Point>> Q(U.size());
 	int i = 0;
@@ -142,17 +131,13 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 	{
 		for (auto& P : u)
 		{
-			
 			Point S = (P-O);
 			
-// 			cout << S << endl;
-			
 			S.Scale(1.0/F);
-			S *= malla;
+			S *= grid;
 			Q[i].emplace_back(S);
 		}
 		++i;
-// 		cout << "---------------------------------" << endl;
 	}
 	return Q;
 }

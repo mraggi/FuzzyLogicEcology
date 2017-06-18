@@ -8,7 +8,7 @@
 #include "GraphCalculator.hpp"
 #include "DiGraph.hpp"
 
-int malla = 6000;
+int grid = 2000;
 double visibilidad = 0.5;
 
 int main() 
@@ -50,7 +50,7 @@ int main()
 		names.emplace_back(v.first);
 	}
 	
-	GraphCalculator GC(malla,visibilidad,E);
+	GraphCalculator GC(grid,visibilidad,E);
 	int numspecies = U.size();
 	
 	Chronometer total;
@@ -78,7 +78,7 @@ int main()
 		cout << '\"' << D.get_name(e.from) << "\" ---> \"" << D.get_name(e.to)  << '\"' << " with weight " << e.weight() << endl;
 
 	
-	cout << "Malla: " << malla << endl;
+	cout << "Malla: " << grid << endl;
 	cout << "Visibilidad: " << visibilidad << endl;
 
 	cout << "Total time: " << total.Peek() << endl;

@@ -1,4 +1,3 @@
-# - Try to find eigen2 headers
 # Once done this will define
 #
 #  BLAZE_FOUND - system has blaze lib
@@ -14,6 +13,7 @@ if (BLAZE_INCLUDE_DIR)
 
   # in cache already
   set(BLAZE_FOUND TRUE)
+  message("Blaze was already here")
 
 else (BLAZE_INCLUDE_DIR)
 
@@ -28,4 +28,3 @@ find_package_handle_standard_args(BLAZE DEFAULT_MSG BLAZE_INCLUDE_DIR)
 mark_as_advanced(BLAZE_INCLUDE_DIR)
 
 endif(BLAZE_INCLUDE_DIR)
-

@@ -89,7 +89,7 @@ using Matrix = vector<Row>;
 const double tolerance = 0.0000000153; //en el continuo original
 
 
-inline double MaximaLongitudQueNoEs0(double C)
+inline double MaxNonZeroDistance(double C)
 {
 	return sqrt(-log(tolerance)/C);
 }
