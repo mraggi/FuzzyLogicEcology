@@ -20,6 +20,7 @@ vector<Point> ReadPointsFromSTDin(size_t n);
 
 vector<vector<string>> ReadTableFromSTDIN(const string& filename);
 
+unordered_map<string,vector<Point>> ExtractLocations(const vector<vector<string>>& U, const vector<int>& names, int longitude = -1, int latitude = -1);
 
 unordered_map<string,vector<Point>> QuercusExtractLocations(const vector<vector<string>>& U);
 unordered_map<string,vector<Point>> LobataeExtractLocations(const vector<vector<string>>& U);

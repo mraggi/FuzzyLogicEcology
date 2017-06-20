@@ -2,17 +2,18 @@
 #include "GraphCalculator.hpp"
 #include "Mu.hpp"
 #include <blaze/Math.h>
-
+#include <blaze/config/BLAS.h>
 // using namespace blaze;
 
 using MatrixXd = blaze::DynamicMatrix<double>;
+// using MatrixXd = blaze::CompressedMatrix<double>;
 
 void Realize(MatrixXd& A, const vector<Point>& P, int row, int N, double Cmx, double Cmy)
 {
 	double dx = MaxNonZeroDistance(Cmx);
 	double dy = MaxNonZeroDistance(Cmy);
-	long dxi = long(dx+1);
-	long dyi = long(dy+1);
+	long dxi = long(dx+2);
+	long dyi = long(dy+2);
 	
 // 	cout << "di = " << di << endl;
 	
@@ -24,7 +25,8 @@ void Realize(MatrixXd& A, const vector<Point>& P, int row, int N, double Cmx, do
 		size_t maxX = min(long(N), long(p.x)+dxi);
 		size_t minY = max(long(0),long(p.y)-dyi);
 		size_t maxY = min(long(N), long(p.y)+dyi);
-		
+		assert(maxX-minX > 0);
+		assert(maxY-minY > 0);
 		for (int x = minX; x < maxX; ++x)
 		{
 			for (int y = minY; y < maxY; ++y)
@@ -55,7 +57,6 @@ Matrix GraphCalculator::CalculateGraph()
 	int numspecies = E.size();
 	
 	MatrixXd A(numspecies,grid*grid,-1.0);
-	
 	vector<double> Area(numspecies,0.0);
 	
 	#pragma omp parallel for
@@ -66,7 +67,7 @@ Matrix GraphCalculator::CalculateGraph()
 			Area[species] += A(species,col);
 	}
 	
-	cout << "Number of nonzeros: " << double(A.nonZeros())/(numspecies*grid*grid) << endl;
+// 	cout << "Number of nonzeros: " << double(A.nonZeros())/(numspecies*grid*grid) << endl;
 	
 // 	A = blaze::forEach(A,[](double d) { return d+1.0; });
 	
@@ -81,9 +82,16 @@ Matrix GraphCalculator::CalculateGraph()
 	Matrix R(numspecies,Row(numspecies));
 	for (int x = 0; x < numspecies; ++x)
 	{
+		if (Area[x] < tolerance)
+		{
+			cout << "Area of X = 0! Increase grid size!!" << endl;
+		}
 		for (int y = 0; y < numspecies; ++y)
 		{
-			R[x][y] = M(x,y)/Area[x];
+			if (Area[x] > tolerance)
+				R[x][y] = sqrt(M(x,y)/Area[x]);
+			else
+				R[x][y] = sqrt(M(x,y));
 // 			R[x][y] = M(x,y);
 		}
 	}

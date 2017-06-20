@@ -9,7 +9,7 @@
 #include "DiGraph.hpp"
 
 int grid = 5000;
-double visibilidad = 1;
+double visibility = 1;
 
 int main() 
 {
@@ -52,9 +52,9 @@ int main()
 	Chronometer total;
 	Chronometer T;
 	
-	for (double visibilidad = 0.05; visibilidad < 1.5; visibilidad += 0.01)
+	for (double visibility = 0.05; visibility < 1.5; visibility += 0.01)
 	{
-		GraphCalculator GC(grid,visibilidad,E);
+		GraphCalculator GC(grid,visibility,E);
 		int numspecies = U.size();
 		
 		
@@ -81,7 +81,7 @@ int main()
 			w = edges[1].weight();
 		
 		
-		cout << "(" << visibilidad << "," << w << ")" << endl;
+		cout << "(" << visibility << "," << w << ")" << endl;
 	}
 	
 	cout << "Total time: " << T.Peek() << endl;

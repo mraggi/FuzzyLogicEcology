@@ -13,7 +13,7 @@ Matrix GraphCalculator::CalculateGraph()
 	{
 		X.emplace_back(grid);
 		X[i].Realize(E[i],Cmx,Cmy);
-		cout << "Para realizar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
+		cout << "Realizing mu_" << i << " took " << T.Reset() << 's' << endl;
 	}
 	
 	Row Area(numspecies,0);
@@ -22,7 +22,7 @@ Matrix GraphCalculator::CalculateGraph()
 		Area[i] = X[i].Integrate();
 		cout << setprecision(2);
 		cout << "\tArea " << i << " = " << Area[i] << endl;
-		cout << "Para integrar la mu_" << i << " tardé " << T.Reset() << 's' << endl;
+		cout << "Integrating mu_" << i << " took " << T.Reset() << 's' << endl;
 
 	}
 	
@@ -50,7 +50,7 @@ Matrix GraphCalculator::CalculateGraph()
 			
 			++num;
 			double t = C.Peek();
-			cout << "Tiempo estimado: " << t*total/num - t << "s" << endl;
+			cout << "Estimated time: " << t*total/num - t << "s" << endl;
 			
 		}
 	}
@@ -84,23 +84,12 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 	O = Point(minX-bx,minY-by);
 	W = Point(maxX+bx,maxY+by);
 	F = W-O;
-// 	cout << "O = " << O << endl;
-// 	cout << "W = " << W << endl;
-// 	cout << "En km, F = " << F << endl;
 	
 	Cnx = Cx*F.x*F.x;
 	Cny = Cx*F.y*F.y;
 	
-// 	cout << "Cnx = " << Cnx << endl;
-	
 	Cmx = Cnx/(grid*grid);
 	Cmy = Cny/(grid*grid);
-	
-// 	cout << "Cmx = " << Cmx << endl;
-// 	cout << "O = " << O << " y W = " << W << endl;
-	
-// 	cout << "bordeEnContinuo = " << bordeEnContinuo << endl;
-// 	cout << "b = " << b << endl;
 	
 	vector<vector<Point>> Q(U.size());
 	int i = 0;
@@ -108,17 +97,13 @@ vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U
 	{
 		for (auto& P : u)
 		{
-			
 			Point S = (P-O);
-			
-// 			cout << S << endl;
 			
 			S.Scale(1.0/F);
 			S *= grid;
 			Q[i].emplace_back(S);
 		}
 		++i;
-// 		cout << "---------------------------------" << endl;
 	}
 	return Q;
 }
