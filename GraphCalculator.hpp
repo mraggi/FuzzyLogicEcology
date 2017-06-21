@@ -55,3 +55,55 @@ private:
 
 	vector<vector<Point>> E;
 };
+
+
+inline vector<vector<Point>> GraphCalculator::Normalized(const vector<vector<Point>>& U)
+{
+	double minX = 9999999999;
+	double maxX = -9999999999;
+	double minY = 9999999999;
+	double maxY = -9999999999;
+	
+	for (auto& u : U)
+	{
+		
+		for (auto p : u)
+		{
+			double x = p.x;
+			double y = p.y;
+			if (x < minX)
+				minX = x;
+			if (y < minY)
+				minY = y;
+			if (x > maxX)
+				maxX = x;
+			if (y > maxY)
+				maxY = y;
+		}
+	}
+	O = Point(minX-bx,minY-by);
+	W = Point(maxX+bx,maxY+by);
+	F = W-O;
+	
+	Cnx = Cx*F.x*F.x;
+	Cny = Cx*F.y*F.y;
+	
+	Cmx = Cnx/(grid*grid);
+	Cmy = Cny/(grid*grid);
+	
+	vector<vector<Point>> Q(U.size());
+	int i = 0;
+	for (auto& u : U)
+	{
+		for (auto& P : u)
+		{
+			Point S = (P-O);
+			
+			S.Scale(1.0/F);
+			S *= grid;
+			Q[i].emplace_back(S);
+		}
+		++i;
+	}
+	return Q;
+}
