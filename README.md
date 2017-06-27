@@ -11,12 +11,25 @@ boost
 cmake
 ```
 
+### Installing dependencies in debian/ubuntu/mint
 For example, to install in debian/ubuntu, do `sudo apt-get install build-essentials libboost-all-dev cmake git`
 
 Then you have to install blaze manually. See [https://bitbucket.org/blaze-lib/blaze/wiki/Configuration%20and%20Installation]
 
+### Installing dependencies in arch/chakra/manjaro
+In a terminal, type:
+`sudo pacman -S cmake boost git`
 
-To use, just do the usual:
+We provide a PKGBUILD for blaze. So download the provided PKGBUILD (inside "blaze" directory) to some directory, either with git or through the web interface.
+
+Then, `cd` to said directory and type
+```bash
+    makepkg
+    sudo pacman -U blaze-*
+```
+
+### Installing
+After the dependencies are satisfied, just do the usual:
 ```bash
 	cd /path/to/wherever
 	git clone https://github.com/mraggi/FuzzyLogicEcology.git
