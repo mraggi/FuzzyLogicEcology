@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 			names.emplace_back(v.first);
 		}
 		
-		GraphCalculator GC(AP.grid, AP.visibility, Points);
+		GraphCalculator GC(AP.grid, AP.visibility, Points, AP.memoryAvailable);
 
 		Matrix M = GC.CalculateGraph();
 		cout << M << endl;

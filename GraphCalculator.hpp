@@ -10,7 +10,7 @@ constexpr double KmInADegree = (pi*EarthRadiusKm)/180.0;
 class GraphCalculator
 {
 public:
-	GraphCalculator(size_t _grid, double VisibilityRangeInKm, const vector<vector<Point>>& U) : grid(_grid)
+	GraphCalculator(size_t _grid, double VisibilityRangeInKm, const vector<vector<Point>>& U, size_t memoryAvailable) : grid(_grid)
 	{
 		double sigma = VisibilityRangeInKm;
 
@@ -39,25 +39,24 @@ public:
         
         size_t memoryNeeded = numberOfColumns*memoryPerColumn;
         
-        size_t memoryAvailable = getTotalSystemMemory();
         
-        if (memoryAvailable < 2*GB)
-        {
-            throw "Not enough memory to run this program!";
-        }
 		
-		memoryAvailable -= 1*GB; // Leave at least 1 GB for the OS
+		size_t total_columns = grid*grid;
 		
-		num_cols_per_block = memoryAvailable/memoryPerColumn;
-		num_blocks = (grid*grid)/num_cols_per_block  + 1; //adjust later
+		num_cols_per_block = min(memoryAvailable/memoryPerColumn,total_columns);
+		num_full_blocks = total_columns/num_cols_per_block;
+		num_cols_partial_block = total_columns%num_cols_per_block;
+		if (num_cols_partial_block != 0)
+		{
+			num_partial_blocks = 1;
+		}
 		
-		
-		cout << "Memory needed: " << double(memoryNeeded)/GB << "GB" << endl;
-        cout << "Available memory: " << double(memoryAvailable)/GB << "GB" << endl;
-        cout << "So I need " << num_blocks << " blocks" << endl;
-		cout << "Each of size " << num_cols_per_block << endl;
-        cout << "Each consumes " << double(num_cols_per_block*memoryPerColumn)/GB << "GB" << endl; 
-        cout << "Except perhaps the last one, which will be of size " << (grid*grid)%num_blocks << endl;
+		cout << "Total memory (if everything was put on memory): " << double(memoryNeeded)/GB << "GB" << endl;
+		cout << "Available memory: " << double(memoryAvailable)/GB << "GB" << endl;
+        cout << "Total number of columns: " << total_columns << endl; 
+        cout << "So I need " << num_full_blocks << " full blocks and " << num_partial_blocks << " partial blocks." << endl;
+		cout << "Full blocks have " << num_cols_per_block << " columns and consume " << double(num_cols_per_block*memoryPerColumn)/GB << "GB of memory." << endl;
+		cout << "Partial blocks have " << num_cols_partial_block << " columns and consume " << double(num_cols_partial_block*memoryPerColumn)/GB << "GB of memory." << endl;
 	}
 	
 	Matrix CalculateGraph();
@@ -84,8 +83,9 @@ private:
 	vector<vector<Point>> E;
 	
 	size_t num_cols_per_block;
-	size_t num_blocks;
-	
+	size_t num_full_blocks;
+	size_t num_partial_blocks {0}; //0 or 1
+	size_t num_cols_partial_block {0};
 };
 
 

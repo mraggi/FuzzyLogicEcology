@@ -26,6 +26,7 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	
 	desc.add_options()
 	("help,h", "produce help message")
+	("memory,m", po::value<string>(), "Maximum amount of memory in bytes to use. Leave blank or at 0 to autodetect. Can use KB, MB, GB")
 	("latitude,x", po::value<int>(&latitude)->default_value(value_not_set), "latitude")
 	("longitude,y", po::value<int>(&longitude)->default_value(value_not_set), "longitude")
 	("grid,g", po::value<int>(&grid)->default_value(grid), "grid size")
@@ -75,9 +76,56 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	}
 	
 	// If there is an output file, do this
-		if (vm.count("output-file"))
+	if (vm.count("output-file"))
+	{
+		string outfile = vm["output-file"].as<string>();
+		
+	}
+	
+	if (!vm.count("memory"))
+	{
+		memoryAvailable = getTotalSystemMemory();
+        
+        if (memoryAvailable < 2*GB)
+        {
+            throw "Not enough memory to run this program!";
+        }
+		
+		memoryAvailable -= 2*GB; // Leave at least 2 GB for the OS
+		memoryAvailable *= 0.95; // Don't use more than 95% of memory!
+	} else
+	{
+		size_t units = 1;
+		string val = vm["memory"].as<string>();
+		if (toupper(val.back()) == 'B')
 		{
-			string outfile = vm["output-file"].as<string>();
+			val.pop_back();
+			char c = toupper(val.back());
+			
+			if (c == 'G')
+				units = GB;
+			if (c == 'M')
+				units = MB;
+			if (c == 'K')
+				units = KB;
+			
+			if (units != 1)
+			{
+				val.pop_back();
+			}
+			try
+			{
+				memoryAvailable = stoll(val)*units;
+			}
+			catch (std::exception& e)
+			{
+				cerr << "Memory is in an invalid format" << endl;
+				throw e;
+			}
 			
 		}
+		
+		
+		
+	}
 }

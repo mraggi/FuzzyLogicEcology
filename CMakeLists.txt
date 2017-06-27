@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(fuzzylogic)
 
 set(CMAKE_BUILD_TYPE Release)
-add_definitions(-std=c++14 -Ofast -march=native)
+add_definitions(-std=c++14 -O3 -march=native)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/QuercusOaxaca.txt ${CMAKE_CURRENT_BINARY_DIR}/QuercusOaxaca.txt COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/quercus_build_graph.sh ${CMAKE_CURRENT_BINARY_DIR}/quercus_build_graph.sh COPYONLY)
