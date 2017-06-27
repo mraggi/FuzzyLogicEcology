@@ -1,12 +1,9 @@
 #include <iomanip>
 #include "GraphCalculator.hpp"
-// #include "Mu.hpp"
 #include <blaze/Math.h>
 #include <blaze/config/BLAS.h>
-// using namespace blaze;
 
 using MatrixXd = blaze::DynamicMatrix<double>;
-// using MatrixXd = blaze::CompressedMatrix<double>;
 
 void Realize(MatrixXd& A, const vector<Point>& P, long row, long N, double Cmx, double Cmy, long block, long num_cols_per_block)
 {
@@ -32,12 +29,13 @@ void Realize(MatrixXd& A, const vector<Point>& P, long row, long N, double Cmx, 
 			for (long y = minY; y < maxY; ++y)
 			{
 				long index = x*N+y;
-				
 				index -= num_cols_per_block*block;
+                
 				if (index >= 0 && index < A.columns())
 				{
 					double XX = (p.x-x)*(p.x-x);
 					double YY = (p.y-y)*(p.y-y);
+                    
 					A(row,index) *= (1.0-exp(-Cmx*XX - Cmy*YY));
 				}
 			}
@@ -73,7 +71,10 @@ Matrix GraphCalculator::CalculateGraph()
 		}
 		
 		M += blaze::declsym( A * blaze::trans(A) );
-		cout << "Done with block " << block+1 << " of " << num_full_blocks+num_partial_blocks << endl; 
+        double time = T.Peek();
+        
+		cout << "Done with block " << block+1 << " of " << num_full_blocks+num_partial_blocks 
+             << ". Expected remaining time: " << time*double(num_full_blocks+num_partial_blocks)/(block+1) - time << 's' << endl; 
 	}
 	
 	if (num_partial_blocks)
@@ -89,17 +90,17 @@ Matrix GraphCalculator::CalculateGraph()
 		}
 		
 		M += blaze::declsym( A * blaze::trans(A) );
-		cout << "Done with block " << num_full_blocks+1 << " of " << num_full_blocks+num_partial_blocks << endl; 
+		cout << "Done with block " << num_full_blocks+1 << " of " << num_full_blocks+num_partial_blocks << '!' << endl; 
 	}
 	
-	cout << "Finished creating matrix. Time taken: " << T.Reset() << endl;
+	cout << "Total Time taken: " << T.Reset() << endl;
 	
 	Matrix R(numspecies,Row(numspecies));
 	for (size_t x = 0; x < numspecies; ++x)
 	{
-		if (Area[x] < tolerance)
+		if (Area[x] <= tolerance)
 		{
-			cout << "Area of X = 0! Increase grid size!!" << endl;
+			cerr << "Area of X = 0! Increase grid size!!" << endl;
 		}
 		for (size_t y = 0; y < numspecies; ++y)
 		{

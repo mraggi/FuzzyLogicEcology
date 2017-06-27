@@ -35,7 +35,7 @@ find_package(Boost COMPONENTS program_options REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-set(EXTRA_LIBS ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+set(EXTRA_LIBS ${Boost_LIBRARIES}  ${CMAKE_THREAD_LIBS_INIT})
 message("Extra libs: " ${EXTRA_LIBS})
 
 if (BLAZE_FOUND)
