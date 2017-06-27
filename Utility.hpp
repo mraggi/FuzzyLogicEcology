@@ -99,3 +99,27 @@ double tolerancia_fisica(double numsigma)
 {
 	return exp(-numsigma*numsigma/2.0);
 }*/
+const unsigned long long KB = 1024;
+const unsigned long long MB = KB*1024;
+const unsigned long long GB = MB*1024;
+
+#if defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))
+#include <unistd.h>
+
+inline unsigned long long getTotalSystemMemory()
+{
+    unsigned long long  pages = sysconf(_SC_PHYS_PAGES);
+    unsigned long long  page_size = sysconf(_SC_PAGE_SIZE);
+    return pages * page_size;
+}
+#else 
+#include <windows.h>
+
+inline unsigned long long getTotalSystemMemory()
+{
+    MEMORYSTATUSEX status;
+    status.dwLength = sizeof(status);
+    GlobalMemoryStatusEx(&status);
+    return status.ullTotalPhys;
+}
+#endif

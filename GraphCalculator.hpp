@@ -30,6 +30,34 @@ public:
 		}
 			
 		E = Normalized(UinKm);
+		
+		auto numspecies = E.size();
+		
+        size_t memoryPerColumn = numspecies*sizeof(double)  + 36; //36 is just a number I came up with. Not based on reality or anything really.
+        
+        size_t numberOfColumns = grid*grid;
+        
+        size_t memoryNeeded = numberOfColumns*memoryPerColumn;
+        
+        size_t memoryAvailable = getTotalSystemMemory();
+        
+        if (memoryAvailable < 2*GB)
+        {
+            throw "Not enough memory to run this program!";
+        }
+		
+		memoryAvailable -= 1*GB; // Leave at least 1 GB for the OS
+		
+		num_cols_per_block = memoryAvailable/memoryPerColumn;
+		num_blocks = (grid*grid)/num_cols_per_block  + 1; //adjust later
+		
+		
+		cout << "Memory needed: " << double(memoryNeeded)/GB << "GB" << endl;
+        cout << "Available memory: " << double(memoryAvailable)/GB << "GB" << endl;
+        cout << "So I need " << num_blocks << " blocks" << endl;
+		cout << "Each of size " << num_cols_per_block << endl;
+        cout << "Each consumes " << double(num_cols_per_block*memoryPerColumn)/GB << "GB" << endl; 
+        cout << "Except perhaps the last one, which will be of size " << (grid*grid)%num_blocks << endl;
 	}
 	
 	Matrix CalculateGraph();
@@ -54,6 +82,10 @@ private:
 	Point F;
 
 	vector<vector<Point>> E;
+	
+	size_t num_cols_per_block;
+	size_t num_blocks;
+	
 };
 
 

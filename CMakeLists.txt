@@ -13,8 +13,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/centro_build_graph.sh ${CMAKE_CURRENT
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/analyze_graph.sage ${CMAKE_CURRENT_BINARY_DIR}/analyze_graph.sage COPYONLY)
 
-add_subdirectory(Graph)
-include_directories(Graph)
+# add_subdirectory(Graph)
+# include_directories(Graph)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules")
 message("Cmake modules in " ${CMAKE_MODULE_PATH})
@@ -24,6 +24,12 @@ find_package(NVVM)
 find_package(OpenCL)
 # find_package(Eigen3)
 find_package(BLAZE)
+find_package(OpenMP)
+if (OPENMP_FOUND)
+	set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+	add_definitions(-DUSE_OPENMP)
+endif()
 
 find_package(Boost COMPONENTS program_options REQUIRED)
 
@@ -33,8 +39,6 @@ set(EXTRA_LIBS ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 message("Extra libs: " ${EXTRA_LIBS})
 
 if (BLAZE_FOUND)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopenmp")
 	message("Blaze Library found at " ${BLAZE_INCLUDE_DIR})
 	include_directories(${BLAZE_INCLUDE_DIR})
 elseif (EIGEN3_FOUND)
@@ -68,4 +72,4 @@ endif()
 
 add_executable(fuzzylogic ${MYSOURCES})
 
-target_link_libraries(fuzzylogic graph ${EXTRA_LIBS})
+target_link_libraries(fuzzylogic ${EXTRA_LIBS})

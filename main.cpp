@@ -6,23 +6,25 @@
 // using namespace boost;
 namespace po = boost::program_options;
 
+#include "Utility.hpp"
 #include "Point.hpp"
 #include "TimeHelpers.hpp"
 #include "ReadFile.hpp"
 #include "Mu.hpp"
 #include "GraphCalculator.hpp"
-#include "DiGraph.hpp"
 #include "argumentparser.hpp"
+#include "edge.hpp"
 
 int main(int argc, char* argv[])
 {
+	
+    cout << setprecision(3) << std::fixed;
+	cout << "Total memory: " << double(getTotalSystemMemory())/GB << "GB" << endl;
+    srand(time(NULL));
+// 	return 0;
 	try
 	{
 		Chronometer chrono;
-		srand(time(NULL));
-
-		cout << setprecision(3) << std::fixed;
-		
 		ArgumentParser AP(argc,argv);
 		
 		if (AP.should_exit)
@@ -36,12 +38,15 @@ int main(int argc, char* argv[])
 		vector< SpeciesRegisters > V(SpeciesMap.begin(), SpeciesMap.end());
 		sort(V.begin(), V.end(), [](const auto & L, const auto & R)
 		{
+			//Decreasing order by number of data points
 			return L.second.size() > R.second.size();
 		});
 		
+		int num = 0;
 		for (const auto& v : V)
 		{
-			cout << "# " << v.first << " has " << v.second.size() << " observations \n";
+			cout << "# "  << num << ' ' << v.first << " has " << v.second.size() << " observations \n";
+            ++num;
 		}
 
 		vector<vector<Point>> Points;
@@ -54,7 +59,7 @@ int main(int argc, char* argv[])
 			Points.emplace_back(v.second);
 			names.emplace_back(v.first);
 		}
-
+		
 		GraphCalculator GC(AP.grid, AP.visibility, Points);
 
 		Matrix M = GC.CalculateGraph();
@@ -63,19 +68,17 @@ int main(int argc, char* argv[])
 		cout << "Calculating the matrix took " << chrono.Peek() << endl;
 		cout  << endl << "------------------------------" << endl << endl;
 
-		DiGraph D = DiGraph::FromAdjacencyMatrix(M,0.0001);
-		D.set_names(names);
+		auto edges = FromAdjacencyMatrix(M);
 
-		auto edges = D.edges();
 
 		sort(edges.begin(), edges.end(), [](const Edge & a, const Edge & b)
 		{
-			return a.weight() < b.weight();
+			return a.weight < b.weight;
 		});
 				
 		for (const auto& e : edges)
 		{
-			cout << '\"' << D.get_name(e.from) << "\" ---> \"" << D.get_name(e.to)  << '\"' << " with weight " << e.weight() << endl;
+			cout << '\"' << names[e.from] << "\" ---> \"" << names[e.to]  << '\"' << " with weight " << e.weight << endl;
 		}
 		
 		if (AP.outfile != "")
@@ -84,7 +87,7 @@ int main(int argc, char* argv[])
 			out << "G = DiGraph()\n";
 			for (auto e : edges)
 			{
-				out << "G.add_edge(\"" << D.get_name(e.from) << "\",\"" << D.get_name(e.to)  << '\"' << "," << e.weight() << ")\n";
+				out << "G.add_edge(\"" << names[e.from] << "\",\"" << names[e.to]  << '\"' << "," << e.weight << ")\n";
 			}
 		}
 
