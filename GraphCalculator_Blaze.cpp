@@ -51,6 +51,7 @@ void Realize(MatrixXd& A, const vector<Point>& P, long row, long N, double Cmx, 
 
 Matrix GraphCalculator::CalculateGraph()
 {
+	cout << "Using: " << blaze::getNumThreads() << " threads" << endl;
 	blaze::setNumThreads( blaze::getNumThreads() );
 	Chronometer T;
 	size_t numspecies = E.size();
