@@ -58,9 +58,10 @@ Matrix GraphCalculator::CalculateGraph()
 	MatrixXd M(numspecies,numspecies,0.0);
 	
 	
+	MatrixXd A(numspecies,num_cols_per_block,-1.0);
 	for (size_t block = 0; block < num_full_blocks; ++block)
 	{
-		MatrixXd A(numspecies,num_cols_per_block,-1.0);
+		A = -1.0;
 		#pragma omp parallel for
 		for (size_t species = 0; species < numspecies; ++species)
 		{
