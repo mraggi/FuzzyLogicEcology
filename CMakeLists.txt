@@ -18,13 +18,20 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/analyze_graph.sage ${CMAKE_CURRENT_BI
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules")
 message("Cmake modules in " ${CMAKE_MODULE_PATH})
+
+find_package(Boost COMPONENTS program_options REQUIRED)
+find_package(BLAZE REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${BLAZE_INCLUDE_DIR})
+set(EXTRA_LIBS ${Boost_LIBRARIES}  ${CMAKE_THREAD_LIBS_INIT}) 
+message("Blaze Library found at " ${BLAZE_INCLUDE_DIR})
+
+
+#################### Optional dependencies
 find_package(ArrayFire)
 find_package(CUDA) 
 find_package(NVVM)
-# find_package(OpenCL)
-# find_package(Eigen3)
-find_package(BLAZE REQUIRED)
-find_package(Eigen3)
+find_package(OpenCL)
 
 find_package(OpenMP)
 if (OPENMP_FOUND) 
@@ -34,43 +41,25 @@ if (OPENMP_FOUND)
 	add_definitions(-DUSE_OPENMP)
 endif()
 
-find_package(Boost COMPONENTS program_options REQUIRED)
-
-include_directories(${Boost_INCLUDE_DIRS})
-
-if (EIGEN3_FOUND)
-	include_directories(${EIGEN3_INCLUDE_DIR})
-	message("Eigen Library found at " ${EIGEN3_INCLUDE_DIR})
-	add_definitions(-DUSE_EIGEN)
-elseif (BLAZE_FOUND)
-	include_directories(${BLAZE_INCLUDE_DIR})
-	message("Blaze Library found at " ${BLAZE_INCLUDE_DIR})
-	add_definitions(-DUSE_BLAZE)
-endif()
-
-set(EXTRA_LIBS ${Boost_LIBRARIES}  ${CMAKE_THREAD_LIBS_INIT}) 
-
-if(ArrayFire_OpenCL_FOUND)
+if(ArrayFire_CUDA_FOUND)
 	include_directories(${ArrayFire_INCLUDE_DIRS})
-	message("arrayfire OpenCL found at "  ${ArrayFire_INCLUDE_DIRS})
+	message("ArrayFire CUDA found at " ${ArrayFire_INCLUDE_DIRS})
+	add_definitions(-DUSE_GPU)
+	set(EXTRA_LIBS ${EXTRA_LIBS} ${ArrayFire_CUDA_LIBRARIES} ${CUDA_LIBRARIES} ${NVVM_LIB})
+elseif(ArrayFire_OpenCL_FOUND)
+	include_directories(${ArrayFire_INCLUDE_DIRS})
 	add_definitions(-DUSE_GPU)
 	set(EXTRA_LIBS ${EXTRA_LIBS} ${ArrayFire_OpenCL_LIBRARIES} ${OpenCL_LIBRARIES})
+	message("ArrayFire OpenCL found at "  ${ArrayFire_INCLUDE_DIRS})
+else()
+	message("ArrayFire not found! You won't be using your GPU. Don't worry, it's probably fast enough as it is with only CPU.")
 endif()
+
 
 message("Extra libs: " ${EXTRA_LIBS})
 
 set(MYSOURCES main.cpp Point.cpp ReadFile.cpp argumentparser.cpp GraphCalculator_GPU.cpp)
 
-# if (BLAZE_FOUND)
-# 	set(MYSOURCES ${MYSOURCES} GraphCalculator_Blaze.cpp)		
-# elseif (EIGEN3_FOUND)
-# 	set(MYSOURCES ${MYSOURCES} GraphCalculator_Eigen.cpp)		
-# elseif (ArrayFire_CUDA_FOUND OR ArrayFire_OpenCL_FOUND)
-# 	set(MYSOURCES ${MYSOURCES} GraphCalculator_GPU.cpp)
-# else()
-# 	set(MYSOURCES ${MYSOURCES} Mu.cpp GraphCalculator.cpp)
-# endif()
-
 add_executable(fuzzylogic ${MYSOURCES})
 
-# target_link_libraries(fuzzylogic ${EXTRA_LIBS} afcuda)
+target_link_libraries(fuzzylogic ${EXTRA_LIBS})
