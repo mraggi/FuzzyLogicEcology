@@ -85,11 +85,15 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	if (!vm.count("memory"))
 	{
 		cout << "Memory option not set. Attempting to use all system memory" << endl;
+#ifdef USE_GPU
+		memoryAvailable = 1*GB;
+#else
 		memoryAvailable = getTotalSystemMemory();
         
 		memoryAvailable -= 1*GB; // Leave at least 1 GB for the OS
 		memoryAvailable *= 0.9; // Don't use more than 90% of memory!
 		memoryAvailable = max(memoryAvailable,long(20L*MB)); // at least use 20MB
+#endif
 	} else
 	{
 		size_t units = 1;

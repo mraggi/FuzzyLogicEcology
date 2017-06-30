@@ -1,6 +1,10 @@
 #include <iomanip>
 #include "GraphCalculator.hpp"
 
+#ifdef USE_GPU
+	#include <arrayfire.h>
+#endif
+
 GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const vector<vector<Point>>& U, size_t memoryAvailable) : grid(_grid)
 {
 	double sigma = VisibilityRangeInKm;
@@ -130,14 +134,18 @@ void UpdateArea(vector<double>& Area, const MatrixXd& A, size_t species)
 
 Matrix GraphCalculator::CalculateGraph()
 {
-	
 	Chronometer T;
 	size_t numspecies = E.size();
 	vector<double> Area(numspecies,0.0);
 	
-	MatrixXd M(numspecies,numspecies,0.0);
 	MatrixXd A(numspecies,num_cols_per_block);
 	
+#ifdef USE_GPU
+// 	af::array AA(A.rows(), A.columns(),f64);
+	af::array M(numspecies,numspecies);
+#else
+	MatrixXd M(numspecies,numspecies,0.0);
+#endif
 	
 	for (size_t block = 0; block < num_full_blocks; ++block)
 	{
@@ -151,8 +159,12 @@ Matrix GraphCalculator::CalculateGraph()
 			UpdateArea(Area,A,species);
 		}
 		cout << "\t Block " << block+1 << " took " << C.Reset() << " to realize." << endl;
+#ifdef USE_GPU
+		af::array AA(A.rows(), A.columns(), A.data());
+		M += af::matmulNT(AA,AA);
+#else
 		M += blaze::declsym( A * blaze::trans(A) );
-		
+#endif
 		cout << "\t And " << C.Reset() << "s to multiply the matrices." << endl;
         double time = T.Peek();
 		cout << "Done with block " << block+1 << " of " << num_full_blocks+num_partial_blocks 
@@ -169,11 +181,21 @@ Matrix GraphCalculator::CalculateGraph()
 			UpdateArea(Area,A,species);
 		}
 		
+#ifdef USE_GPU
+		af::array AA(A.rows(), A.columns(), A.data());
+		M += af::matmulNT(AA,AA);
+#else
 		M += blaze::declsym( A * blaze::trans(A) );
+#endif
+		
 		cout << "Done with block " << num_full_blocks+1 << " of " << num_full_blocks+num_partial_blocks << '!' << endl; 
 	}
 	
 	cout << "Total Time taken: " << T.Reset() << endl;
+	
+#ifdef USE_GPU
+	double* MM = M.host<double>();
+#endif
 	
 	Matrix R(numspecies,Row(numspecies));
 	for (size_t x = 0; x < numspecies; ++x)
@@ -185,11 +207,19 @@ Matrix GraphCalculator::CalculateGraph()
 		for (size_t y = 0; y < numspecies; ++y)
 		{
 			if (Area[x] > tolerance)
+#ifdef USE_GPU
+				int index = x*grid + y;
+				R[x][y] = MM[index]/Area[x];
+#else
 				R[x][y] = M(x,y)/Area[x];
+#endif
 			else
-				R[x][y] = M(x,y);
+				R[x][y] = 0.0;
 		}
 	}
+#ifdef USE_GPU
+	af::freeHost(MM);
+#endif
 	
 	return R;
 }

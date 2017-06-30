@@ -23,42 +23,63 @@ find_package(Boost COMPONENTS program_options REQUIRED)
 find_package(BLAZE REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${BLAZE_INCLUDE_DIR})
-set(EXTRA_LIBS ${Boost_LIBRARIES}  ${CMAKE_THREAD_LIBS_INIT}) 
+
+set(EXTRA_LIBS  ${Boost_LIBRARIES}  
+				${CMAKE_THREAD_LIBS_INIT})
+				
 message("Blaze Library found at " ${BLAZE_INCLUDE_DIR})
 
 
 #################### Optional dependencies
-find_package(ArrayFire)
-find_package(CUDA) 
-find_package(NVVM)
-find_package(OpenCL)
-
-find_package(OpenMP)
-if (OPENMP_FOUND) 
-	message("Open MP Found!")
-	set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-	add_definitions(-DUSE_OPENMP)
+OPTION(BUILD_USING_MP "Build Using OpenMP for parallelism" ON)
+if (${BUILD_USING_MP})
+	find_package(OpenMP QUIET)
+	if (OPENMP_FOUND) 
+		message("Open MP Found!")
+		set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+		set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+		add_definitions(-DUSE_OPENMP)
+	else()
+		set(BUILD_USING_MP OFF)
+	endif()
 endif()
 
-if(ArrayFire_CUDA_FOUND)
+OPTION(BUILD_GPU "Build GPU version using arrayfire" ON)
+
+if (${BUILD_GPU})
+	find_package(ArrayFire)
+	find_package(CUDA) 
+	find_package(NVVM)
+	find_package(OpenCL)
+	if(ArrayFire_CUDA_FOUND)
 	include_directories(${ArrayFire_INCLUDE_DIRS})
-	message("ArrayFire CUDA found at " ${ArrayFire_INCLUDE_DIRS})
-	add_definitions(-DUSE_GPU)
-	set(EXTRA_LIBS ${EXTRA_LIBS} ${ArrayFire_CUDA_LIBRARIES} ${CUDA_LIBRARIES} ${NVVM_LIB})
-elseif(ArrayFire_OpenCL_FOUND)
-	include_directories(${ArrayFire_INCLUDE_DIRS})
-	add_definitions(-DUSE_GPU)
-	set(EXTRA_LIBS ${EXTRA_LIBS} ${ArrayFire_OpenCL_LIBRARIES} ${OpenCL_LIBRARIES})
-	message("ArrayFire OpenCL found at "  ${ArrayFire_INCLUDE_DIRS})
-else()
-	message("ArrayFire not found! You won't be using your GPU. Don't worry, it's probably fast enough as it is with only CPU.")
+		message("ArrayFire CUDA found at " ${ArrayFire_INCLUDE_DIRS})
+		add_definitions(-DUSE_GPU)
+		
+		set(EXTRA_LIBS  ${EXTRA_LIBS} 
+					    ${ArrayFire_CUDA_LIBRARIES} 
+					    ${CUDA_LIBRARIES} 
+					    ${NVVM_LIB})
+					   
+	elseif(ArrayFire_OpenCL_FOUND)
+		include_directories(${ArrayFire_INCLUDE_DIRS})
+		add_definitions(-DUSE_GPU)
+		
+		set(EXTRA_LIBS  ${EXTRA_LIBS} 
+						${ArrayFire_OpenCL_LIBRARIES} 
+						${OpenCL_LIBRARIES})
+						
+		message("ArrayFire OpenCL found at "  ${ArrayFire_INCLUDE_DIRS})
+	else()
+		message("ArrayFire not found! To use the GPU, you need to install ArrayFire. Falling back to CPU.")
+		set(BUILD_GPU OFF)
+	endif()
 endif()
 
 
 message("Extra libs: " ${EXTRA_LIBS})
 
-set(MYSOURCES main.cpp Point.cpp ReadFile.cpp argumentparser.cpp GraphCalculator_GPU.cpp)
+set(MYSOURCES main.cpp Point.cpp ReadFile.cpp argumentparser.cpp GraphCalculator.cpp)
 
 add_executable(fuzzylogic ${MYSOURCES})
 
