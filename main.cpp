@@ -1,9 +1,8 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <boost/program_options.hpp>
 
-// using namespace boost;
+#include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
 #include "Utility.hpp"
@@ -17,11 +16,9 @@ namespace po = boost::program_options;
 
 int main(int argc, char* argv[])
 {
-	
+	std::ios_base::sync_with_stdio(false);
     cout << setprecision(3) << std::fixed;
-	cout << "Total memory: " << double(getTotalSystemMemory())/GB << "GB" << endl;
     srand(time(NULL));
-// 	return 0;
 	try
 	{
 		Chronometer chrono;
@@ -62,10 +59,11 @@ int main(int argc, char* argv[])
 		
 		GraphCalculator GC(AP.grid, AP.visibility, Points, AP.memoryAvailable);
 
+		cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << endl;
 		Matrix M = GC.CalculateGraph();
-		cout << M << endl;
+// 		cout << M << endl;
 
-		cout << "Calculating the matrix took " << chrono.Peek() << endl;
+		cout << "Done Calculating Graph in " << chrono.Peek() << "s." << endl;
 		cout  << endl << "------------------------------" << endl << endl;
 
 		auto edges = FromAdjacencyMatrix(M);

@@ -84,15 +84,12 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	
 	if (!vm.count("memory"))
 	{
+		cout << "Memory option not set. Attempting to use all system memory" << endl;
 		memoryAvailable = getTotalSystemMemory();
         
-        if (memoryAvailable < 2*GB)
-        {
-            throw "Not enough memory to run this program!";
-        }
-		
-		memoryAvailable -= 2*GB; // Leave at least 2 GB for the OS
-		memoryAvailable *= 0.95; // Don't use more than 95% of memory!
+		memoryAvailable -= 1*GB; // Leave at least 1 GB for the OS
+		memoryAvailable *= 0.9; // Don't use more than 90% of memory!
+		memoryAvailable = max(memoryAvailable,long(20L*MB)); // at least use 20MB
 	} else
 	{
 		size_t units = 1;
@@ -115,11 +112,11 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 			}
 			try
 			{
-				memoryAvailable = stoll(val)*units;
+				memoryAvailable = stol(val)*units;
 			}
 			catch (std::exception& e)
 			{
-				cerr << "Memory is in an invalid format" << endl;
+				cerr << "Memory amount is in an invalid format. Use for example --memory=500MB" << endl;
 				throw e;
 			}
 			

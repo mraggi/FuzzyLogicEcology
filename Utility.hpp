@@ -87,7 +87,7 @@ using Row = vector<double>;
 using Matrix = vector<Row>;
 
 const double tolerance = 0.0000000153; //en el continuo original
-
+const double inf = 999999999999999.0;
 
 inline double MaxNonZeroDistance(double C)
 {

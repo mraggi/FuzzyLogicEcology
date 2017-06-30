@@ -16,5 +16,5 @@ struct ArgumentParser
 	std::string outfile { "" };
 	std::vector<int> NamedColumns {{1,2}};
 	bool should_exit { false };
-	size_t memoryAvailable{0};
+	long memoryAvailable{0};
 };
