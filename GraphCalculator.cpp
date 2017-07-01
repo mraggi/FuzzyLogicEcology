@@ -32,8 +32,11 @@ GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const
 void GraphCalculator::SetBlockSize(long memoryAvailable)
 {
 	cout << endl << "***************************** System Information *****************************" << endl;
+
+#ifdef USE_BLAZE
 	blaze::setNumThreads( blaze::getNumThreads() );
 	cout << "Using: " << blaze::getNumThreads() << " threads" << endl;
+#endif
 	
 	auto numspecies = E.size();
 	size_t memoryPerColumn = numspecies*sizeof(double)  + 24; //24 is just a number I came up with. Not based on reality or anything really. It's probably less, but whatever.
@@ -62,6 +65,19 @@ void GraphCalculator::SetBlockSize(long memoryAvailable)
 	cout << "******************************************************************\n" << endl;
 }
 
+inline long num_columns(const MatrixXd& A)
+{
+#ifdef USE_BLAZE
+	return A.columns();
+#else
+	return A.cols();
+#endif
+}
+
+inline long num_rows(const MatrixXd& A)
+{
+	return A.rows(); // it's the same in both libraries. Only here to be consistent with cols
+}
 void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 {
 	const vector<Point>& P = E[species];
@@ -90,7 +106,7 @@ void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 		if (mxX > minX)
 			minX = mxX;
 		
-		long MxX = (A.columns()+offset)/N + 1;
+		long MxX = (num_columns(A)+offset)/N + 1;
 		if (MxX < maxX)
 			maxX = MxX;
 		
@@ -105,7 +121,7 @@ void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 			if (myY > my)
 				my = myY;
 			
-			long MyY = A.columns()+offset-x*N;
+			long MyY = num_columns(A)+offset-x*N;
 			if (MyY < My)
 				My = MyY;
 			
@@ -115,25 +131,43 @@ void GraphCalculator::Realize(MatrixXd& A, long species, long block)
                 
 				double XX = (p.x-x)*(p.x-x);
 				double YY = (p.y-y)*(p.y-y);
-				
+#ifdef FUZZY_MIN
+				A(species,index) = max(double(A(species,index)),exp(-Cmx*XX - Cmy*YY));
+#else
 				A(species,index) *= (1.0-exp(-Cmx*XX - Cmy*YY));
+#endif
 			}
 		}
 	}
 	
-	for (size_t col = 0; col < A.columns(); ++col)
+#ifndef FUZZY_MIN
+	for (size_t col = 0; col < num_columns(A); ++col)
 		A(species,col) += 1.0;
+#endif
 }
 
 inline
 void UpdateArea(vector<double>& Area, const MatrixXd& A, size_t species)
 {
-	for (size_t col = 0; col < A.columns(); ++col)
+	for (size_t col = 0; col < num_columns(A); ++col)
+	{
+#ifdef FUZZY_MIN
+		Area[species] += A(species,col);
+#else		
+// 		Area(species) += A(species,col);
 		Area[species] += A(species,col)*A(species,col);
+#endif 
+	}
 }
 
 Matrix GraphCalculator::CalculateGraph()
 {
+#ifdef FUZZY_MIN
+	scalar_min_t startvalue = 0.0;
+#else
+	double startvalue = -1.0;
+#endif
+	
 	Chronometer T;
 	size_t numspecies = E.size();
 	vector<double> Area(numspecies,0.0);
@@ -141,17 +175,25 @@ Matrix GraphCalculator::CalculateGraph()
 	MatrixXd A(numspecies,num_cols_per_block);
 	
 #ifdef USE_GPU
-// 	af::array AA(A.rows(), A.columns(),f64);
+// 	af::array AA(A.rows(), num_columns(A),f64);
 	af::array M(numspecies,numspecies);
 #else
-	MatrixXd M(numspecies,numspecies,0.0);
+	MatrixXd M(numspecies,numspecies);
 #endif
 	
-	for (size_t block = 0; block < num_full_blocks; ++block)
+	for (size_t block = 0; block < num_full_blocks + num_partial_blocks; ++block)
 	{
 		Chronometer C;
 		cout << endl << "Starting block " << block+1 << endl;
+		if (block == num_full_blocks)
+			A.resize(numspecies,num_cols_partial_block);
+		
+#ifdef USE_BLAZE
 		A = -1.0;
+#else
+		A = MatrixXd::Constant(A.rows(), A.cols(), startvalue);
+#endif
+		cout << "\tTook " << C.Reset() << "s to initialize matrix to -1" << endl;
 		#pragma omp parallel for
 		for (size_t species = 0; species < numspecies; ++species)
 		{
@@ -160,39 +202,31 @@ Matrix GraphCalculator::CalculateGraph()
 		}
 		cout << "\t Block " << block+1 << " took " << C.Reset() << " to realize." << endl;
 #ifdef USE_GPU
-		af::array AA(A.rows(), A.columns(), A.data());
+		af::array AA(num_rows(A), num_columns(A), A.data());
 		M += af::matmulNT(AA,AA);
 #else
+	#if USE_BLAZE
 		M += blaze::declsym( A * blaze::trans(A) );
+	#else
+		M += A*A.transpose();
+	#endif
 #endif
 		cout << "\t And " << C.Reset() << "s to multiply the matrices." << endl;
         double time = T.Peek();
 		cout << "Done with block " << block+1 << " of " << num_full_blocks+num_partial_blocks 
              << ". Expected remaining time: " << time*double(num_full_blocks+num_partial_blocks)/(block+1) - time << 's' << endl; 
 	}
-	A.resize(numspecies,num_cols_partial_block,false);
-	if (num_partial_blocks)
-	{
-		A = -1.0;
-		#pragma omp parallel for 
-		for (size_t species = 0; species < numspecies; ++species)
-		{
-			Realize(A,species,num_full_blocks);
-			UpdateArea(Area,A,species);
-		}
-		
-#ifdef USE_GPU
-		af::array AA(A.rows(), A.columns(), A.data());
-		M += af::matmulNT(AA,AA);
-#else
-		M += blaze::declsym( A * blaze::trans(A) );
-#endif
-		
-		cout << "Done with block " << num_full_blocks+1 << " of " << num_full_blocks+num_partial_blocks << '!' << endl; 
-	}
 	
 	cout << "Total Time taken: " << T.Reset() << endl;
 	
+
+	return DivideByArea(M,Area);
+}
+
+template<class Mat>
+Matrix GraphCalculator::DivideByArea(const Mat& M, const vector<double>& Area) const
+{
+	auto numspecies = Area.size();
 #ifdef USE_GPU
 	double* MM = M.host<double>();
 #endif
@@ -207,20 +241,23 @@ Matrix GraphCalculator::CalculateGraph()
 		for (size_t y = 0; y < numspecies; ++y)
 		{
 			if (Area[x] > tolerance)
+			{
 #ifdef USE_GPU
 				int index = x*grid + y;
 				R[x][y] = MM[index]/Area[x];
 #else
 				R[x][y] = M(x,y)/Area[x];
 #endif
+			}
 			else
+			{
 				R[x][y] = 0.0;
+			}
 		}
 	}
 #ifdef USE_GPU
 	af::freeHost(MM);
 #endif
-	
 	return R;
 }
 

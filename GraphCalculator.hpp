@@ -6,9 +6,18 @@
 #include "scalar_min.hpp"
 
 // Blaze stuff
-#include <blaze/Blaze.h>
-#include <blaze/config/BLAS.h>
-using MatrixXd = blaze::DynamicMatrix<double>;
+#ifdef USE_BLAZE
+	#include <blaze/config/BLAS.h>
+	#include <blaze/Blaze.h>
+	using MatrixXd = blaze::DynamicMatrix<double>;
+#else
+	#include <eigen3/Eigen/Dense>
+	#ifdef FUZZY_MIN
+		using MatrixXd = Eigen::Matrix<scalar_min_t,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor>;
+	#else
+		using MatrixXd = Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor>;
+	#endif
+#endif
 // using MatrixXd = blaze::DynamicMatrix<scalar_min_t>;
 
 //End blaze stuff
@@ -25,7 +34,8 @@ private: //functions
 	void Realize(MatrixXd& A, long row, long block);
 	void Normalize(vector<vector<Point>>& U);
 	void SetBlockSize(long memoryAvailable);
-	
+	template<class Mat>
+	Matrix DivideByArea(const Mat& M, const vector<double>& Area) const;
 private: // variables
 	size_t grid;
 	double Cx; //in continuum

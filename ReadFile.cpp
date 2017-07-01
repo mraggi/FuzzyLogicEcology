@@ -3,60 +3,37 @@
 #include <istream>
 #include <sstream>
 #include <locale>
-// Input Format:
 
-// First line: the number of species n
-
-// After that, every species is defined as:
-// 		string: name of species
-// 		int: # of points m_i in the species i,
-//		(m_i lines, each with two space separated doubles: ) containing x and y coords
-
-vector<Point> ReadPointsFromSTDin(size_t n)
-{
-	vector<Point> P(n);
-
-	for (auto& p : P)
-	{
-		cin >> p.x >> p.y;
-	}
-
-	return P;
-}
-
-vector<vector<string>> ReadTableFromSTDIN(const string& filename)
+vector<vector<string>> ReadTable(istream& is)
 {
 	vector<vector<string>> R;
 	string line;
-	ifstream myfile(filename);
+	
 
-	if (myfile.is_open())
+	int i = 0;
+	while (getline(is, line))
 	{
-		int i = 0;
-		while (getline(myfile, line))
-		{
-			std::istringstream iss(line);
+		std::istringstream iss(line);
 // 			cout << "line = " << line << endl;
-			R.push_back({});
-			do
+		R.push_back({});
+		do
+		{
+			string sub;
+			iss >> sub;
+			if (!sub.empty())
 			{
-				string sub;
-				iss >> sub;
-				if (!sub.empty())
-				{
-					R[i].push_back(sub);
+				R[i].emplace_back(sub);
 // 					cout << "Substring: |" << sub << "| of length " << sub.size() << std::endl;
-				}
-			} while (iss);
-// 			if (R[i].size() != 8)
-// 				cout << "Line \"" << line << "\" lenght: " << R[i].size() << endl;
-			++i;
+			}
+		} while (iss);
+		if (i > 0 && R[i].size() != R[i-1].size())
+		{
+			cerr << "Error in file: Some lines have a different number of space-separated inputs" << endl;
+			cerr << "Error in line: " <<i << ":\n" << R[i] << "\n(which has " << R[i].size() << " inputs instead of " << R[i].size() << ")" << endl;
+			throw;
 		}
-
-		myfile.close();
+		++i;
 	}
-	else
-		cerr << "Unable to open file";
 	
 	return R;
 	
@@ -162,10 +139,16 @@ unordered_map<string,vector<Point>> ExtractLocations(const vector<vector<string>
 			name += ' ';
 		}
 		name.pop_back();
-		double x = stod(U[i][latitude]);
-		double y = stod(U[i][longitude]);
-		
-		R[name].emplace_back(x,y);
+		try
+		{
+			double x = stod(U[i][latitude]);
+			double y = stod(U[i][longitude]);
+			R[name].emplace_back(x,y);
+
+		} catch(...)
+		{
+			cerr << "Error: number not in a correct format: " << U[i][longitude] << ' ' << U[i][latitude] << endl;
+		}
 	}
 	
 	

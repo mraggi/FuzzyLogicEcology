@@ -27,25 +27,27 @@ int main(int argc, char* argv[])
 		if (AP.should_exit)
 			return 0;
 		
-		auto Table = ReadTableFromSTDIN(AP.filename);
+		auto Table = ReadTable(*AP.is);
 		auto SpeciesMap = ExtractLocations(Table,AP.NamedColumns,AP.latitude,AP.longitude);
 		int numspecies = SpeciesMap.size();
 
 		using SpeciesRegisters = pair<string, vector<Point>>;
 		vector< SpeciesRegisters > V(SpeciesMap.begin(), SpeciesMap.end());
-		sort(V.begin(), V.end(), [](const auto & L, const auto & R)
-		{
-			//Decreasing order by number of data points
-			return L.second.size() > R.second.size();
-		});
+// 		sort(V.begin(), V.end(), [](const auto & L, const auto & R)
+// 		{
+// 			//Decreasing order by number of data points
+// 			return L.second.size() > R.second.size();
+// 		});
 		
+		cout << endl << "********************* Species Found *******************" << endl;
 		int num = 0;
 		for (const auto& v : V)
 		{
 			cout << "# "  << num << ' ' << v.first << " has " << v.second.size() << " observations \n";
             ++num;
 		}
-
+		cout << "***********************************************" << endl;
+		
 		vector<vector<Point>> Points;
 		vector<string> names;
 		Points.reserve(numspecies);
@@ -61,7 +63,7 @@ int main(int argc, char* argv[])
 
 		cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << endl;
 		Matrix M = GC.CalculateGraph();
-// 		cout << M << endl;
+		cout << M << endl;
 
 		cout << "Done Calculating Graph in " << chrono.Peek() << "s." << endl;
 		cout  << endl << "------------------------------" << endl << endl;

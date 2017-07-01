@@ -29,11 +29,11 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	("memory,m", po::value<string>(), "Maximum amount of memory in bytes to use. Leave blank or at 0 to autodetect. Can use KB, MB, GB")
 	("latitude,x", po::value<int>(&latitude)->default_value(value_not_set), "latitude")
 	("longitude,y", po::value<int>(&longitude)->default_value(value_not_set), "longitude")
-	("grid,g", po::value<int>(&grid)->default_value(grid), "grid size")
+	("grid,g", po::value<int>(&grid)->default_value(grid), "grid size (The larger grid is, the more accurate the calculations will be, but it's also slower.)")
 	("visibility,v", po::value<double>(&visibility)->default_value(visibility), "visibility in km")
 	("namecolumns,I", po::value< vector<int> >(), "name columns")
-	("input-file,i", po::value< vector<string> >(), "input file")
-	("output-file,o", po::value< string >(), "sage output file with graph description.")		
+	("input-file,i", po::value< vector<string> >(), "input file. If left blank, the program will read from STDIN")
+	("output-file,o", po::value< string >(), "sage output file.")	
 	;
 
 	po::positional_options_description p;
@@ -57,7 +57,10 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 
 	if (vm.count("input-file"))
 	{
-		cout << "Input file is: " << vm["input-file"].as< vector<string> >() << '\n';
+		string filename = vm["input-file"].as< vector<string> >()[0];
+		cout << "Input file is: " << filename << '\n';
+		file.open(filename);
+		is = &file;
 	}
 	
 	if (vm.count("output-file"))
@@ -68,11 +71,6 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	if (vm.count("namecolumns"))
 	{
 		NamedColumns = vm["namecolumns"].as< vector<int> >();
-	}
-	
-	if (vm.count("input-file"))
-	{
-		filename = vm["input-file"].as< vector<string> >()[0];
 	}
 	
 	// If there is an output file, do this

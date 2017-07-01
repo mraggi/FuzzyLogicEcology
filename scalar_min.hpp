@@ -35,7 +35,8 @@ inline bool operator>=(const scalar_min_t& x, const scalar_min_t& y)
 
 inline scalar_min_t operator*(const scalar_min_t& x, const scalar_min_t& y)
 {
-	return std::min(x,y);
+// 	return std::min(x,y);
+	return 1;
 }
 
 inline scalar_min_t operator+(const scalar_min_t& x, const scalar_min_t& y)
