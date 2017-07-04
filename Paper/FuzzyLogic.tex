@@ -294,53 +294,59 @@ This project was supported by PAPIIT IA106316.
 \bibliographystyle{myamsalpha}
 \bibliography{references}
 
+
 \appendix
 \section{On the mathematical expression of the area distribution}
-We consider a species $A$ and denote by $N$ the number of its individuals; then the expression (\ref{mu}) reads:
+In this appendix we provide an analytic expression of the integral of the (product of the) membership functions in an ideal case, namely where the integral is extended over ${\mathbb R}^2$. Although this is unrealistic because the species are distributed on the surface of the Earth, we consider such an idealisation justified by the exponential decay of the functions $f_P$ defined above.
+
+Given a species $A$, we denote by $N_A$ the number of its individuals; then the expression (\ref{mu}) reads:
 \begin{equation}
-\mu_A = \sum_{i=1}^N f_{i} - \sum_{i \neq j} f_{i} f_{j} + \sum_{i \neq j \neq k,  i \neq k } f_{i} f_{j} f_{k} + \cdots + (-1)^{N-1} \prod_{i=1}^Nf_i,
+\mu_A = \sum_{i=1}^{N_A} f_{i} - \sum_{i \neq j} f_{i} f_{j} + \sum_{i \neq j \neq k,  i \neq k } f_{i} f_{j} f_{k} + \cdots + (-1)^{N_A-1} \prod_{i=1}^{N_A} f_i,
 \end{equation}
 or, in more compact notation,
 \begin{equation}
-\mu_A = \sum_{n=1}^N (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^N f_{i_1} \cdots f_{i_n}.
+\mu_A = \sum_{n=1}^{N_A} (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^{N_A} f_{i_1} \cdots f_{i_n}.
 \end{equation}
 Now we compute the integral of $\mu_A$ over all of space, i.e. over ${\mathbb R}^2$:
 \begin{align}
-&\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A(x,y) \nonumber\\
-&=  \sum_{i=1}^N \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) - \sum_{i \neq j} \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) f_{j}(x,y)  \nonumber\\
-& + \sum_{i \neq j \neq k,  i \neq k } \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) f_{j}(x,y) f_{k}(x,y) + \cdots + (-1)^{N-1} \int_{{\mathbb R}^2} \xd x \, \xd y \,\prod_{i=1}^Nf_i(x,y), \nonumber\\
-&= \sum_{n=1}^N (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^N
-\int_{{\mathbb R}^2} \xd x \, \xd y \,  f_{i_1} (x,y)\cdots f_{i_n} (x,y).
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A(x,y)
+% \nonumber\\
+%&=  \sum_{i=1}^{N_A} \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) - \sum_{i \neq j} \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) f_{j}(x,y)  \nonumber\\
+%& + \sum_{i \neq j \neq k,  i \neq k } \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) f_{j}(x,y) f_{k}(x,y) + \cdots + (-1)^{N_A-1} \int_{{\mathbb R}^2} \xd x \, \xd y \,\prod_{i=1}^{N_A} f_i(x,y), \nonumber\\
+%&
+= \sum_{n=1}^{N_A} (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^{N_A} \int_{{\mathbb R}^2} \xd x \, \xd y \,  f_{i_1} (x,y)\cdots f_{i_n} (x,y).
 \end{align}
-Notice that if the $f_i$ are Gaussian distributions, then the first integral in the r.h.s. of the second line of the above expression results to be
+Notice that the $f_i$ are Gaussian distributions, then the first integral in the r.h.s. of the second line of the above expression results to be
 \begin{equation}
 \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) = \frac{\pi}{C}.
 \end{equation}
-
-We consider the integral of the product of $n$ Gaussians:
+We consider the integral of the product of $n$ Gaussian distributions:
 \begin{align}
 \int_{{\mathbb R}^2} \xd x \, \xd y \,  f_{i_1} (x,y)\cdots f_{i_n} (x,y) = \int_{{\mathbb R}^2} \xd x \, \xd y \,  \exp \left[ -C \sum_{\alpha=1}^n \left( (x-x_{i_{\alpha}})^2 + (y-y_{i_{\alpha}})^2 \right) \right].
 \end{align}
 Notice that 
 \begin{equation}
-\sum_{\alpha=1}^n  (x-x_{i_{\alpha}})^2 = n x^2 -2x \underbrace{\sum_{\alpha=1}^n x_{i_{\alpha}} }_{X_{1,n}}+ \underbrace{\sum_{\alpha=1}^n x_{i_{\alpha}}^2}_{X_{2,n}}.
+\sum_{\alpha=1}^n  \left( (x-x_{i_{\alpha}})^2 +(y-y_{i_{\alpha}})^2 \right) = n (x^2+y^2) -2x  \sum_{\alpha=1}^n x_{i_{\alpha}} + \sum_{\alpha=1}^n x_{i_{\alpha}}^2 -2y \sum_{\alpha=1}^n y_{i_{\alpha}} + \sum_{\alpha=1}^n y_{i_{\alpha}}^2.
+% \underbrace{\sum_{\alpha=1}^n x_{i_{\alpha}} }_{X_{1,n}}+ \underbrace{\sum_{\alpha=1}^n x_{i_{\alpha}}^2}_{X_{2,n}} -2y \underbrace{\sum_{\alpha=1}^n y_{i_{\alpha}} }_{Y_{1,n}}+ \underbrace{\sum_{\alpha=1}^n y_{i_{\alpha}}^2}_{Y_{2,n}}.
 \end{equation}
-So, using the obvious notation,
+So, 
 \begin{align}
 &\int_{{\mathbb R}^2} \xd x \, \xd y \,  f_{i_1} (x,y)\cdots f_{i_n} (x,y) \nonumber\\
-&= \int_{{\mathbb R}^2} \xd x  \ \xd y \, \exp \left[ -Cn(x^2+y^2) +2C(X_{1,n} x +Y_{1,n}y) - C(X_{2,n}+Y_{2,n}) \right], \nonumber\\
-&= \frac{\pi}{nC} \exp \left[ \frac{C(X_{1,n}^2+Y_{1,n}^2)}{n}  - C(X_{2,n}+Y_{2,n})\right], \nonumber\\
+&= \int_{{\mathbb R}^2} \xd x  \ \xd y \, \exp \left[ -Cn(x^2+y^2) +2C \sum_{\alpha=1}^n \left( x_{i_{\alpha}} x +y_{i_{\alpha}} y \right) - C \sum_{\alpha=1}^n \left(x_{i_{\alpha}}^2 + y_{i_{\alpha}}^2 \right) \right], \nonumber\\
+%&= \frac{\pi}{nC} \exp \left[ \frac{C(X_{1,n}^2+Y_{1,n}^2)}{n}  - C(X_{2,n}+Y_{2,n})\right], \nonumber\\
 &= \frac{\pi}{nC} \exp \left[ \frac{C(\left( \sum_{\alpha=1}^n x_{i_{\alpha}}\right)^2+\left( \sum_{\alpha=1}^n y_{i_{\alpha}}\right)^2)}{n}  - C \sum_{\alpha=1}^n (x_{i_{\alpha}}^2+y_{i_{\alpha}}^2)\right], \nonumber\\
 &=  \frac{\pi}{nC} \exp \left[ - \frac{C}{n} \sum_{1=\alpha<\beta}^n \left((x_{i_\alpha}-x_{i_\beta})^2 + (y_{i_{\alpha}}-y_{i_{\beta}})^2 \right) \right], \nonumber\\
 &=  \frac{\pi}{nC} \exp \left[ - \frac{C}{n} \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 \right],
 \end{align}
 where $d_{i_{\alpha} i_{\beta}}$ is the (euclidean) distance between point $P_{i_{\alpha}} =(x_{i_{\alpha}} ,y_{i_{\alpha}} )$ and point $P_{i_{\beta}}=(x_{i_{\beta}},y_{i_{\beta}})$. Finally
-\begin{equation}
-\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A= \sum_{n=1}^N (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^N \frac{\pi}{nC} \exp \left[ - \frac{C}{n} \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 \right].
-\end{equation}
-Analogously we obtain the integral of the product of two membership functions
 \begin{align}
-\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B &=  \sum_{n=1}^{N_A} \sum_{\tilde{n}=1}^{N_B} (-1)^{n+\tilde{n}} \sum_{ 1=i_1< \cdots <i_n }^{N_A} \sum_{ 1=\tilde{i}_1< \cdots <\tilde{i}_n }^{N_B} \frac{\pi}{(n+\tilde{n})C}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A&= \sum_{n=1}^{N_A} (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^{N_A} \frac{\pi}{nC} \exp \left[ - \frac{C}{n} \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 \right], \\
+&= \frac{\pi}{C} \left[ N_A - \frac12  \sum_{ 1=i_1< i_2}^{N_A} \exp \left[- \frac{C}{2}  d_{i_{1} i_{2}}^2 \right] + \frac{1}{3}  \sum_{ 1=i_1< i_2 <i_3 }^{N_A}  \exp \left[ - \frac{C}{3} \sum_{1=\alpha < \beta}^3 d_{i_{\alpha} i_{\beta}}^2 \right] + \cdots
+\right].
+\end{align}
+Analogously we obtain the integral of the product of two membership functions of two species $A$ and $B$,
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B &=  \sum_{n=1}^{N_A} \sum_{\tilde{n}=1}^{N_B} (-1)^{n+\tilde{n}} \sum_{ 1=i_1< \cdots <i_n }^{N_A} \sum_{ 1=\tilde{i}_1< \cdots <\tilde{i}_{\tilde{n}} }^{N_B} \frac{\pi}{(n+\tilde{n})C}
  \nonumber\\
 & \exp \left[ - \frac{C}{n+\tilde{n}} \left( \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 + \sum_{1=\alpha < \beta}^{\tilde{n}} d_{\tilde{i}_{\alpha} \tilde{i}_{\beta}}^2 +
 % \right. \right. \nonumber\\
@@ -350,5 +356,84 @@ d_{i_{\alpha} \tilde{i}_{\tilde{\alpha}}}^2
 %\left[ (x_{i_{\alpha}} - x_{\tilde{i}_{\tilde{\alpha}}})^2 + (y_{i_{\alpha}} - y_{\tilde{i}_{\tilde{\alpha}}})^2\right]
 \right) \right].
 \end{align}
+
+\section{Toy models}
+\subsection{$N_A=1$, $N_B=1$}
+We have in this case (here and in the following we indicate the indices - including the numbers - relative to the species $B$ with a tilde),
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A = \int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_B =  \frac{\pi}{C}
+\end{align}
+and
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B =  \frac{\pi}{2C} e^{- \frac{C}{2}d^2_{1\tilde{1}}}.
+\end{align}
+being $d_{1\tilde{1}}$ the distance between the individuals of the species $A$ and $B$.
+
+\subsection{$N_A=2$, $N_B=1$}
+We denote with $a_1$ and $a_2$ the two individual of the species $A$ and with $b$ the one of species $B$.  Then, we have in this case
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A&= \sum_{n=1}^{2} (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^{2} \frac{\pi}{nC} \exp \left[ - \frac{C}{n} \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 \right], \\
+&= \frac{\pi}{C} \left[ 2 - \frac12  \sum_{ 1=i_1< i_2}^{2} \exp \left[- \frac{C}{2}  d_{i_{1} i_{2}}^2 \right]  \right], \\
+&= \frac{\pi}{C} \left[ 2 - \frac12  e^{- \frac{C}{2}  d_{{1} {2}}^2 } \right],
+\end{align}
+being $d_{12}$ the distance between $a_1$ and $a_2$, and
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A^2 &=  \sum_{n=1}^{2} \sum_{\tilde{n}=1}^{2} (-1)^{n+\tilde{n}} \sum_{ 1=i_1< \cdots <i_n }^{2} \sum_{ 1=\tilde{i}_1< \cdots <\tilde{i}_{\tilde{n}} }^{2} \frac{\pi}{(n+\tilde{n})C}
+ \nonumber\\
+& \exp \left[ - \frac{C}{n+\tilde{n}} \left( \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 + \sum_{1=\alpha < \beta}^{\tilde{n}} d_{\tilde{i}_{\alpha} \tilde{i}_{\beta}}^2 +
+\sum_{\alpha=1}^n \sum_{\tilde{\alpha}=1}^{\tilde{n}}  d_{i_{\alpha} \tilde{i}_{\tilde{\alpha}}}^2 \right) \right], \\
+&= \frac{\pi}{C} \left[ 1+e^{- \frac{C}{2}d^2_{12}} - \frac{4}{3} e^{- \frac{2C}{3} d^2_{1 2} } + \frac{1}{4} e^{- C d_{12}^2 }  \right].
+\end{align}
+Also
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B &=  \sum_{n=1}^{2} \sum_{\tilde{n}=1}^{1} (-1)^{n+\tilde{n}} \sum_{ 1=i_1< \cdots <i_n }^{2} \sum_{ 1=\tilde{i}_1< \cdots <\tilde{i}_{\tilde{n}} }^{1} \frac{\pi}{(n+\tilde{n})C}
+ \nonumber\\
+& \exp \left[ - \frac{C}{n+\tilde{n}} \left( \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 + \sum_{1=\alpha < \beta}^{\tilde{n}} d_{\tilde{i}_{\alpha} \tilde{i}_{\beta}}^2 +
+\sum_{\alpha=1}^n \sum_{\tilde{\alpha}=1}^{\tilde{n}}  d_{i_{\alpha} \tilde{i}_{\tilde{\alpha}}}^2 \right) \right], \\
+&=  \sum_{n=1}^{2}  (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^{2}  \frac{\pi}{(n+1)C}
+ \exp \left[ - \frac{C}{n+1} \left( \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 +
+\sum_{\alpha=1}^n  d_{i_{\alpha} {\tilde{1}}}^2 \right) \right], \\
+&= \frac{\pi}{C} \left[  \frac12 \sum_{ 1=i_1 }^{2} \exp \left( - \frac{C}{2} d_{i_1 \tilde{1}}^2 \right)  - \frac{1}{3} \exp \left( -\frac{C}{3} [d_{12}^2 + d_{1 \tilde{1}}^2 + d_{2 \tilde{1}}^2 ]\right)  \right], \\
+&= \frac{\pi}{C} \left[  \frac12  \exp \left( - \frac{C}{2} d_{1 \tilde{1}}^2 \right) + \frac12  \exp \left( - \frac{C}{2} d_{2 \tilde{1}}^2 \right)  - \frac{1}{3} \exp \left( -\frac{C}{3} [d_{12}^2 + d_{1 \tilde{1}}^2 + d_{2 \tilde{1}}^2 ]\right)  \right],  
+\end{align}
+where $d_{i_{\alpha} \tilde{1}}$ is the distance between $a_{\alpha}$ and $b$.
+
+\begin{itemize}
+	\item
+Suppose that $d_{1 \tilde{1}} \ll 1$, namely that $b$ is extremely close to $a_1$ (and consequently $d_{12} \simeq d_{2 \tilde{1}}$). In that case,
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B 
+= \frac{\pi}{C} \left[  \frac12  + \frac12  \exp \left( - \frac{C}{2} d_{12 }^2 \right)  - \frac{1}{3} \exp \left( -\frac{2C}{3} d_{12}^2 \right)  \right].
+\end{align}
+The weight $w_{AB}$ of the link $A \rightarrow B$ then results
+\begin{align}
+w_{AB} = \frac{\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B}{\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A^2} = \frac{ \frac12  + \frac12  e^{ - \frac{C}{2} d_{12 }^2 }  - \frac{1}{3} e^{-\frac{2C}{3} d_{12}^2 } }{ 1+e^{- \frac{C}{2}d^2_{12}} - \frac{4}{3} e^{- \frac{2C}{3} d^2_{1 2} } + \frac{1}{4} e^{- C d_{12}^2 } },% = \frac12 \frac{I}{I+G},
+\end{align}
+%where $I= 1+e^{- \frac{C}{2}d^2_{12}} - \frac{2}{3} e^{- \frac{2C}{3} d^2_{1 2} }$ and $G= - \frac{2}{3} e^{- \frac{2C}{3} d^2_{1 2} } + \frac{1}{4} e^{- C d_{12}^2 } $
+and we see that the maximum value for $w_{AB}$ is $\frac{2/3}{2/3+1/4} = \frac{8}{11}$ and the minimum value is $\frac12$. The weight $w_{BA}$ of the link $B \rightarrow A$ then results
+\begin{align}
+w_{BA} = \frac{\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B}{\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_B^2} = \frac{ \frac12  + \frac12  e^{ - \frac{C}{2} d_{12 }^2 }  - \frac{1}{3} e^{-\frac{2C}{3} d_{12}^2 } }{ \frac12 } = 1+e^{- \frac{C}{2}d^2_{12}} - \frac{2}{3} e^{- \frac{2C}{3} d^2_{1 2} },% = \frac12 \frac{I}{I+G},
+\end{align}
+with maximum value equal to 1 and minimum value equal to $\frac{4}{3}$.
+	
+	\item In the case that $b$ is equidistant from $a_1$ and $a_2$, i.e. $d_{1 \tilde{1}} = d_{2 \tilde{1}}$, we have
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B 
+= \frac{\pi}{C} \left[    \exp \left( - \frac{C}{2} d_{1\tilde{1} }^2 \right)  - \frac{1}{3} \exp \left( -\frac{C}{3} [d_{12}^2 + 2 d_{1 \tilde{1}}^2] \right)  \right].
+\end{align}
+The weights result to be given by
+\begin{align}
+w_{AB} = \frac{\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B}{\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A^2} = \frac{  e^{- \frac{C}{2} d_{1\tilde{1} }^2 }  - \frac{1}{3} e^{-\frac{C}{3} [d_{12}^2 + 2 d_{1 \tilde{1}}^2] }  }
+{ 1+e^{- \frac{C}{2}d^2_{12}} - \frac{4}{3} e^{- \frac{2C}{3} d^2_{1 2} } + \frac{1}{4} e^{- C d_{12}^2 } },% = \frac12 \frac{I}{I+G},
+\end{align}
+with minimum and maximum values respectively equal to 0 and $\frac{2/3}{11/12}=\frac{8}{11}$; and
+\begin{align}
+w_{BA} = \frac{\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B}{\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_B^2} = \frac12 e^{- \frac{C}{2} d_{1\tilde{1} }^2 }  - \frac{1}{6} e^{-\frac{C}{3} [d_{12}^2 + 2 d_{1 \tilde{1}}^2] },
+\end{align}
+with minimum and maximum values respectively equal to 0 and $\frac{1}{3}$.
+	
+\end{itemize}
+
+
 
 \end{document}

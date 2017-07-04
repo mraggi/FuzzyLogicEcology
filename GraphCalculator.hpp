@@ -6,13 +6,13 @@
 #include "scalar_min.hpp"
 
 // Blaze stuff
-#ifdef USE_BLAZE
+#if USE_BLAZE
 	#include <blaze/config/BLAS.h>
 	#include <blaze/Blaze.h>
 	using MatrixXd = blaze::DynamicMatrix<double>;
 #else
 	#include <eigen3/Eigen/Dense>
-	#ifdef FUZZY_MIN
+	#if FUZZY_MIN
 		using MatrixXd = Eigen::Matrix<scalar_min_t,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor>;
 	#else
 		using MatrixXd = Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor>;
