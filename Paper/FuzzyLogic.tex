@@ -262,6 +262,15 @@ Then, $MM^T$ is an $s\times s$ matrix whose $(i,j)$-th entry contains $\int \mu_
 
 Note also that the algorithms described here are highly parallelizable, since calculating the matrix associated with $\mu_A$ for one species does not rely on observations from any other species. Indeed, the provided software benefits considerably by using a computer with many cores. \tcr{paperize?}
 
+\subsection{Advantages and disadvantages of min over product}
+
+We gave two parallel ways to construct the distribution network: using products and using min. In this section we discuss the advantages and disadvantages of using each.
+
+The clearest disadvantage of using the product is that $A\cap A \neq A$. So the weighted edge $w_P(\cA \to \cA) \neq 1$. This sucks. In general, in our experimental data, the edge weights become quite small. A way to alleviate this is to consider
+	$$\widehat{w_P}(\cA \to \cB) := \left(\int_\Omega \mu_A\mu_B\right)\big/\left(\int_\Omega \mu_A^2\right)$$
+	
+This gives much better edge weights \tcr{paperize... justify?}, but has the disadvantage that an edge weight may be greater than 1. Using our experimental data. Since the edge weight $w(\cA \to \cB)$ is supposed to represent how what percentage of the area of distribution of $\cA$ is contained in the area of distribution of $\cB$, a value greater than 1 would mean that $\cA$ is more strongly contained in $\cB$ than in itself. This makes sense!! It's not bad!
+
 \section{Experiments and results}
 
 \subsection{Digraphs}
