@@ -19,11 +19,11 @@ message("Cmake modules in " ${CMAKE_MODULE_PATH})
 find_package(Boost COMPONENTS program_options REQUIRED QUIET)
 include_directories(${Boost_INCLUDE_DIRS})
 
-OPTION(USE_MINIMUM_INSTEAD_OF_PRODUCT "Use the model of Fuzzy logic where the intersection is the minimum, not the product (warning: SLOW)" OFF)
+OPTION(FUZZY_MIN "Use the model of Fuzzy logic where the intersection is the minimum, not the product (warning: SLOW)" OFF)
 OPTION(BUILD_USING_BLAZE "Use Blaze Library instead of Eigen (faster)" ON)
 OPTION(BUILD_GPU "Build GPU version using arrayfire" ON)
 
-if (${USE_MINIMUM_INSTEAD_OF_PRODUCT})
+if (${FUZZY_MIN})
 	set(BUILD_USING_BLAZE OFF)
 	set(BUILD_GPU OFF)
 	message("Blaze Library not available when using minimum instead of product")
@@ -48,7 +48,7 @@ if (NOT ${BUILD_USING_BLAZE})
 	message("Eigen Library found at " ${BLAZE_INCLUDE_DIR})
 endif()
 
-if (${USE_MINIMUM_INSTEAD_OF_PRODUCT})
+if (${FUZZY_MIN})
 	add_definitions(-DFUZZY_MIN)
 endif()
 

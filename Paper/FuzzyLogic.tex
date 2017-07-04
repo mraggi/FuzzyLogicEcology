@@ -11,7 +11,7 @@
 \usepackage{graphicx}
 \usepackage{color}
 
-
+\newcommand{\xd}{\mathrm{d}}
 
 %\def\emph{#1}\textbf{#1}
 \makeatletter
@@ -243,5 +243,62 @@ This project was supported by PAPIIT IA106316.
 
 \bibliographystyle{myamsalpha}
 \bibliography{references}
+
+\appendix
+\section{On the mathematical expression of the area distribution}
+We consider a species $A$ and denote by $N$ the number of its individuals; then the expression (\ref{mu}) reads:
+\begin{equation}
+\mu_A = \sum_{i=1}^N f_{i} - \sum_{i \neq j} f_{i} f_{j} + \sum_{i \neq j \neq k,  i \neq k } f_{i} f_{j} f_{k} + \cdots + (-1)^{N-1} \prod_{i=1}^Nf_i,
+\end{equation}
+or, in more compact notation,
+\begin{equation}
+\mu_A = \sum_{n=1}^N (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^N f_{i_1} \cdots f_{i_n}.
+\end{equation}
+Now we compute the integral of $\mu_A$ over all of space, i.e. over ${\mathbb R}^2$:
+\begin{align}
+&\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A(x,y) \nonumber\\
+&=  \sum_{i=1}^N \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) - \sum_{i \neq j} \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) f_{j}(x,y)  \nonumber\\
+& + \sum_{i \neq j \neq k,  i \neq k } \int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) f_{j}(x,y) f_{k}(x,y) + \cdots + (-1)^{N-1} \int_{{\mathbb R}^2} \xd x \, \xd y \,\prod_{i=1}^Nf_i(x,y), \nonumber\\
+&= \sum_{n=1}^N (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^N
+\int_{{\mathbb R}^2} \xd x \, \xd y \,  f_{i_1} (x,y)\cdots f_{i_n} (x,y).
+\end{align}
+Notice that if the $f_i$ are Gaussian distributions, then the first integral in the r.h.s. of the second line of the above expression results to be
+\begin{equation}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, f_{i}(x,y) = \frac{\pi}{C}.
+\end{equation}
+
+We consider the integral of the product of $n$ Gaussians:
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \,  f_{i_1} (x,y)\cdots f_{i_n} (x,y) = \int_{{\mathbb R}^2} \xd x \, \xd y \,  \exp \left[ -C \sum_{\alpha=1}^n \left( (x-x_{i_{\alpha}})^2 + (y-y_{i_{\alpha}})^2 \right) \right].
+\end{align}
+Notice that 
+\begin{equation}
+\sum_{\alpha=1}^n  (x-x_{i_{\alpha}})^2 = n x^2 -2x \underbrace{\sum_{\alpha=1}^n x_{i_{\alpha}} }_{X_{1,n}}+ \underbrace{\sum_{\alpha=1}^n x_{i_{\alpha}}^2}_{X_{2,n}}.
+\end{equation}
+So, using the obvious notation,
+\begin{align}
+&\int_{{\mathbb R}^2} \xd x \, \xd y \,  f_{i_1} (x,y)\cdots f_{i_n} (x,y) \nonumber\\
+&= \int_{{\mathbb R}^2} \xd x  \ \xd y \, \exp \left[ -Cn(x^2+y^2) +2C(X_{1,n} x +Y_{1,n}y) - C(X_{2,n}+Y_{2,n}) \right], \nonumber\\
+&= \frac{\pi}{nC} \exp \left[ \frac{C(X_{1,n}^2+Y_{1,n}^2)}{n}  - C(X_{2,n}+Y_{2,n})\right], \nonumber\\
+&= \frac{\pi}{nC} \exp \left[ \frac{C(\left( \sum_{\alpha=1}^n x_{i_{\alpha}}\right)^2+\left( \sum_{\alpha=1}^n y_{i_{\alpha}}\right)^2)}{n}  - C \sum_{\alpha=1}^n (x_{i_{\alpha}}^2+y_{i_{\alpha}}^2)\right], \nonumber\\
+&=  \frac{\pi}{nC} \exp \left[ - \frac{C}{n} \sum_{1=\alpha<\beta}^n \left((x_{i_\alpha}-x_{i_\beta})^2 + (y_{i_{\alpha}}-y_{i_{\beta}})^2 \right) \right], \nonumber\\
+&=  \frac{\pi}{nC} \exp \left[ - \frac{C}{n} \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 \right],
+\end{align}
+where $d_{i_{\alpha} i_{\beta}}$ is the (euclidean) distance between point $P_{i_{\alpha}} =(x_{i_{\alpha}} ,y_{i_{\alpha}} )$ and point $P_{i_{\beta}}=(x_{i_{\beta}},y_{i_{\beta}})$. Finally
+\begin{equation}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A= \sum_{n=1}^N (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^N \frac{\pi}{nC} \exp \left[ - \frac{C}{n} \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 \right].
+\end{equation}
+Analogously we obtain the integral of the product of two membership functions
+\begin{align}
+\int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A \mu_B &=  \sum_{n=1}^{N_A} \sum_{\tilde{n}=1}^{N_B} (-1)^{n+\tilde{n}} \sum_{ 1=i_1< \cdots <i_n }^{N_A} \sum_{ 1=\tilde{i}_1< \cdots <\tilde{i}_n }^{N_B} \frac{\pi}{(n+\tilde{n})C}
+ \nonumber\\
+& \exp \left[ - \frac{C}{n+\tilde{n}} \left( \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 + \sum_{1=\alpha < \beta}^{\tilde{n}} d_{\tilde{i}_{\alpha} \tilde{i}_{\beta}}^2 +
+% \right. \right. \nonumber\\
+%& \left. \left. 
+\sum_{\alpha=1}^n \sum_{\tilde{\alpha}=1}^{\tilde{n}} 
+d_{i_{\alpha} \tilde{i}_{\tilde{\alpha}}}^2
+%\left[ (x_{i_{\alpha}} - x_{\tilde{i}_{\tilde{\alpha}}})^2 + (y_{i_{\alpha}} - y_{\tilde{i}_{\tilde{\alpha}}})^2\right]
+\right) \right].
+\end{align}
 
 \end{document}
