@@ -94,11 +94,19 @@ int main(int argc, char* argv[])
 		cout << "Grid: " << AP.grid << endl;
 		cout << "Visibility: " << AP.visibility << endl;
 
-		cout << "Total time: " << chrono.Peek() << endl;
+#if FUZZY_MIN
+		cout << "USING EIGEN (FUZZY MIN mode)" << endl;
+#elif USE_BLAZE
+		cout << "USING BLAZE (FUZZY PRODUCT mode)" << endl;
+#else
+		cout << "USING EIGEN (FUZZY PRODUCT mode)" << endl;
+#endif
+		
+		cout << endl << "Total time: " << chrono.Peek() << endl;
 	}
 	catch (std::exception& e)
 	{
-		cout << e.what() << '\n';
+		cout << e.what() << endl;
 		return 1;
 	}
 

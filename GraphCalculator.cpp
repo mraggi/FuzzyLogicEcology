@@ -153,6 +153,33 @@ void UpdateArea(vector<double>& Area, const MatrixXd& A, size_t species)
 	}
 }
 
+void printRowAsMatrix(const MatrixXd& A, int row, int grid)
+{
+	for (int index = 0; index < num_columns(A); ++index)
+	{
+// 		int x = index/grid;
+		int y = index%grid;
+		if (y == 0)
+			cout << endl;
+		cout << A(row,index) << ' ';
+	}
+	cout << endl;
+}
+
+void printNonZeros(const MatrixXd& A)
+{
+	for (int x = 0; x < num_rows(A); ++x)
+	{
+		for (int y = 0; y < num_columns(A); ++y)
+		{
+			if (A(x,y) > scalar_min_t(0.001))
+			{
+				cout << "(" << x << "," << y << "): " << A(x,y) << endl;
+			}
+		}
+	}
+}
+
 Matrix GraphCalculator::CalculateGraph()
 {
 #if FUZZY_MIN
@@ -186,7 +213,7 @@ Matrix GraphCalculator::CalculateGraph()
 		A = MatrixXd::Constant(A.rows(), A.cols(), startvalue);
 #endif
 		cout << "\tTook " << C.Reset() << "s to initialize matrix to -1" << endl;
-		#pragma omp parallel for
+// 		#pragma omp parallel for
 		for (size_t species = 0; species < numspecies; ++species)
 		{
 			Realize(A,species, block);

@@ -30,11 +30,21 @@ bool Test11()
 
 int main()
 {
-	if (Test11())
-	{
-		cout << "All tests passed!" << endl;
-		return 0;
-	}
-	cout << "Some tests failed!" << endl;
-	return 1;
+	MatrixXd A(2,2);
+    A(0,0) = scalar_min_t(1);
+    A(0,1) = scalar_min_t(2);
+    A(1,0) = scalar_min_t(3);
+    A(1,1) = scalar_min_t(4);
+    cout << "A = " << endl << A << endl;
+
+//     cout << "A*A = " << endl << A.lazyProduct(A) << endl;
+	return 0;
+	
+// 	if (Test11())
+// 	{
+// 		cout << "All tests passed!" << endl;
+// 		return 0;
+// 	}
+// 	cout << "Some tests failed!" << endl;
+// 	return 1;
 }

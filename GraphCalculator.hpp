@@ -22,8 +22,6 @@
 
 //End blaze stuff
 
-
-
 class GraphCalculator
 {
 public:
