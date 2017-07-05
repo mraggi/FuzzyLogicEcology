@@ -5,6 +5,8 @@
 
 using namespace std;
 
+
+
 template <class T> 
 std::ostream& operator<<(std::ostream& os, const vector<T>& X)
 {

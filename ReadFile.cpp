@@ -121,7 +121,7 @@ unordered_map<string,vector<Point>> ExtractLocations(const vector<vector<string>
 			if (colname == "latitud" || colname == "latitude")
 			{
 				latitude = i;
-				cout << "Longitude deduced to be in column " << i << endl;
+				cout << "Latitude deduced to be in column " << i << endl;
 			}
 		}
 	}
@@ -141,8 +141,9 @@ unordered_map<string,vector<Point>> ExtractLocations(const vector<vector<string>
 		name.pop_back();
 		try
 		{
-			double x = stod(U[i][latitude]);
-			double y = stod(U[i][longitude]);
+			double x = stod(U[i][latitude])*KmInADegree;
+			double y = stod(U[i][longitude])*KmInADegree;
+			
 			R[name].emplace_back(x,y);
 
 		} catch(...)

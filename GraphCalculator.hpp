@@ -22,21 +22,27 @@
 
 //End blaze stuff
 
-constexpr double EarthRadiusKm = 6371.0;
-constexpr double KmInADegree = (pi*EarthRadiusKm)/180.0;
+
 
 class GraphCalculator
 {
 public:
 	GraphCalculator(size_t _grid, double VisibilityRangeInKm, const vector<vector<Point>>& U, size_t memoryAvailable);
 	Matrix CalculateGraph();
+	
+	double GetTotalArea(int species) const;
+	
 private: //functions
 	void Realize(MatrixXd& A, long row, long block);
 	void Normalize(vector<vector<Point>>& U);
 	void SetBlockSize(long memoryAvailable);
 	template<class Mat>
-	Matrix DivideByArea(const Mat& M, const vector<double>& Area) const;
+	Matrix DivideByArea(const Mat& M) const;
+
+	
+// public:
 private: // variables
+	vector<double> Area;	
 	size_t grid;
 	double Cx; //in continuum
 	double Cy;

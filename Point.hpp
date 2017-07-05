@@ -9,6 +9,8 @@
 using namespace std;
 
 constexpr double pi = 3.1415926535897932384626433832795028841971694;
+constexpr double EarthRadiusKm = 6371.0;
+constexpr double KmInADegree = (pi*EarthRadiusKm)/180.0;
 
 inline double RadiansToDegrees(double angle)
 {

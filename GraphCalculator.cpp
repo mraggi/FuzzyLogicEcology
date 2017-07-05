@@ -5,7 +5,7 @@
 	#include <arrayfire.h>
 #endif
 
-GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const vector<vector<Point>>& U, size_t memoryAvailable) : grid(_grid)
+GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const vector<vector<Point>>& U, size_t memoryAvailable) : grid(_grid), Area(U.size(),0.0)
 {
 	double sigma = VisibilityRangeInKm;
 
@@ -15,13 +15,6 @@ GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const
 	by = MaxNonZeroDistance(Cy);
 	
 	E = U;
-	for (auto& conjDePuntos : E)
-	{
-		for (auto& punto : conjDePuntos)
-		{
-			punto *= KmInADegree;
-		}
-	}
 		
 	Normalize(E);
 	
@@ -154,8 +147,8 @@ void UpdateArea(vector<double>& Area, const MatrixXd& A, size_t species)
 #if FUZZY_MIN
 		Area[species] += A(species,col);
 #else		
-// 		Area(species) += A(species,col);
-		Area[species] += A(species,col)*A(species,col);
+		Area[species] += A(species,col);
+// 		Area[species] += A(species,col)*A(species,col);
 #endif 
 	}
 }
@@ -170,7 +163,6 @@ Matrix GraphCalculator::CalculateGraph()
 	
 	Chronometer T;
 	size_t numspecies = E.size();
-	vector<double> Area(numspecies,0.0);
 	
 	MatrixXd A(numspecies,num_cols_per_block);
 	
@@ -216,15 +208,14 @@ Matrix GraphCalculator::CalculateGraph()
 		cout << "Done with block " << block+1 << " of " << num_full_blocks+num_partial_blocks 
              << ". Expected remaining time: " << time*double(num_full_blocks+num_partial_blocks)/(block+1) - time << 's' << endl; 
 	}
-	cout << "Area: " << Area << endl;
 	cout << "Total Time taken: " << T.Reset() << endl;
 	
 
-	return DivideByArea(M,Area);
+	return DivideByArea(M);
 }
 
 template<class Mat>
-Matrix GraphCalculator::DivideByArea(const Mat& M, const vector<double>& Area) const
+Matrix GraphCalculator::DivideByArea(const Mat& M) const
 {
 	auto numspecies = Area.size();
 #if USE_GPU
@@ -260,6 +251,12 @@ Matrix GraphCalculator::DivideByArea(const Mat& M, const vector<double>& Area) c
 #endif
 	return R;
 }
+
+double GraphCalculator::GetTotalArea(int species) const
+{
+	return Area[species]*F.x*F.y/(grid*grid);
+}
+
 
 void GraphCalculator::Normalize(vector<vector<Point>>& U)
 {
