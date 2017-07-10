@@ -93,7 +93,7 @@
 
 \tcr{No puedo poner los emails!!!!!!! No sé cómo! Alguien arréglelo antes de que rompa la compu!}
 \begin{abstract}
-	We present a novel way of constructing an interaction network for ecological species using tools from fuzzy logic. We present a few (3???) examples: Quercus Oaxaca (?), Loba-whatever, and redes centro, which were obtained by doing bla and bla \tcr{César?}. We also release computational tools that take as input some observational data and output a network built using the methods described in this paper. Furthermore, the code to analyze said network is also freely released.
+	We present a novel way of constructing an interaction network for ecological species using tools from fuzzy logic. We present a few (3???) examples: Quercus Oaxaca (?), Loba-whatever, and redes centro, which were obtained by doing bla and bla \tcr{César?}. We also release computational tools that take as input some observational data and output a network built using the methods described in this paper. Furthermore, the code to analyze said network is also freely released, and a web service is launched, where a user may submit a text file with data and get a network back.
 	\vspace{5pt}
 Keywords: fuzzy logic, ecology, networks\\
  {\small Mathematics Subject Classification: ???} 
@@ -110,7 +110,7 @@ All the source code used for this paper can be freely downloaded and used (under
 	\url{https://www.github.com/mraggi/FuzzyLogicEcology}
 \end{center}
 
-Traditionally, the way to build an interaction network is to use circles or polygons or whatever, but that has the problems of... \tcr{César}
+Traditionally, the way to build an interaction network is to use circles or polygons or whatever, but that has the problems of... \tcr{Marisol + Adriana}
 
 \subsection{A brief introduction to the tools of fuzzy logic}
 In this section we introduce the reader to the fuzzy logic tools we used to build the interaction network. For a more complete treatment on the topic, see \cite{FuzzyLogicSuperBook} or \cite{FuzzyLogicSuperBook2}. 
@@ -132,7 +132,7 @@ We wish to define the standard set operations ($\subset,\setminus,\cap,\cup$) on
 	\end{itemize}
 \end{definition}
 
-The above definitions are the only standard definition of $\subset$ and $\setminus$, but the definition of $\cap$ and therefore $\cup$ varies, as there are many ways to do so in a consistent and logical manner. Usually one gives the definition of $\cap$ as $\mu_{A\cap B}(p) := \II(\mu_A(p),\mu_B(p))$, where  $\II : [0,1]^2 \to [0,1]$ is a function that satisfies the same properties as intersection when evaluated in $\{0,1\}$. The definition of $\cup$ follows. \tcr{paperize!}. 
+The above definitions are the only standard definition of $\subset$ and $\setminus$, but the definition of $\cap$ and therefore $\cup$ varies, as there are many ways to do so in a consistent and logical manner. Usually one gives the definition of $\cap$ as $\mu_{A\cap B}(p) := \II(\mu_A(p),\mu_B(p))$, where  $\II : [0,1]^2 \to [0,1]$ is a function that satisfies the same properties as intersection when evaluated in $\{0,1\}$. The definition of $\cup$ follows. \tcr{paperize! Luis Miguel?}. 
 
 \begin{definition}
 A \emph{consistent} function $\II : [0,1]^2 \to [0,1]$ is one that for all $a,b,c\in[0,1]$
@@ -146,7 +146,7 @@ A \emph{consistent} function $\II : [0,1]^2 \to [0,1]$ is one that for all $a,b,
 
 Once the intersection is defined as $\mu_{A\cap B}(p) := \II(\mu_A(p),\mu_B(p))$, the definition of $\cup$ easily follows as in the inclusion-exclusion principle: $\mu_{A\cup B} = \mu_A + \mu_B - \mu_{A\cup B}$.
 
-It can be easily checked that if one defines intersection this way with a consistent $\II$, it satisfies many of the common properties of sets, such as commutativity for $\cap$ and $\cup$, associativity, De Morgan's laws, etc. when the corresponding crisp set properties are satisfied as well \tcr{paperizar!}.
+It can be easily checked that if one defines intersection this way with a consistent $\II$, it satisfies many of the common properties of sets, such as commutativity for $\cap$ and $\cup$, associativity, De Morgan's laws, etc. when the corresponding crisp set properties are satisfied as well \tcr{paperize! Luis Miguel?}.
 
 
 %% new section? I don't know.
@@ -159,7 +159,7 @@ The second definition, also quite common, is to define $\II(a,b) = \min(a,b)$. I
 
 \section{Building the network}
 
-The main idea behind the method is that instead of considering the distribution area of a species as a crisp set, we consider the distribution as a fuzzy set. The motivation behind this is that given an observation of an individual of a certain species, the area of effect of this individual in its interaction with other species will decay the further away one moves from this observation. \tcr{Este enunciado está terrible. Re-escribir! Y pasar para antes, probablemente.}
+The main idea behind the method is that instead of considering the distribution area of a species as a crisp set, we consider the distribution as a fuzzy set. The motivation behind this is that given an observation of an individual of a certain species, the area of effect of this individual in its interaction with other species will decay the further away one moves from this observation. \tcr{This sentence is terrible. Rewrite. \tcr{Luis Miguel}}
 
 Let $\Omega \subset \RR^2$ denote the full area of distribution we are considering. Let $P$ denote a point in $\Omega$ and $C > 0$ be real constant number. We define $f_P:\Omega \to [0,1]$ in the following way:
 	$$f_P(Q) = e^{-C\left[d(P,Q)^2\right]}.$$
@@ -206,19 +206,19 @@ Divide $\Omega$ into an $n\times n$ grid. Then, each $\mu_A$ can be discretized 
 	In a brute force approach, since for every point in the grid we have to consider every observation of said species, calculating the matrix associated with $\mu_A$ takes at least $\Theta(|A|n^2)$ time. To speed up computations by sacrificing \tcr{(a tiny amount of)} accuracy, note that 
 		$$\mu_A \leq \sum_{a\in A} f_a.$$
 		
-		\tcr{Uh... paperize the ``a tiny amount of'' part}
+		\tcr{Uh... paperize the ``a tiny amount of'' part. Daniele}
 		
 	We note that the exponential decay in the formula for $f_a$ gives a quick way to only affect the area near point $a$. Therefore, if we admit an error of $\varepsilon > 0$ for each point in the grid, we only need to compute $f_a(p)$ for points $p$ near $a$ inside a circle of radius $R$, where
 		$$R := f_a^{-1}(\varepsilon/|A|) = \sqrt{-\log\left(\frac{\varepsilon}{|A|C}\right)}$$
 	
-	In this way, calculating the matrix associated with $\mu_A$ takes $\Theta(|A|R^2 + n^2)$, a considerable speedup. This assumes, of course, that each point in the grid can be calculated in $\Theta(|A|)$ time, but this is not immediately obvious how to do so when $\II$ is the product. In the next section we make it so. \tcr{paperize}.
+	In this way, calculating the matrix associated with $\mu_A$ takes $\Theta(|A|R^2 + n^2)$, a considerable speedup. This assumes, of course, that each point in the grid can be calculated in $\Theta(|A|)$ time, but this is not immediately obvious how to do so when $\II$ is the product. In the next section we make it so. \tcr{paperize. Marisol o Adriana o Sergio}.
 	
 	With this in mind, we proceed to normalize as follows:
 	\begin{center}
 		\includegraphics[scale=0.5]{./continuoamalla.pdf}
 	\end{center}
 	
-	The second function just involves multiplying each coordinate by $n$ so pffft. \tcr{paperize} 
+	The second function just involves multiplying each coordinate by $n$ so it is easy. \tcr{paperize. Daniele} 
 	
 	Consider the bounding box in $\Omega$ of the points in the data set. That is, let $O=(mx,my)$ and $W=(Mx,My)$, where $mx,my,Mx,My$ denote the minimum and maximum $x$ and $y$ values in the dataset respectively (of all observations for all species in question) respectively.
 	
@@ -267,7 +267,7 @@ We gave two parallel ways to construct the distribution network: using products 
 The clearest disadvantage of using the product is that $A\cap A \neq A$. So the weighted edge $w_P(\cA \to \cA) \neq 1$. This sucks. In general, in our experimental data, the edge weights become quite small. A way to alleviate this is to consider
 	$$\widehat{w_P}(\cA \to \cB) := \left(\int_\Omega \mu_A\mu_B\right)\big/\left(\int_\Omega \mu_A^2\right)$$
 	
-This gives much better edge weights \tcr{paperize... justify?}, but has the disadvantage that an edge weight may be greater than 1. Using our experimental data. Since the edge weight $w(\cA \to \cB)$ is supposed to represent how what percentage of the area of distribution of $\cA$ is contained in the area of distribution of $\cB$, a value greater than 1 would mean that $\cA$ is more strongly contained in $\cB$ than in itself. This makes sense!! It's not bad!
+This gives much better edge weights \tcr{paperize... justify? Luis Miguel?}, but has the disadvantage that an edge weight may be greater than 1. Using our experimental data. Since the edge weight $w(\cA \to \cB)$ is supposed to represent how what percentage of the area of distribution of $\cA$ is contained in the area of distribution of $\cB$, a value greater than 1 would mean that $\cA$ is more strongly contained in $\cB$ than in itself. This makes sense!! It's not bad!
 
 \section{Experiments and results}
 
@@ -275,13 +275,13 @@ This gives much better edge weights \tcr{paperize... justify?}, but has the disa
 The following digraphs were obtained as a result of the algorithms described in the previous section. \tcr{(mm... damos las gráficas? La más chica es una matriz de $56\times56$, aunque podríamos dar sólo las aristas más pesadas... no sé)}
 
 \subsection{Analysis of the digraphs}
-This graphs are cool because here is the robustness and the analysis revealed deep and important truths \tcr{(Yo les doy los resultados del análisis. Uds. escriben por qué, para qué, cómo, cuándo, etc.)}
+\tcr{Is this section for second paper? Or what?}
 
-
+This graphs are cool because here is the robustness and the analysis revealed deep and important truths \tcr{(Yo les doy los resultados del análisis. Uds. escriben por qué, para qué, cómo, cuándo, etc.)}. 
 
 \section{Conclusions}
 
-Finally, we conclude this awesome work. Please accept this paper!!
+Finally, we conclude this awesome work. Please accept this paper!! \tcr{Later}
 
 
 \section*{Acknowledgements}
@@ -295,6 +295,9 @@ This project was supported by PAPIIT IA106316.
 
 \appendix
 \section{On the mathematical expression of the area distribution}
+
+\tcr{Me gustaría decir aquí que usamos estas expresiones como unit tests del programa. Adriana? Marisol? Sergio?}
+
 In this appendix we provide an analytic expression of the integral of the (product of the) membership functions in an ideal case, namely where the integral is extended over ${\mathbb R}^2$. Although this is unrealistic because the species are distributed on the surface of the Earth, we consider such an idealisation justified by the exponential decay of the functions $f_P$ defined above.
 
 \tcr{Suggestion: so far, we have been using $f_a$ where $a$ is a point, not $f_i$ where $i\in\ZZ$.}
