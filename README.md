@@ -50,3 +50,7 @@ Of course, more detailed options can be found by typing
 ```bash
 	./fuzzylogic --help
 ```
+
+### Usage and Tutorial
+
+Let's write this.
