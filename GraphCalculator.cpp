@@ -314,7 +314,7 @@ void GraphCalculator::Normalize(vector<vector<Point>>& U)
 	F = W-O;
 	
 	Cnx = Cx*F.x*F.x;
-	Cny = Cx*F.y*F.y;
+	Cny = Cy*F.y*F.y;
 	
 	Cmx = Cnx/(grid*grid);
 	Cmy = Cny/(grid*grid);

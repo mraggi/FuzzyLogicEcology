@@ -132,14 +132,14 @@ We wish to define the standard set operations ($\subset,\setminus,\cap,\cup$) on
 	\end{itemize}
 \end{definition}
 
-The above definitions are the only standard definition of $\subset$ and $\setminus$, but the definition of $\cap$ and therefore $\cup$ varies, as there are many ways to do so in a consistent and logical manner. Usually one gives the definition of $\cap$ as $\mu_{A\cap B} = \II(a,b)$, where  $\II : \RR^2 \to [0,1]$ is a function that satisfies the same properties as intersection when evaluated in $\{0,1\}$. The definition of $\cup$ follows. \tcr{paperize!}. 
+The above definitions are the only standard definition of $\subset$ and $\setminus$, but the definition of $\cap$ and therefore $\cup$ varies, as there are many ways to do so in a consistent and logical manner. Usually one gives the definition of $\cap$ as $\mu_{A\cap B}(p) := \II(\mu_A(p),\mu_B(p))$, where  $\II : [0,1]^2 \to [0,1]$ is a function that satisfies the same properties as intersection when evaluated in $\{0,1\}$. The definition of $\cup$ follows. \tcr{paperize!}. 
 
 \begin{definition}
-A \emph{consistent} function $\II : [0,1]^2 \to [0,1]$ is one that
+A \emph{consistent} function $\II : [0,1]^2 \to [0,1]$ is one that for all $a,b,c\in[0,1]$
 \begin{enumerate}
-  \item $\II(a,b) = \II(b,a)$ for all $a,b$. (symmetry)
-  \item $\II(0,b) = 0$ for all $b$.
-  \item $\II(1,b) = b$ for all $a$.
+  \item $\II(a,b) = \II(b,a)$. (symmetry)
+  \item $\II(0,b) = 0$.
+  \item $\II(1,b) = b$.
   \item $\II(a,b) \leq \II(c,b)$ if $a \leq c$.
 \end{enumerate}
 \end{definition}
@@ -151,16 +151,9 @@ It can be easily checked that if one defines intersection this way with a consis
 
 %% new section? I don't know.
 
-In this work we will consider two different definitions of $\II$. Both have advantages and disadvantages. 
+In this work we will consider two different definitions of $\II$. Both have advantages and disadvantages, which we discuss later.
 
-The first definition we shall consider involves defining the operations akin to when considering independent sets in probability: $\II(a,b) = ab$.
-
-\begin{definition}
-	\begin{itemize}
-		\item $A\cap B$ is defined by the membership function $\mu_{A\cap B} (x) := \mu_A(x)\mu_B(x)$
-		\item $A\cup B$ is defined by the membership function $\mu_{A\cup B} (x) := \mu_A(x)+\mu_B(x)-\mu_A(x)\mu_B(x)$
-	\end{itemize}
-\end{definition}
+The first definition we shall consider involves defining the operations akin to when considering independent sets in probability: $\II(a,b) = ab$, so that $A\cap B$ is defined by the membership function $\mu_{A\cap B} (x) := \mu_A(x)\mu_B(x)$, and therefore $A\cup B$ is defined by the membership function $\mu_{A\cup B} (x) := \mu_A(x)+\mu_B(x)-\mu_A(x)\mu_B(x)$.
 
 The second definition, also quite common, is to define $\II(a,b) = \min(a,b)$. In this scenario, we observe that $\mu_{A\cup B}(p) = \max(\mu_A(p),\mu_B(p))$.
 
@@ -168,9 +161,7 @@ The second definition, also quite common, is to define $\II(a,b) = \min(a,b)$. I
 
 The main idea behind the method is that instead of considering the distribution area of a species as a crisp set, we consider the distribution as a fuzzy set. The motivation behind this is that given an observation of an individual of a certain species, the area of effect of this individual in its interaction with other species will decay the further away one moves from this observation. \tcr{Este enunciado está terrible. Re-escribir! Y pasar para antes, probablemente.}
 
-Let $\Omega \subset \RR^2$ denote the full area of distribution we are considering.
-
-Let $P$ denote a point in $\Omega$ and $C > 0$ be real constant number. We define $f_P:\Omega \to [0,1]$ in the following way:
+Let $\Omega \subset \RR^2$ denote the full area of distribution we are considering. Let $P$ denote a point in $\Omega$ and $C > 0$ be real constant number. We define $f_P:\Omega \to [0,1]$ in the following way:
 	$$f_P(Q) = e^{-C\left[d(P,Q)^2\right]}.$$
 	where $d(P,Q)$ denotes the (Euclidean) distance from $P$ to $Q$.
 
@@ -205,50 +196,57 @@ Obviously an analytical approach is a terrible way to do it \tcr{Bah, justifique
 
 So we rely on numerical methods instead. First we'll describe how to find $\mu_A$ for each species $\cA$, and then we proceed to find $w(\cA\to\cB)$ for each pair of species $\cA$,$\cB$.
 
-Divide $\Omega$ into an $n\times n$ grid. Then, each $\mu_A$ can be discretized and represented by an $n\times n$ matrix of real numbers. The higher $n$ is, the better the approximation. For all our experimental results, we found that $n \approx 5000$ is more than enough to get an accurate approximation. \tcr{Alguien se quisiera aventar el análisis de error? No? That's what I thought.}
+Divide $\Omega$ into an $n\times n$ grid. Then, each $\mu_A$ can be discretized and represented by an $n\times n$ matrix of real numbers, where every point in the $n\times n$ grid contains a number in $[0,1]$. The higher $n$ is, the better the approximation. For all our experimental results, we found that $n \approx 5000$ is more than enough to get an accurate approximation, in the sense that there is no noticeable difference between the edge weights when $n = 5000$ and when $n = 20,000$. \tcr{Alguien se quisiera aventar un análisis de error? No? That's what I thought.}
 
 
 \subsection{Normalizing}
 
-	In a brute force approach, since for every point in the grid we have to consider every observation of said species, calculating the matrix associated with $\mu_A$ takes at least $\Theta(|A|n^2)$ time. To speed up computations by sacrificing \tcb{(a tiny amount of)} accuracy, note that 
+	Before going into detail of how to normalize the data in order to calculate the integrals numerically, we discuss allowing some tiny error into our calculations in order to reduce $\Omega$ to a bounded set. This discussion will have the added benefit of making the computation much faster. \tcr{paperize. And probably re-write. Daniele!! I tried, but couldn't quite get it.} 
+	
+	In a brute force approach, since for every point in the grid we have to consider every observation of said species, calculating the matrix associated with $\mu_A$ takes at least $\Theta(|A|n^2)$ time. To speed up computations by sacrificing \tcr{(a tiny amount of)} accuracy, note that 
 		$$\mu_A \leq \sum_{a\in A} f_a.$$
+		
+		\tcr{Uh... paperize the ``a tiny amount of'' part}
 		
 	We note that the exponential decay in the formula for $f_a$ gives a quick way to only affect the area near point $a$. Therefore, if we admit an error of $\varepsilon > 0$ for each point in the grid, we only need to compute $f_a(p)$ for points $p$ near $a$ inside a circle of radius $R$, where
 		$$R := f_a^{-1}(\varepsilon/|A|) = \sqrt{-\log\left(\frac{\varepsilon}{|A|C}\right)}$$
 	
-	In this way, calculating the matrix associated with $\mu_A$ takes $\Theta(|A|R^2 + n^2)$, a considerable speedup. This assumes, of course, that each point in the grid can be calculated in $\Theta(|A|)$ time, which is not immediate when $\II$ is the product. In the next section we make it so. \tcr{paperize}.
+	In this way, calculating the matrix associated with $\mu_A$ takes $\Theta(|A|R^2 + n^2)$, a considerable speedup. This assumes, of course, that each point in the grid can be calculated in $\Theta(|A|)$ time, but this is not immediately obvious how to do so when $\II$ is the product. In the next section we make it so. \tcr{paperize}.
 	
 	With this in mind, we proceed to normalize as follows:
 	\begin{center}
 		\includegraphics[scale=0.5]{./continuoamalla.pdf}
 	\end{center}
 	
-	First, let $O=(mx,my)$ and $W=(Mx,My)$, where $mx,my,Mx,My$ denote the minimum and maximum points in the dataset. Let $F=W-O$.
-
-	Then, $b_x = R/|F_x|$ and $b_y = R/|F_y|$ are the $x$ and $y$ borders respectively. Any element of the grid outside the border would, by the definition of $R$, contain a number that is less than $\varepsilon$ and therefore can be ignored.
+	The second function just involves multiplying each coordinate by $n$ so pffft. \tcr{paperize} 
 	
-	Also, $C$ has to be transformed into $C_x$ and $C_y$ by the equation \tcr{look it up in the code}, because of \tcr{Daniele said so. I agreed he was correct, but I don't remember.}
+	Consider the bounding box in $\Omega$ of the points in the data set. That is, let $O=(mx,my)$ and $W=(Mx,My)$, where $mx,my,Mx,My$ denote the minimum and maximum $x$ and $y$ values in the dataset respectively (of all observations for all species in question) respectively.
+	
+	Let $F=W-O$. Then, $b_x = R/|F_x|$ and $b_y = R/|F_y|$ are the $x$ and $y$ borders respectively in $[0,1]\times[0,1]$. For any point falling outside the border, the value of $\mu$ would, by the definition of $R$, be a number that is less than $\varepsilon$ and therefore can be ignored. Every point in the dataset gets normalized in this way.
+	
+	Also, $C$ has to be transformed into $C_x := C\frac{F_x^2}{n^2}$ and $C_y :=  C\frac{F_y^2}{n^2}$, because of \tcr{Daniele said so. I agreed he was correct, but I don't remember.}
 
 \subsection{Finding \texorpdfstring{$\mu_A$}{mu\_A}}
-Finding the matrix representing $\mu_A$ is straightforward when considering $\II$ as the min function. For the rest of this section, we consider only the case when $\II$ is the product function.
+Computing the matrix representing $\mu_A$ is straightforward when considering $\II$ as the min function: For each point in the grid we must simply find the closest point $a\in A$ and calculate $f_a$.
 
 When $\II$ is the product function, however, things get a little more tricky \tcr{paperize}. By the inclusion-exclusion principle we have
-	$$\mu_A = \sum_{a\in A} f_{a} - \sum_{a,b \in \binom{A}{2}} f_a f_b + \sum_{a,b,c \in \binom{A}{3} } f_a f_{b} f_{c} + \dots + (-1)^{N+1} \prod_{a\in A} f_a $$
-We factorize $\mu_A$ as follows:
-\begin{equation}\label{mu}\mu_A = 1-\prod_{a\in A} (1-f_a)\end{equation}
+	$$\mu_A = \sum_{a\in A} f_{a} - \sum_{a,b \in \binom{A}{2}} f_a f_b + \sum_{a,b,c \in \binom{A}{3} } f_a f_{b} f_{c} + \dots + (-1)^{|A|+1} \prod_{a\in A} f_a.$$
+
+	We factor $\mu_A$ as follows:
+$$\mu_A = 1-\prod_{a\in A} (1-f_a)$$
 
 	
 
 	\subsection{Finding \texorpdfstring{$w$}{w}}
 	
-	Once we have $\mu$ for every species, it's time to calculate $\int \mu_A\mu_B$ for every pair of species $\cA$, $\cB$. The straightforward approach has a complexity of $O(s^2n^2)$, where $s$ is the number of species and $n$ is the size of the grid. 
+	Once we have $\mu$ for every species, it's time to calculate $\int \mu_A\mu_B$ for every pair of species $\cA$, $\cB$. The straightforward approach has a complexity of $O(s^2n^2)$, where $s$ is the number of species and $n$ is the size of the grid.
 	
 	We may speed up this computation when $\II$ is the product with the following trick. 
 	
 	Note that 
-		$$\int \mu_A \mu_B \approx \sum_{0\leq x < n} \sum_{0\leq y < n} \mu_A[x,y]\mu_B[x,y]$$
+		$$n^2\int \mu_A \mu_B \approx \sum_{0\leq x < n} \sum_{0\leq y < n} \mu_A[x,y]\mu_B[x,y]$$
 	
-	If we flatten the matrix $\mu_A$ and $\mu_B$ to vectors $\nu_A$ and $\nu_B$, this last sum is simply the dot product $\nu_A\cdot \nu_B$.
+	Let $\nu_A$ and $\nu_B$ denote vectors that result from flattening $\mu_A$ and $\mu_B$. Then the r.h.s. of the previous equation is simply the dot product $\nu_A\cdot \nu_B$.
 	
 	So consider the $s\times n^2$ matrix 
 	$$M = \begin{bmatrix}
@@ -258,9 +256,9 @@ We factorize $\mu_A$ as follows:
 					\longleftarrow & \nu_{s-1} & \longrightarrow \\
 	      \end{bmatrix}.
 	$$
-Then, $MM^T$ is an $s\times s$ matrix whose $(i,j)$-th entry contains $\int \mu_A \mu_B$. This can be done efficiently with fast matrix multiplication algorithms (\cite{strassen}) \tcr{(Marisol, tú te los sabes seguramente, pon unas palabritas de ellos y di que son super chidos y que no se que)}. Unfortunately, when $\II = \min$ this speedup is not possible, as fast matrix multiplication relies on the fact that $+$ and $\times$ are distributive.
+Then, $MM^T$ is an $s\times s$ matrix whose $(i,j)$-th entry contains $\nu_A\cdot \nu_B \approx n^2\int \mu_A \mu_B$. However, $MM^T$ can be computed efficiently with fast matrix multiplication algorithms (\cite{strassen}) \tcr{(Marisol, tú te los sabes seguramente, pon unas palabritas de ellos y di que son super chidos y que no se que)}. Unfortunately, when $\II = \min$ this speedup is not possible, as fast matrix multiplication relies on the fact that $+$ and $\times$ are distributive.
 
-Note also that the algorithms described here are highly parallelizable, since calculating the matrix associated with $\mu_A$ for one species does not rely on observations from any other species. Indeed, the provided software benefits considerably by using a computer with many cores. \tcr{paperize?}
+Note also that the algorithms described here are highly parallelizable, since calculating the matrix associated with $\mu_A$ for one species does not rely on observations from any other species, and the fast matrix multiplication algorithms are highly paralellizable \tcr{paperize. Marisol: do this}. Indeed, the provided software benefits considerably by using a computer with many cores. \tcr{paperize?}
 
 \subsection{Advantages and disadvantages of min over product}
 
@@ -298,6 +296,8 @@ This project was supported by PAPIIT IA106316.
 \appendix
 \section{On the mathematical expression of the area distribution}
 In this appendix we provide an analytic expression of the integral of the (product of the) membership functions in an ideal case, namely where the integral is extended over ${\mathbb R}^2$. Although this is unrealistic because the species are distributed on the surface of the Earth, we consider such an idealisation justified by the exponential decay of the functions $f_P$ defined above.
+
+\tcr{Suggestion: so far, we have been using $f_a$ where $a$ is a point, not $f_i$ where $i\in\ZZ$.}
 
 Given a species $A$, we denote by $N_A$ the number of its individuals; then the expression (\ref{mu}) reads:
 \begin{equation}
@@ -358,7 +358,7 @@ d_{i_{\alpha} \tilde{i}_{\tilde{\alpha}}}^2
 \end{align}
 
 \section{Toy models}
-\subsection{$N_A=1$, $N_B=1$}
+\subsection{\texorpdfstring{$N_A=1$}{NA=1}, \texorpdfstring{$N_B=1$}{NB=1}}
 We have in this case (here and in the following we indicate the indices - including the numbers - relative to the species $B$ with a tilde),
 \begin{align}
 \int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A = \int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_B =  \frac{\pi}{C}
@@ -369,7 +369,7 @@ and
 \end{align}
 being $d_{1\tilde{1}}$ the distance between the individuals of the species $A$ and $B$.
 
-\subsection{$N_A=2$, $N_B=1$}
+\subsection{\texorpdfstring{$N_A=2$}{NA=1}, \texorpdfstring{$N_B=1$}{NB=1}}
 We denote with $a_1$ and $a_2$ the two individual of the species $A$ and with $b$ the one of species $B$.  Then, we have in this case
 \begin{align}
 \int_{{\mathbb R}^2} \xd x \, \xd y \, \mu_A&= \sum_{n=1}^{2} (-1)^{n+1} \sum_{ 1=i_1< \cdots <i_n }^{2} \frac{\pi}{nC} \exp \left[ - \frac{C}{n} \sum_{1=\alpha < \beta}^n d_{i_{\alpha} i_{\beta}}^2 \right], \\
