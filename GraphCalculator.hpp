@@ -5,12 +5,12 @@
 #include "Point.hpp"
 #include "scalar_min.hpp"
 
-// Blaze stuff
+
 #if USE_BLAZE
 	#include <blaze/config/BLAS.h>
 	#include <blaze/Blaze.h>
 	using MatrixXd = blaze::DynamicMatrix<double>;
-#else
+#elif USE_EIGEN
 	#include <eigen3/Eigen/Dense>
 	#if FUZZY_MIN
 		using MatrixXd = Eigen::Matrix<scalar_min_t,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor>;
@@ -18,9 +18,6 @@
 		using MatrixXd = Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor>;
 	#endif
 #endif
-// using MatrixXd = blaze::DynamicMatrix<scalar_min_t>;
-
-//End blaze stuff
 
 class GraphCalculator
 {
@@ -37,7 +34,22 @@ private: //functions
 	template<class Mat>
 	Matrix DivideByArea(const Mat& M) const;
 
-	
+	inline void UpdateFunction(const Point& p, const long& x, const long& y, double& a, int i = -1)
+    {
+        double XX = (p.x-x)*(p.x-x);
+        double YY = (p.y-y)*(p.y-y);
+        #if FUZZY_MIN
+            a = max(double(a),exp(-Cmx*XX - Cmy*YY));
+		#elif PROMISCUIDAD
+			double r = radius[i];
+			if (XX+YY < r*r)
+			{
+				a = 1.0;
+			}
+        #else
+            a *= (1.0-exp(-Cmx*XX - Cmy*YY));
+        #endif
+    }
 // public:
 private: // variables
 	vector<double> Area;	
@@ -53,7 +65,9 @@ private: // variables
 
 	double bx; //border in continuum
 	double by; 
-		
+	
+	vector<double> radius;
+	
 	Point O;
 	Point W;
 	Point F;

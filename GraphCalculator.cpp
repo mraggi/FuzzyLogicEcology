@@ -1,4 +1,6 @@
 #include <iomanip>
+#include <cassert>
+
 #include "GraphCalculator.hpp"
 
 #if USE_GPU
@@ -62,15 +64,17 @@ inline long num_columns(const MatrixXd& A)
 {
 #if USE_BLAZE
 	return A.columns();
-#else
+#elif USE_EIGEN
 	return A.cols();
 #endif
 }
 
 inline long num_rows(const MatrixXd& A)
 {
-	return A.rows(); // it's the same in both libraries. Only here to be consistent with cols
+	return A.rows(); 
+    // I know it's the same in both libraries. Only here to be consistent with cols
 }
+
 void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 {
 	const vector<Point>& P = E[species];
@@ -122,18 +126,13 @@ void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 			{
 				long index = x*N+y - offset;
                 
-				double XX = (p.x-x)*(p.x-x);
-				double YY = (p.y-y)*(p.y-y);
-#if FUZZY_MIN
-				A(species,index) = max(double(A(species,index)),exp(-Cmx*XX - Cmy*YY));
-#else
-				A(species,index) *= (1.0-exp(-Cmx*XX - Cmy*YY));
-#endif
+                UpdateFunction(p,x,y,A(species,index),species);
+                
 			}
 		}
 	}
 	
-#if (!FUZZY_MIN)
+#if (!FUZZY_MIN && !PROMISCUIDAD)
 	for (size_t col = 0; col < num_columns(A); ++col)
 		A(species,col) += 1.0;
 #endif
@@ -180,13 +179,42 @@ void printNonZeros(const MatrixXd& A)
 	}
 }
 
-Matrix GraphCalculator::CalculateGraph()
+template <class Mat>
+inline void ResetMatrix(Mat& A)
 {
 #if FUZZY_MIN
 	scalar_min_t startvalue = 0.0;
 #else
 	double startvalue = -1.0;
 #endif
+
+#if USE_BLAZE
+	A = -1.0;
+#endif
+		
+#if USE_EIGEN
+	A = MatrixXd::Constant(A.rows(), A.cols(), startvalue);
+#endif
+}
+
+// This does M += A*A^T
+template <class Mat>
+inline void AddTransposeProduct(Mat& M, Mat& A)
+{
+    #if FUZZY_MIN //Using Eigen, but in fuzzy-min mode
+		M += A.lazyProduct(A.transpose());
+	#elif USE_GPU 
+		af::array AA(num_rows(A), num_columns(A), A.data());
+		M += af::matmulNT(AA,AA);
+	#elif USE_BLAZE 
+		M += blaze::declsym( A * blaze::trans(A) );
+	#elif USE_EIGEN 
+		M += A*A.transpose();
+	#endif
+}
+
+Matrix GraphCalculator::CalculateGraph()
+{
 	
 	Chronometer T;
 	size_t numspecies = E.size();
@@ -207,29 +235,21 @@ Matrix GraphCalculator::CalculateGraph()
 		if (block == num_full_blocks)
 			A.resize(numspecies,num_cols_partial_block);
 		
-#if USE_BLAZE
-		A = -1.0;
-#else
-		A = MatrixXd::Constant(A.rows(), A.cols(), startvalue);
-#endif
+        ResetMatrix(A);
+        
 		cout << "\tTook " << C.Reset() << "s to initialize matrix to -1" << endl;
-// 		#pragma omp parallel for
+        
+		#pragma omp parallel for
 		for (size_t species = 0; species < numspecies; ++species)
 		{
 			Realize(A,species, block);
 			UpdateArea(Area,A,species);
 		}
 		cout << "\t Block " << block+1 << " took " << C.Reset() << " to realize." << endl;
-	#if FUZZY_MIN //Using Eigen, but in fuzzy-min mode
-		M += A.lazyProduct(A.transpose());
-	#elif USE_GPU //Using Arrayfire
-		af::array AA(num_rows(A), num_columns(A), A.data());
-		M += af::matmulNT(AA,AA);
-	#elif USE_BLAZE //Using blaze
-		M += blaze::declsym( A * blaze::trans(A) );
-	#else //Using Eigen, but not in fuzzy-min mode.
-		M += A*A.transpose();
-	#endif
+        
+        // M += A*A^T
+        AddTransposeProduct(M,A);
+        
 		cout << "\t And " << C.Reset() << "s to multiply the matrices." << endl;
         double time = T.Peek();
 		cout << "Done with block " << block+1 << " of " << num_full_blocks+num_partial_blocks 
@@ -328,4 +348,21 @@ void GraphCalculator::Normalize(vector<vector<Point>>& U)
 			P *= grid;
 		}
 	}
+	
+	radius.resize(U.size());
+	int species = 0;
+	for (auto& u : U)
+	{
+		double dist = 0;
+		for (int i = 0; i < u.size(); ++i)
+		{
+			for (int j = i+1; j < u.size(); ++j)
+			{
+				dist += u[i].Distance(u[j]);
+			}
+		}
+		radius[species] = 2.0*dist/(u.size()*(u.size()-1));
+		++species;
+	}
+	cout << "radiuses: " << radius << endl;
 }

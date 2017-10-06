@@ -5,8 +5,8 @@ Construction of a digraph based on data points from observations of ecological d
 
 First, you need to make sure you have the following dependencies:
 ```
-g++ or clang++
-blaze or eigen3
+g++ (or clang++)
+eigen3 (or blaze)
 boost
 cmake
 ```
@@ -14,7 +14,7 @@ cmake
 ### Installing dependencies in debian/ubuntu/mint
 For example, to install in debian/ubuntu, do `sudo apt-get install build-essentials libboost-all-dev cmake git eigen3`
 
-Then, if you wish, you can install blaze manually. See [https://bitbucket.org/blaze-lib/blaze/wiki/Configuration%20and%20Installation]. On some machines, blaze is faster than eigen, but in some it doesn't.
+Then, if you wish, you can install blaze manually. See [https://bitbucket.org/blaze-lib/blaze/wiki/Configuration%20and%20Installation]. On some machines, blaze is faster than eigen, but in some it isn't. If unsure, or if you don't need the absolute fastest, just use eigen.
 
 ### Installing dependencies in arch/chakra/manjaro
 In a terminal, type:
@@ -40,7 +40,7 @@ After the dependencies are satisfied, just do the usual:
 	make
 ```
 
-If you wish to use eigen instead of blaze, you can replace `cmake ..` by `cmake .. -DUSE_BLAZE=OFF`. 
+If you wish to use blaze instead of eigen, you can replace `cmake ..` by `cmake .. -DBUILD_USING_EIGEN=OFF` or `cmake .. -DBUILD_USING_BLAZE=ON`. 
 
 To build the Quercus Oaxaca Graph using default options (i.e. for an example), see:
 ```bash

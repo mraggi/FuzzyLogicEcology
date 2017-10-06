@@ -12,7 +12,10 @@ namespace po = boost::program_options;
 #include "Mu.hpp"
 #include "GraphCalculator.hpp"
 #include "argumentparser.hpp"
-#include "edge.hpp"
+#include "Graph.hpp"
+#include "GraphMeasures.hpp"
+
+void printLibraryMessage();
 
 int main(int argc, char* argv[])
 {
@@ -63,22 +66,33 @@ int main(int argc, char* argv[])
 
 		cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << endl;
 		Matrix M = GC.CalculateGraph();
+		
+		for (int i = 0; i < numspecies; ++i)
+		{
+			cout << "  " << names[i] << " has area " << GC.GetTotalArea(i) << endl;
+		}
+		
+		cout << endl << "Adjacency Matrix: " << endl;
 		cout << M << endl;
 
 		cout << "Done Calculating Graph in " << chrono.Peek() << "s." << endl;
 		cout  << endl << "------------------------------" << endl << endl;
 
-		auto edges = FromAdjacencyMatrix(M);
+		DiGraph D = DiGraph::FromAdjacencyMatrix(M);
+		
+		auto edges = D.edges();
 
 
-		sort(edges.begin(), edges.end(), [](const Edge & a, const Edge & b)
+		auto by_weight = [](const Edge & a, const Edge & b)
 		{
-			return a.weight < b.weight;
-		});
+			return a.weight() < b.weight();
+		};
+		
+		sort(edges.begin(), edges.end(), by_weight);
 				
 		for (const auto& e : edges)
 		{
-			cout << '\"' << names[e.from] << "\" ---> \"" << names[e.to]  << '\"' << " with weight " << e.weight << endl;
+			cout << '\"' << names[e.from] << "\" ---> \"" << names[e.to]  << '\"' << " with weight " << e.weight() << endl;
 		}
 		
 		if (AP.outfile != "")
@@ -87,22 +101,39 @@ int main(int argc, char* argv[])
 			out << "G = DiGraph()\n";
 			for (auto e : edges)
 			{
-				out << "G.add_edge(\"" << names[e.from] << "\",\"" << names[e.to]  << '\"' << "," << e.weight << ")\n";
+				out << "G.add_edge(\"" << names[e.from] << "\",\"" << names[e.to]  << '\"' << "," << e.weight() << ")\n";
 			}
 		}
 
 		cout << "Grid: " << AP.grid << endl;
 		cout << "Visibility: " << AP.visibility << endl;
 
-#if FUZZY_MIN
-		cout << "USING EIGEN (FUZZY MIN mode)" << endl;
-#elif USE_BLAZE
-		cout << "USING BLAZE (FUZZY PRODUCT mode)" << endl;
-#else
-		cout << "USING EIGEN (FUZZY PRODUCT mode)" << endl;
-#endif
+        printLibraryMessage();
 		
 		cout << endl << "Total time: " << chrono.Peek() << endl;
+		
+		
+// 		auto CC = ReduceToFindEndemism(D,0.15);
+// 		int i = 0;
+// 		for (auto& c : CC)
+// 		{
+// 			cout << "Connected component " << i << " of size " << c.size() << endl;
+// 			
+// 			for (auto especie : c)
+// 			{
+// 				cout << '\t' << names[especie] << endl;
+// 			}
+// 			cout << endl;
+// 			++i;
+// 		}
+// 		
+// 		cout << "Vector of areas: ";
+// 		for (int i = 0; i < numspecies; ++i)
+// 		{
+// 			cout << GC.GetTotalArea(i) << ", ";
+// 		}
+// 		cout << endl;
+		
 	}
 	catch (std::exception& e)
 	{
@@ -111,4 +142,18 @@ int main(int argc, char* argv[])
 	}
 
 	return 0;
+}
+
+
+void printLibraryMessage()
+{
+    #if FUZZY_MIN
+		cout << "USING EIGEN (FUZZY MIN mode)" << endl;
+    #elif USE_BLAZE
+        cout << "USING BLAZE (FUZZY PRODUCT mode)" << endl;
+    #elif USE_EIGEN
+        cout << "USING EIGEN (FUZZY PRODUCT mode)" << endl;
+    #else
+        cout << "Error: You must use either Eigen or Blaze!" << endl;
+    #endif
 }
