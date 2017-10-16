@@ -22,9 +22,11 @@ int main(int argc, char* argv[])
 	std::ios_base::sync_with_stdio(false);
     cout << setprecision(3) << std::fixed;
     srand(time(NULL));
+
+    
+    Chronometer chrono;
 	try
 	{
-		Chronometer chrono;
 		ArgumentParser AP(argc,argv);
 		
 		if (AP.should_exit)
@@ -110,29 +112,9 @@ int main(int argc, char* argv[])
 
         printLibraryMessage();
 		
-		cout << endl << "Total time: " << chrono.Peek() << endl;
 		
-		
-// 		auto CC = ReduceToFindEndemism(D,0.15);
-// 		int i = 0;
-// 		for (auto& c : CC)
-// 		{
-// 			cout << "Connected component " << i << " of size " << c.size() << endl;
-// 			
-// 			for (auto especie : c)
-// 			{
-// 				cout << '\t' << names[especie] << endl;
-// 			}
-// 			cout << endl;
-// 			++i;
-// 		}
-// 		
-// 		cout << "Vector of areas: ";
-// 		for (int i = 0; i < numspecies; ++i)
-// 		{
-// 			cout << GC.GetTotalArea(i) << ", ";
-// 		}
-// 		cout << endl;
+        cout << "Areas: ";
+        GC.printAreaVector(std::cout, ',');
 		
 	}
 	catch (std::exception& e)
@@ -141,6 +123,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	cout << endl << "Total time: " << chrono.Peek() << endl;
 	return 0;
 }
 

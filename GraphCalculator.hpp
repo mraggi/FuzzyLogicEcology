@@ -27,29 +27,18 @@ public:
 	
 	double GetTotalArea(int species) const;
 	
+    void printAreaVector(std::ostream& os = std::cout, char sep = ' ');
+    
 private: //functions
 	void Realize(MatrixXd& A, long row, long block);
 	void Normalize(vector<vector<Point>>& U);
 	void SetBlockSize(long memoryAvailable);
+    
 	template<class Mat>
 	Matrix DivideByArea(const Mat& M) const;
 
-	inline void UpdateFunction(const Point& p, const long& x, const long& y, double& a, int i = -1)
-    {
-        double XX = (p.x-x)*(p.x-x);
-        double YY = (p.y-y)*(p.y-y);
-        #if FUZZY_MIN
-            a = max(double(a),exp(-Cmx*XX - Cmy*YY));
-		#elif PROMISCUIDAD
-			double r = radius[i];
-			if (XX+YY < r*r)
-			{
-				a = 1.0;
-			}
-        #else
-            a *= (1.0-exp(-Cmx*XX - Cmy*YY));
-        #endif
-    }
+    // A tiny bit faster if inlined. Who cares?
+	inline void UpdateFunction(const Point& p, const long& x, const long& y, double& a, int i = -1);
 // public:
 private: // variables
 	vector<double> Area;	
@@ -81,4 +70,13 @@ private: // variables
 };
 
 
-
+void GraphCalculator::UpdateFunction(const Point& p, const long& x, const long& y, double& a, int i)
+{
+    double XX = (p.x-x)*(p.x-x);
+    double YY = (p.y-y)*(p.y-y);
+    #if FUZZY_MIN
+        a = max(double(a),exp(-Cmx*XX - Cmy*YY));
+    #else
+        a *= (1.0-exp(-Cmx*XX - Cmy*YY));
+    #endif
+}

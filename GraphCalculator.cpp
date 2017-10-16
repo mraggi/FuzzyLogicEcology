@@ -3,10 +3,6 @@
 
 #include "GraphCalculator.hpp"
 
-#if USE_GPU
-	#include <arrayfire.h>
-#endif
-
 GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const vector<vector<Point>>& U, size_t memoryAvailable) : grid(_grid), Area(U.size(),0.0)
 {
 	double sigma = VisibilityRangeInKm;
@@ -46,19 +42,21 @@ void GraphCalculator::SetBlockSize(long memoryAvailable)
 	if (num_cols_partial_block != 0)
 		num_partial_blocks = 1;
 	
-	cout << "Total memory (if everything was put on memory): " << double(memoryNeeded)/GB << "GB" << endl;
-	cout << "Available memory: " << double(memoryAvailable)/GB << "GB" << endl;
-	cout << "Total number of columns: " << total_columns << endl; 
-	cout << "So I need " << num_full_blocks << " full blocks and " << num_partial_blocks << " partial blocks." << endl;
+	cout << "Total memory (if everything was put on memory): " << double(memoryNeeded)/GB << "GB" << '\n';
+	cout << "Available memory: " << double(memoryAvailable)/GB << "GB\n";
+	cout << "Total number of columns: " << total_columns << '\n'; 
+	cout << "So I need " << num_full_blocks << " full blocks and " << num_partial_blocks << " partial blocks.\n";
 	
 	cout << "Full blocks have " << num_cols_per_block << " columns and consume " 
-		 << double(num_cols_per_block*memoryPerColumn)/GB << "GB of memory." << endl;
+		 << double(num_cols_per_block*memoryPerColumn)/GB << "GB of memory.\n";
 		 
-	cout << "Partial blocks have " << num_cols_partial_block << " columns and consume " 
-		 << double(num_cols_partial_block*memoryPerColumn)/GB << "GB of memory." << endl;
+	cout << "Partial block has " << num_cols_partial_block << " columns and consumes " 
+		 << double(num_cols_partial_block*memoryPerColumn)/GB << "GB of memory.\n";
 		 
-	cout << "******************************************************************\n" << endl;
+	cout << "******************************************************************\n\n" << std::flush;
 }
+
+
 
 inline long num_columns(const MatrixXd& A)
 {
@@ -132,7 +130,7 @@ void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 		}
 	}
 	
-#if (!FUZZY_MIN && !PROMISCUIDAD)
+#if (!FUZZY_MIN)
 	for (size_t col = 0; col < num_columns(A); ++col)
 		A(species,col) += 1.0;
 #endif
@@ -173,7 +171,7 @@ void printNonZeros(const MatrixXd& A)
 		{
 			if (A(x,y) > scalar_min_t(0.001))
 			{
-				cout << "(" << x << "," << y << "): " << A(x,y) << endl;
+				cout << "(" << x << "," << y << "): " << A(x,y) << '\n';
 			}
 		}
 	}
@@ -203,41 +201,34 @@ inline void AddTransposeProduct(Mat& M, Mat& A)
 {
     #if FUZZY_MIN //Using Eigen, but in fuzzy-min mode
 		M += A.lazyProduct(A.transpose());
-	#elif USE_GPU 
-		af::array AA(num_rows(A), num_columns(A), A.data());
-		M += af::matmulNT(AA,AA);
+    #elif USE_EIGEN 
+		M += A*A.transpose();
 	#elif USE_BLAZE 
 		M += blaze::declsym( A * blaze::trans(A) );
-	#elif USE_EIGEN 
-		M += A*A.transpose();
 	#endif
 }
 
 Matrix GraphCalculator::CalculateGraph()
 {
-	
-	Chronometer T;
+	Chronometer FromStart;
+    
 	size_t numspecies = E.size();
-	
+    size_t num_blocks = num_full_blocks + num_partial_blocks;
+
 	MatrixXd A(numspecies,num_cols_per_block);
 	
-#if USE_GPU
-// 	af::array AA(A.rows(), num_columns(A),f64);
-	af::array M(numspecies,numspecies);
-#else
 	MatrixXd M(numspecies,numspecies);
-#endif
 	
 	for (size_t block = 0; block < num_full_blocks + num_partial_blocks; ++block)
 	{
-		Chronometer C;
-		cout << endl << "Starting block " << block+1 << endl;
+		Chronometer BlockTimer;
+		cout << "\nStarting block " << block+1 << endl;
 		if (block == num_full_blocks)
 			A.resize(numspecies,num_cols_partial_block);
 		
         ResetMatrix(A);
         
-		cout << "\tTook " << C.Reset() << "s to initialize matrix to -1" << endl;
+		cout << "\tTook " << BlockTimer.Reset() << "s to initialize matrix to -1" << endl;
         
 		#pragma omp parallel for
 		for (size_t species = 0; species < numspecies; ++species)
@@ -245,17 +236,21 @@ Matrix GraphCalculator::CalculateGraph()
 			Realize(A,species, block);
 			UpdateArea(Area,A,species);
 		}
-		cout << "\t Block " << block+1 << " took " << C.Reset() << " to realize." << endl;
+		cout << "\t Block " << block+1 << " took " << BlockTimer.Reset() << " to realize." << endl;
         
         // M += A*A^T
         AddTransposeProduct(M,A);
+
+		cout << "\t And " << BlockTimer.Reset() << "s to multiply the matrices.\n";
         
-		cout << "\t And " << C.Reset() << "s to multiply the matrices." << endl;
-        double time = T.Peek();
-		cout << "Done with block " << block+1 << " of " << num_full_blocks+num_partial_blocks 
-             << ". Expected remaining time: " << time*double(num_full_blocks+num_partial_blocks)/(block+1) - time << 's' << endl; 
+        double running_time = FromStart.Peek();
+        double total_time = running_time*double(num_blocks)/(block+1);
+		
+        cout << "Done with block " << block+1 << " of " << num_blocks 
+             << ". Expected remaining time: " << total_time - running_time << 's' << endl;
 	}
-	cout << "Total Time taken: " << T.Reset() << endl;
+	
+	cout << "Total Time taken: " << FromStart.Reset() << endl;
 	
 
 	return DivideByArea(M);
@@ -265,9 +260,6 @@ template<class Mat>
 Matrix GraphCalculator::DivideByArea(const Mat& M) const
 {
 	auto numspecies = Area.size();
-#if USE_GPU
-	double* MM = M.host<double>();
-#endif
 	
 	Matrix R(numspecies,Row(numspecies));
 	for (size_t x = 0; x < numspecies; ++x)
@@ -280,12 +272,7 @@ Matrix GraphCalculator::DivideByArea(const Mat& M) const
 		{
 			if (Area[x] > tolerance)
 			{
-#if USE_GPU
-				int index = x*grid + y;
-				R[x][y] = MM[index]/Area[x];
-#else
-				R[x][y] = M(x,y)/Area[x];
-#endif
+                R[x][y] = M(x,y)/Area[x];
 			}
 			else
 			{
@@ -293,9 +280,7 @@ Matrix GraphCalculator::DivideByArea(const Mat& M) const
 			}
 		}
 	}
-#if USE_GPU
-	af::freeHost(MM);
-#endif
+
 	return R;
 }
 
@@ -303,7 +288,6 @@ double GraphCalculator::GetTotalArea(int species) const
 {
 	return Area[species]*F.x*F.y/(grid*grid);
 }
-
 
 void GraphCalculator::Normalize(vector<vector<Point>>& U)
 {
@@ -314,7 +298,6 @@ void GraphCalculator::Normalize(vector<vector<Point>>& U)
 	
 	for (const auto& u : U)
 	{
-		
 		for (const Point& p : u)
 		{
 			double x = p.x;
@@ -348,21 +331,14 @@ void GraphCalculator::Normalize(vector<vector<Point>>& U)
 			P *= grid;
 		}
 	}
-	
-	radius.resize(U.size());
-	int species = 0;
-	for (auto& u : U)
-	{
-		double dist = 0;
-		for (int i = 0; i < u.size(); ++i)
-		{
-			for (int j = i+1; j < u.size(); ++j)
-			{
-				dist += u[i].Distance(u[j]);
-			}
-		}
-		radius[species] = 2.0*dist/(u.size()*(u.size()-1));
-		++species;
-	}
-	cout << "radiuses: " << radius << endl;
+}
+
+void GraphCalculator::printAreaVector(std::ostream& os, char sep)
+{
+    os << GetTotalArea(0);
+    for (size_t i = 1; i < Area.size(); ++i)
+    {
+        os << sep << GetTotalArea(i);
+    }
+    os << endl;
 }

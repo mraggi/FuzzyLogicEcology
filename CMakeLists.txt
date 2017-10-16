@@ -27,13 +27,10 @@ OPTION(USE_FUZZY_MINIMUM_INSTEAD_OF_PRODUCT "Use the model of Fuzzy logic where 
 OPTION(BUILD_USING_BLAZE "Use Blaze Library for Linear Algebra" OFF)
 OPTION(BUILD_USING_EIGEN "Use Eigen Library for Linear Algebra" ON)
 
-OPTION(BUILD_GPU "Build GPU version using arrayfire" OFF)
-
 if (${USE_FUZZY_MINIMUM_INSTEAD_OF_PRODUCT})
     set(BUILD_USING_EIGEN ON)
 	set(BUILD_USING_BLAZE OFF)
-	set(BUILD_GPU OFF)
-	message("Blaze Library and GPU not available when using minimum instead of product")
+	message("Blaze Library not available when using minimum instead of product")
 endif()
 
 if (BUILD_USING_BLAZE)
@@ -62,7 +59,7 @@ if (${USE_FUZZY_MINIMUM_INSTEAD_OF_PRODUCT})
 	add_definitions(-DFUZZY_MIN)
 endif()
 
-add_definitions(-DPROMISCUIDAD)
+# add_definitions(-DPROMISCUIDAD)
 
 set(EXTRA_LIBS ${Boost_LIBRARIES}  
 			   ${CMAKE_THREAD_LIBS_INIT})
@@ -82,37 +79,6 @@ if (${BUILD_USING_MP})
 	else()
 		set(BUILD_USING_MP OFF)
 		message("OpenMP not found! Turning off openmp :(")
-	endif()
-endif()
-
-
-if (${BUILD_GPU})
-	find_package(ArrayFire)
-	find_package(CUDA) 
-	find_package(NVVM)
-	find_package(OpenCL)
-	if(ArrayFire_CUDA_FOUND)
-	include_directories(${ArrayFire_INCLUDE_DIRS})
-		message("ArrayFire CUDA found at " ${ArrayFire_INCLUDE_DIRS})
-		add_definitions(-DUSE_GPU)
-		
-		set(EXTRA_LIBS  ${EXTRA_LIBS} 
-					    ${ArrayFire_CUDA_LIBRARIES} 
-					    ${CUDA_LIBRARIES} 
-					    ${NVVM_LIB})
-					   
-	elseif(ArrayFire_OpenCL_FOUND)
-		include_directories(${ArrayFire_INCLUDE_DIRS})
-		add_definitions(-DUSE_GPU)
-		
-		set(EXTRA_LIBS  ${EXTRA_LIBS} 
-						${ArrayFire_OpenCL_LIBRARIES} 
-						${OpenCL_LIBRARIES})
-						
-		message("ArrayFire OpenCL found at "  ${ArrayFire_INCLUDE_DIRS})
-	else()
-		message("ArrayFire not found! To use the GPU, you need to install ArrayFire. Falling back to CPU.")
-		set(BUILD_GPU OFF)
 	endif()
 endif()
 
