@@ -9,8 +9,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/QuercusOaxaca.txt ${CMAKE_CURRENT_BIN
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/quercus_build_graph.sh ${CMAKE_CURRENT_BINARY_DIR}/quercus_build_graph.sh COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lobatae.txt ${CMAKE_CURRENT_BINARY_DIR}/lobatae.txt COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lobatae_build_graph.sh ${CMAKE_CURRENT_BINARY_DIR}/lobatae_build_graph.sh COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/redes_centro.txt ${CMAKE_CURRENT_BINARY_DIR}/redes_centro.txt COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/centro_build_graph.sh ${CMAKE_CURRENT_BINARY_DIR}/centro_build_graph.sh COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/redes_centro.txt ${CMAKE_CURRENT_BINARY_DIR}/redes_centro.txt COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/centro_build_graph.sh ${CMAKE_CURRENT_BINARY_DIR}/centro_build_graph.sh COPYONLY)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/analyze_graph.sage ${CMAKE_CURRENT_BINARY_DIR}/analyze_graph.sage COPYONLY)
 

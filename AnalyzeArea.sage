@@ -1,6 +1,6 @@
 import numpy as np
 
-def AnalyzeAreas(A, num_bins = 30):
+def AnalyzeAreas(A, num_bins = 15):
     A.sort()
     # First, we simply fit an exponential curve a*e^(ci) for (i,Area[i])
     x=var('x')
