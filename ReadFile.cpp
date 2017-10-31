@@ -35,71 +35,15 @@ vector<vector<string>> ReadTable(istream& is)
 		++i;
 	}
 	
+	if (R.empty())
+	{
+		throw std::invalid_argument("Empy input stream!"s);
+	}
+	
 	return R;
 	
 }
 
-unordered_map<string,vector<Point>> QuercusExtractLocations(const vector<vector<string>>& U)
-{
-	unordered_map<string,vector<Point>> R;
-	
-	
-	
-	for (int i = 1; i < U.size(); ++i)
-	{
-		string name = U[i][1] + ' ' + U[i][2];
-		double x = stod(U[i][3]);
-		double y = stod(U[i][4]);
-		
-		
-		
-		R[name].emplace_back(x,y);
-	}
-	
-	
-	
-	return R;
-}
-
-unordered_map<string,vector<Point>> LobataeExtractLocations(const vector<vector<string>>& U)
-{
-	unordered_map<string,vector<Point>> R;
-	
-	
-	
-	for (int i = 1; i < U.size(); ++i)
-	{
-		string name = U[i][1];
-		double x = stod(U[i][2]);
-		double y = stod(U[i][3]);
-		
-		R[name].emplace_back(x,y);
-	}
-	
-	
-	
-	return R;
-}
-
-unordered_map<string,vector<Point>> CentroExtractLocations(const vector<vector<string>>& U)
-{
-	unordered_map<string,vector<Point>> R;
-	
-	
-	
-	for (int i = 1; i < U.size(); ++i)
-	{
-		string name = U[i][0]+ ' ' +U[i][1]+ ' ' +U[i][2]+ ' ' +U[i][3]+ ' ' +U[i][4]+ ' ' +U[i][5]+ ' ' +U[i][6];
-		double x = stod(U[i][7]);
-		double y = stod(U[i][8]);
-		
-		R[name].emplace_back(x,y);
-	}
-	
-	
-	
-	return R;
-}
 
 unordered_map<string,vector<Point>> ExtractLocations(const vector<vector<string>>& U, const vector<int>& names, int longitude, int latitude)
 {

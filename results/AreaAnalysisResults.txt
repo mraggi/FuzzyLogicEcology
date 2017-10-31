@@ -1,0 +1,124 @@
+************* Analyzing QUERCUS with PRODUCT *************
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 2954.292138
+         Iterations: 9
+         Function evaluations: 268
+(a,c) =  (2.6142319313707314, 0.08274196700603811)
+Launched png viewer for Graphics object consisting of 57 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 1924.779152
+         Iterations: 9
+         Function evaluations: 487
+(a,b,c) =  (1.3731221546891403, -0.05297125501054774, 0.7089878097849192)
+Launched png viewer for Graphics object consisting of 57 graphics primitives
+Finished fitting logistic model
+
+
+************* Analyzing QUERCUS with MIN *************
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 2904.329751
+         Iterations: 9
+         Function evaluations: 269
+(a,c) =  (2.4918041665793766, 0.0829768650012842)
+Launched png viewer for Graphics object consisting of 58 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 1930.118572
+         Iterations: 9
+         Function evaluations: 480
+(a,b,c) =  (1.3199765011566056, -0.05296078020150382, 0.7091338310712562)
+Launched png viewer for Graphics object consisting of 57 graphics primitives
+Finished fitting logistic model
+
+
+************* Analyzing LOBATAE with PRODUCT *************
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 499726.739658
+         Iterations: 18
+         Function evaluations: 577
+(a,c) =  (1.4459936495816534, 0.06749587740193763)
+Launched png viewer for Graphics object consisting of 105 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 271769.032279
+         Iterations: 9
+         Function evaluations: 512
+(a,b,c) =  (4.182592756492955, -0.06552435504179024, 0.5800359656675861)
+Launched png viewer for Graphics object consisting of 105 graphics primitives
+Finished fitting logistic model
+
+
+************* Analyzing LOBATAE with MIN *************
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 494002.669200
+         Iterations: 18
+         Function evaluations: 531
+(a,c) =  (1.2006983714784722, 0.06919061405306749)
+Launched png viewer for Graphics object consisting of 105 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 265087.469709
+         Iterations: 10
+         Function evaluations: 557
+(a,b,c) =  (4.166357132117056, -0.07012451773483061, 0.5658562471203775)
+Launched png viewer for Graphics object consisting of 105 graphics primitives
+Finished fitting logistic model
+
+
+************* Analyzing CENTRO with PRODUCT *************
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 806857.883159
+         Iterations: 56
+         Function evaluations: 1608
+(a,c) =  (5.25339042665486, 0.029900214414906857)
+Launched png viewer for Graphics object consisting of 202 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 647399.039951
+         Iterations: 7
+         Function evaluations: 400
+(a,b,c) =  (4.743049876256742, -0.04226315664381227, 0.5884672351886484)
+Launched png viewer for Graphics object consisting of 202 graphics primitives
+Finished fitting logistic model
+
+
+************* Analyzing CENTRO with MIN *************
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 806740.602998
+         Iterations: 56
+         Function evaluations: 1603
+(a,c) =  (4.342515483984308, 0.03043402348021597)
+Launched png viewer for Graphics object consisting of 202 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 560725.879699
+         Iterations: 8
+         Function evaluations: 461
+(a,b,c) =  (4.276937260302549, -0.04316694314888798, 0.5848770785457595)
+Launched png viewer for Graphics object consisting of 202 graphics primitives
+Finished fitting logistic model
