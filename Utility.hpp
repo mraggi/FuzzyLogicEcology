@@ -3,9 +3,11 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
-
+using std::vector;
+using std::cout;
+using std::cerr;
+using std::max;
+using std::endl;
 
 template <class T> 
 std::ostream& operator<<(std::ostream& os, const vector<T>& X)

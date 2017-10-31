@@ -1,5 +1,6 @@
 #include <iomanip>
 #include <cassert>
+#include <fstream>
 
 #include "GraphCalculator.hpp"
 
@@ -70,7 +71,7 @@ inline long num_columns(const MatrixXd& A)
 inline long num_rows(const MatrixXd& A)
 {
 	return A.rows(); 
-    // I know it's the same in both libraries. Only here to be consistent with cols
+	// I know it's the same in both libraries. Only here to be consistent with cols
 }
 
 void GraphCalculator::Realize(MatrixXd& A, long species, long block)
@@ -123,9 +124,9 @@ void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 			for (long y = my; y < My; ++y)
 			{
 				long index = x*N+y - offset;
-                
-                UpdateFunction(p,x,y,A(species,index),species);
-                
+				
+				UpdateFunction(p,x,y,A(species,index),species);
+				
 			}
 		}
 	}
@@ -199,9 +200,9 @@ inline void ResetMatrix(Mat& A)
 template <class Mat>
 inline void AddTransposeProduct(Mat& M, Mat& A)
 {
-    #if FUZZY_MIN //Using Eigen, but in fuzzy-min mode
+	#if FUZZY_MIN //Using Eigen, but in fuzzy-min mode
 		M += A.lazyProduct(A.transpose());
-    #elif USE_EIGEN 
+	#elif USE_EIGEN 
 		M += A*A.transpose();
 	#elif USE_BLAZE 
 		M += blaze::declsym( A * blaze::trans(A) );
@@ -211,9 +212,9 @@ inline void AddTransposeProduct(Mat& M, Mat& A)
 Matrix GraphCalculator::CalculateGraph()
 {
 	Chronometer FromStart;
-    
+	
 	size_t numspecies = E.size();
-    size_t num_blocks = num_full_blocks + num_partial_blocks;
+	size_t num_blocks = num_full_blocks + num_partial_blocks;
 
 	MatrixXd A(numspecies,num_cols_per_block);
 	
@@ -226,10 +227,10 @@ Matrix GraphCalculator::CalculateGraph()
 		if (block == num_full_blocks)
 			A.resize(numspecies,num_cols_partial_block);
 		
-        ResetMatrix(A);
-        
+		ResetMatrix(A);
+		
 		cout << "\tTook " << BlockTimer.Reset() << "s to initialize matrix to -1" << endl;
-        
+		
 		#pragma omp parallel for
 		for (size_t species = 0; species < numspecies; ++species)
 		{
@@ -237,17 +238,17 @@ Matrix GraphCalculator::CalculateGraph()
 			UpdateArea(Area,A,species);
 		}
 		cout << "\t Block " << block+1 << " took " << BlockTimer.Reset() << " to realize." << endl;
-        
-        // M += A*A^T
-        AddTransposeProduct(M,A);
+		
+		// M += A*A^T
+		AddTransposeProduct(M,A);
 
 		cout << "\t And " << BlockTimer.Reset() << "s to multiply the matrices.\n";
-        
-        double running_time = FromStart.Peek();
-        double total_time = running_time*double(num_blocks)/(block+1);
 		
-        cout << "Done with block " << block+1 << " of " << num_blocks 
-             << ". Expected remaining time: " << total_time - running_time << 's' << endl;
+		double running_time = FromStart.Peek();
+		double total_time = running_time*double(num_blocks)/(block+1);
+		
+		cout << "Done with block " << block+1 << " of " << num_blocks 
+			 << ". Expected remaining time: " << total_time - running_time << 's' << endl;
 	}
 	
 	cout << "Total Time taken: " << FromStart.Reset() << endl;
@@ -259,20 +260,20 @@ Matrix GraphCalculator::CalculateGraph()
 template<class Mat>
 Matrix GraphCalculator::DivideByArea(const Mat& M) const
 {
-	auto numspecies = Area.size();
+	auto numspecies = num_species();
 	
 	Matrix R(numspecies,Row(numspecies));
 	for (size_t x = 0; x < numspecies; ++x)
 	{
 		if (Area[x] <= tolerance)
 		{
-			cerr << "Area of X = 0! Increase grid size!!" << endl;
+			cerr << "Area of X = 0! Increase grid size!" << endl;
 		}
 		for (size_t y = 0; y < numspecies; ++y)
 		{
 			if (Area[x] > tolerance)
 			{
-                R[x][y] = M(x,y)/Area[x];
+				R[x][y] = M(x,y)/Area[x];
 			}
 			else
 			{
@@ -335,10 +336,26 @@ void GraphCalculator::Normalize(vector<vector<Point>>& U)
 
 void GraphCalculator::printAreaVector(std::ostream& os, char sep)
 {
-    os << GetTotalArea(0);
-    for (size_t i = 1; i < Area.size(); ++i)
-    {
-        os << sep << GetTotalArea(i);
-    }
-    os << endl;
+	os << GetTotalArea(0);
+	for (size_t i = 1; i < num_species(); ++i)
+	{
+		os << sep << GetTotalArea(i);
+	}
+	os << endl;
 }
+
+
+// void GraphCalculator::WriteArcGis(const string& prefix)
+// {
+//	 for (int sp = 0; sp < num_species(); ++sp)
+//	 {
+//		 string fn = filename + to_string(sp) + ".txt";
+//		 
+//		 std::ofstream ofs(fn, std::ifstream::out);
+//		 ofs << "ncols " << grid << '\n';
+//		 ofs << "nrows " << grid << '\n';
+//		 ofs << "xllcorner " << O.x << '\n';
+//		 ofs << "yllcorner " << O.y << '\n';
+//	 }
+// }
+

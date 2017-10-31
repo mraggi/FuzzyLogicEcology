@@ -1,4 +1,5 @@
 .kdev4
+redes_centro.txt
 FuzzyLogicEcology.kdev4
 build*
 Graph
@@ -9,3 +10,4 @@ Paper/FuzzyLogic.log
 Paper/FuzzyLogic.out
 Paper/FuzzyLogic.synctex.gz
 Paper/FuzzyLogic.tex.backup
+old

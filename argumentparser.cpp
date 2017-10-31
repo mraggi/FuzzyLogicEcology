@@ -6,7 +6,10 @@
 #include <boost/program_options.hpp>
 #include "argumentparser.hpp"
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+using std::vector;
 namespace po = boost::program_options;
 
 ArgumentParser::ArgumentParser(int argc, char* argv[])
@@ -34,6 +37,7 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	("namecolumns,I", po::value< vector<int> >(), "name columns")
 	("input-file,i", po::value< vector<string> >(), "input file. If left blank, the program will read from STDIN")
 	("output-file,o", po::value< string >(), "sage output file.")	
+	("arcgis-outfile", po::value< vector<string> >(), "ArcGIS output files (see )http://webhelp.esri.com/arcgisdesktop/9.3/index.cfm?TopicName=ESRI\%20ASCII\%20Raster\%20format")
 	;
 
 	po::positional_options_description p;
@@ -48,6 +52,7 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 		cout << usage << '\n';
 		cout << desc;
 		should_exit = true;
+		return;
 	}
 
 	if (vm.count("namecolumns"))
@@ -55,12 +60,28 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 		cout << "Name columns are: " << vm["namecolumns"].as< vector<int> >().size() << ": " << vm["namecolumns"].as< vector<int> >() << '\n';
 	}
 
+	if (vm.count("arcgis-outfile"))
+	{
+		arcgisfile = vm["arcgis-outfile"].as< vector<string> >()[0];
+		cout << "Arcgis file prefix is: " << arcgisfile << '\n';
+	}
+	
 	if (vm.count("input-file"))
 	{
 		string filename = vm["input-file"].as< vector<string> >()[0];
 		cout << "Input file is: " << filename << '\n';
-		file.open(filename);
-		is = &file;
+		try
+		{
+		  file.open(filename);
+		  is = &file;
+		} catch (...)
+		{
+		  cout << "Error opening file: " << filename << endl;
+		  is = &std::cin;
+		}
+	} else
+	{
+	  cout << "No input file given. Will read from STDIN" << endl;
 	}
 	
 	if (vm.count("output-file"))
@@ -84,7 +105,7 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	{
 		cout << "Memory option not set. Attempting to use all system memory" << endl;
 		memoryAvailable = getTotalSystemMemory();
-        
+		
 		memoryAvailable -= 1*GB; // Leave at least 1 GB for the OS
 		memoryAvailable *= 0.9; // Don't use more than 90% of memory!
 		memoryAvailable = max(memoryAvailable,long(20L*MB)); // at least use 20MB

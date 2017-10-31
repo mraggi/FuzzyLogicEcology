@@ -14,15 +14,15 @@ constexpr double KmInADegree = (pi*EarthRadiusKm)/180.0;
 
 inline double RadiansToDegrees(double angle)
 {
-    return angle*180.0/pi;
+	return angle*180.0/pi;
 }
 
 //Returns an angle that is between -pi and pi.
 inline double MakeValidAngle(double theta)
 {
-    while (theta > pi) theta -= 2*pi;
-    while (theta < -pi) theta += 2*pi;
-    return theta;
+	while (theta > pi) theta -= 2*pi;
+	while (theta < -pi) theta += 2*pi;
+	return theta;
 }
 
 
@@ -54,7 +54,7 @@ public:
 	inline double Length() const   { return sqrt(x*x + y*y); }
 	inline double LengthSq() const { return x*x + y*y; }
 
-	inline double Angle() const    { return atan2(y,x); }
+	inline double Angle() const	{ return atan2(y,x); }
 	inline double AngleTo(const Point& vec)const { return MakeValidAngle(vec.Angle()-Angle()); }
 
 	inline bool IsCloserToFirstThanSecond(const Point& A, const Point& B) const { return DistanceSq(A) < DistanceSq(B); }
@@ -100,15 +100,15 @@ public:
 	Point Truncated(double r) const;
 
 	//Returns a point with same length that is rotated pi/2 counter-clockwise
-	inline Point Perp() const    { return Point(-y, x); }
+	inline Point Perp() const	{ return Point(-y, x); }
 
 	/* start Operator definitions */
 
 	const Point& operator=(const Point& other);
 	inline void operator+=(const Point &vec) { x += vec.x; y += vec.y;}
 	inline void operator-=(const Point &vec) { x -= vec.x; y -= vec.y;}
-	inline void operator*=(double num)            { x *= num; y *= num;}
-	inline void operator/=(double num)            { x /= num; y /= num;}
+	inline void operator*=(double num)			{ x *= num; y *= num;}
+	inline void operator/=(double num)			{ x /= num; y /= num;}
 	inline Point operator-(void) const { return Point(-x,-y); }
 
 	bool operator!=(const Point &vec) const;

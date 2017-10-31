@@ -31,13 +31,13 @@ bool Test11()
 int main()
 {
 	MatrixXd A(2,2);
-    A(0,0) = scalar_min_t(1);
-    A(0,1) = scalar_min_t(2);
-    A(1,0) = scalar_min_t(3);
-    A(1,1) = scalar_min_t(4);
-    cout << "A = " << endl << A << endl;
+	A(0,0) = scalar_min_t(1);
+	A(0,1) = scalar_min_t(2);
+	A(1,0) = scalar_min_t(3);
+	A(1,1) = scalar_min_t(4);
+	cout << "A = " << endl << A << endl;
 
-//     cout << "A*A = " << endl << A.lazyProduct(A) << endl;
+//	 cout << "A*A = " << endl << A.lazyProduct(A) << endl;
 	return 0;
 	
 // 	if (Test11())

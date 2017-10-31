@@ -73,19 +73,19 @@ struct Edge
 class Graph
 {
 public:
-    explicit Graph(vertex_t numberOfVertices):
+	explicit Graph(vertex_t numberOfVertices):
 			m_n(numberOfVertices),
 			m_graph(numberOfVertices)
-    {
-    }
-    
-    explicit Graph(const std::vector<std::string>& names):
+	{
+	}
+	
+	explicit Graph(const std::vector<std::string>& names):
 			m_n(names.size()),
 			m_graph(names.size())
-    {
+	{
 		set_names(names);
-    }
-    
+	}
+	
 	int degree(vertex_t a) const
 	{
 		return m_graph[a].size();
@@ -93,44 +93,44 @@ public:
 	
 	// Graph modification functions
 	void add_edge(vertex_t from, vertex_t to, weight_t w = 1)
-    {
+	{
 		m_graph[from].emplace_back(to,w);
 		m_graph[to].emplace_back(from,w);
 		m_neighbors_sorted = false;
-    }
-    
+	}
+	
 	void add_edge(const std::string& from, const std::string& to, weight_t w = 1)
-    {
+	{
 		vertex_t a = get_vertex_by_name(from);
 		vertex_t b = get_vertex_by_name(to);
 		add_edge(a,b,w);
-    }
+	}
 	
 	// Get Graph Info
 	vertex_t num_vertices() const { return m_n; }
 	size_t num_edges() const
-    {
-        size_t total = 0;
-        for (vertex_t u = 0; u < m_n; ++u)
-        {
-            total += degree(u);
-        }
-        return total/2;
-    }
+	{
+		size_t total = 0;
+		for (vertex_t u = 0; u < m_n; ++u)
+		{
+			total += degree(u);
+		}
+		return total/2;
+	}
 	
 	std::vector<Edge> edges() const
-    {
-        std::vector<Edge> total;
-        for (vertex_t u = 0; u < m_n; ++u)
-        {
-            for (auto v : m_graph[u])
-            {
-                if (v > u)
-                    total.emplace_back(u,v,v.weight());
-            }
-        }
-        return total;
-    }
+	{
+		std::vector<Edge> total;
+		for (vertex_t u = 0; u < m_n; ++u)
+		{
+			for (auto v : m_graph[u])
+			{
+				if (v > u)
+					total.emplace_back(u,v,v.weight());
+			}
+		}
+		return total;
+	}
 	
 	Graph induced_subgraph(const std::vector<vertex_t>& Vertices) const
 	{
@@ -216,21 +216,21 @@ public:
 		}
 	}
 	
-    Graph& operator+=(const Graph& G)
-    {
-        auto oldn = m_n;
-        auto newn = oldn+G.num_vertices();
-        m_graph.resize(newn);
-        
-        for (vertex_t u = 0; u < G.num_vertices(); ++u)
-        {
-            for (auto v : G.neighbors(u))
-                add_edge(u+oldn,v+oldn,v.weight());
-        }
-        m_n = newn;
-        return *this;
-    }
-    
+	Graph& operator+=(const Graph& G)
+	{
+		auto oldn = m_n;
+		auto newn = oldn+G.num_vertices();
+		m_graph.resize(newn);
+		
+		for (vertex_t u = 0; u < G.num_vertices(); ++u)
+		{
+			for (auto v : G.neighbors(u))
+				add_edge(u+oldn,v+oldn,v.weight());
+		}
+		m_n = newn;
+		return *this;
+	}
+	
 	void sort_neighbors()
 	{
 		if (m_neighbors_sorted)
@@ -322,14 +322,14 @@ private:
 class DiGraph
 {
 public:
-    explicit DiGraph(vertex_t numberOfVertices = 0):
+	explicit DiGraph(vertex_t numberOfVertices = 0):
 			m_n(numberOfVertices),
 			m_outgraph(numberOfVertices),
 			m_ingraph(numberOfVertices)
-    {
-    }
-    
-    static DiGraph FromAdjacencyMatrix(const std::vector<std::vector<double>>& A, double tolerance = 0.001)
+	{
+	}
+	
+	static DiGraph FromAdjacencyMatrix(const std::vector<std::vector<double>>& A, double tolerance = 0.001)
 	{
 		auto n = A.size();
 		DiGraph D(n);
@@ -359,44 +359,44 @@ public:
 	
 	// DiGraph modification functions
 	void add_edge(vertex_t from, vertex_t to, weight_t w = 1)
-    {
+	{
 		m_outgraph[from].emplace_back(to,w);
 		m_ingraph[to].emplace_back(from,w);
 		m_neighbors_sorted = false;
-    }
+	}
 	
 	void add_edge(const std::string& from, const std::string& to, weight_t w = 1)
-    {
+	{
 		vertex_t a = get_vertex_by_name(from);
 		vertex_t b = get_vertex_by_name(to);
 		add_edge(a,b,w);
-    }
+	}
 	
 	
 	// Get DiGraph Info
 	vertex_t num_vertices() const { return m_n; }
 	size_t num_edges() const
-    {
-        size_t total = 0;
-        for (vertex_t u = 0; u < m_n; ++u)
-        {
-            total += outdegree(u);
-        }
-        return total;
-    }
+	{
+		size_t total = 0;
+		for (vertex_t u = 0; u < m_n; ++u)
+		{
+			total += outdegree(u);
+		}
+		return total;
+	}
 	
 	std::vector<Edge> edges() const
-    {
-        std::vector<Edge> total;
-        for (vertex_t u = 0; u < m_n; ++u)
-        {
-            for (auto v : m_outgraph[u])
-            {
-                total.emplace_back(u,v,v.weight());
-            }
-        }
-        return total;
-    }
+	{
+		std::vector<Edge> total;
+		for (vertex_t u = 0; u < m_n; ++u)
+		{
+			for (auto v : m_outgraph[u])
+			{
+				total.emplace_back(u,v,v.weight());
+			}
+		}
+		return total;
+	}
 	
 	inline const std::vector<Neighbor>& outneighbors(vertex_t n) const { return m_outgraph[n]; }
 	inline const std::vector<Neighbor>& inneighbors(vertex_t n) const { return m_ingraph[n]; }
@@ -408,15 +408,15 @@ public:
 	template<class Compare>
 	inline const weight_t edge_value(vertex_t from, vertex_t to, Compare outcomp) const 
 	{
-        auto it = std::partition_point(outneighbors(from).begin(), outneighbors(from).end(), [to,outcomp](const vertex_t& a)
-        {
-            return outcomp(a, to);
-        });
-        if (it == outneighbors(from).end())
-            return 0;
-        if (*it == to)
-            return it->weight();
-        return 0;
+		auto it = std::partition_point(outneighbors(from).begin(), outneighbors(from).end(), [to,outcomp](const vertex_t& a)
+		{
+			return outcomp(a, to);
+		});
+		if (it == outneighbors(from).end())
+			return 0;
+		if (*it == to)
+			return it->weight();
+		return 0;
 	}
 	
 	void sort_neighbors()

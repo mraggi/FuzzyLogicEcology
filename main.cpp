@@ -20,11 +20,11 @@ void printLibraryMessage();
 int main(int argc, char* argv[])
 {
 	std::ios_base::sync_with_stdio(false);
-    cout << setprecision(3) << std::fixed;
-    srand(time(NULL));
+	cout << setprecision(3) << std::fixed;
+	srand(time(NULL));
 
-    
-    Chronometer chrono;
+	
+	Chronometer chrono;
 	try
 	{
 		ArgumentParser AP(argc,argv);
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 		for (const auto& v : V)
 		{
 			cout << "# "  << num << ' ' << v.first << " has " << v.second.size() << " observations \n";
-            ++num;
+			++num;
 		}
 		cout << "***********************************************" << endl;
 		
@@ -110,12 +110,17 @@ int main(int argc, char* argv[])
 		cout << "Grid: " << AP.grid << endl;
 		cout << "Visibility: " << AP.visibility << endl;
 
-        printLibraryMessage();
+		printLibraryMessage();
 		
 		
-        cout << "Areas: ";
-        GC.printAreaVector(std::cout, ',');
+		cout << "Areas: ";
+		GC.printAreaVector(std::cout, ',');
 		
+		if (AP.arcgisfile != "")
+		{
+//			 GC.WriteArcGis(AP.arcgisfile);
+			cout << "Operation writing to arcgis file not supported yet :(" << endl;
+		}
 	}
 	catch (std::exception& e)
 	{
@@ -130,13 +135,13 @@ int main(int argc, char* argv[])
 
 void printLibraryMessage()
 {
-    #if FUZZY_MIN
+	#if FUZZY_MIN
 		cout << "USING EIGEN (FUZZY MIN mode)" << endl;
-    #elif USE_BLAZE
-        cout << "USING BLAZE (FUZZY PRODUCT mode)" << endl;
-    #elif USE_EIGEN
-        cout << "USING EIGEN (FUZZY PRODUCT mode)" << endl;
-    #else
-        cout << "Error: You must use either Eigen or Blaze!" << endl;
-    #endif
+	#elif USE_BLAZE
+		cout << "USING BLAZE (FUZZY PRODUCT mode)" << endl;
+	#elif USE_EIGEN
+		cout << "USING EIGEN (FUZZY PRODUCT mode)" << endl;
+	#else
+		cout << "Error: You must use either Eigen or Blaze!" << endl;
+	#endif
 }

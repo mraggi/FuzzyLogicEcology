@@ -13,9 +13,10 @@ struct ArgumentParser
 	double visibility {0.5};
 	int grid {2000};
 	std::string outfile { "" };
-	std::vector<int> NamedColumns {{0}};
+	std::vector<int> NamedColumns {0};
 	bool should_exit { false };
 	long memoryAvailable{0};
 	std::istream* is{&std::cin};
 	std::ifstream file;
+	std::string arcgisfile {};
 };
