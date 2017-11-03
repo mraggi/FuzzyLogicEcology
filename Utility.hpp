@@ -3,14 +3,8 @@
 #include <iostream>
 #include <vector>
 
-using std::vector;
-using std::cout;
-using std::cerr;
-using std::max;
-using std::endl;
-
 template <class T> 
-std::ostream& operator<<(std::ostream& os, const vector<T>& X)
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& X)
 {
 	for (const auto& x : X)
 		os << x << " ";
@@ -18,10 +12,10 @@ std::ostream& operator<<(std::ostream& os, const vector<T>& X)
 }
 
 template <class T> 
-std::ostream& operator<<(std::ostream& os, const vector<vector<T>>& X)
+std::ostream& operator<<(std::ostream& os, const std::vector<std::vector<T>>& X)
 {
 	for (const auto& x : X)
-		os << x << endl;
+		os << x << std::endl;
 	return os;
 }
 
@@ -87,8 +81,8 @@ int signof(const T& a)
 }
 
 
-using Row = vector<double>;
-using Matrix = vector<Row>;
+using Row = std::vector<double>;
+using Matrix = std::vector<Row>;
 
 const double tolerance = 0.000000153; //en el continuo original
 const double inf = 999999999999999.0;

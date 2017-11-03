@@ -129,13 +129,13 @@ Point Point::Projection(const Point& H) const
 
 Point Point::ProjectionToLine(const Point& A, const Point& B) const
 {
-// 	cout << "Projection to line" << endl;
+// 	std::cout << "Projection to line" << std::endl;
 	Point me = *this;
 	Point meMinusA = me - A;
 	Point BMinusA  = B  - A;
-// 	cout << "baaaa" << endl;
+// 	std::cout << "baaaa" << std::endl;
 	Point temp = meMinusA.Projection(BMinusA);
-// 	cout << "temp: " << temp << endl;
+// 	std::cout << "temp: " << temp << std::endl;
 	return temp + A;
 }
 
@@ -169,15 +169,6 @@ bool Point::IsToTheRightOfLine(const Point& A, const Point& B) const
 	if (H.x*P.y < H.y*P.x)
 		return true;
 	return false;
-}
-
-
-const Point& Point::operator=(const Point& other)
-{
-	x = other.x;
-	y = other.y;
-
-	return *this;
 }
 
 bool Point::operator!=(const Point& vec) const
@@ -261,16 +252,16 @@ bool operator<(const Point& A, const Point& B)
 	return (A.y >= B.y);
 }
 
-vector<Point> GenerateRandomPoints(int n, int resolution)
+std::vector<Point> GenerateRandomPoints(int n, int resolution)
 {
-	vector<Point> result;
+	std::vector<Point> result;
 	
 	result.reserve(n);
 	
 	double r = resolution;
 	
 	Point Centro(random_double(0.0,r), random_double(0.0,r));
-	cout << "point2d("<< Centro << ")+";
+	std::cout << "point2d("<< Centro << ")+";
 	while (result.size() < n)
 	{
 		Point P(random_double(0.0,r), random_double(0.0,r));

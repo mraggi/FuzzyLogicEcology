@@ -18,5 +18,5 @@ struct ArgumentParser
 	long memoryAvailable{0};
 	std::istream* is{&std::cin};
 	std::ifstream file;
-	std::string arcgisfile {};
+// 	std::string arcgisfile {};
 };

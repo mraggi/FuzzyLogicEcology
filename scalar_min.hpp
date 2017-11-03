@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
+// this struct is used to replace double when using the version of fuzzy logic that uses min instead of prod.
 struct scalar_min_t
 {
 	scalar_min_t(double a = 0.0) : value(a) {} 

@@ -4,7 +4,7 @@
 
 #include "GraphCalculator.hpp"
 
-GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const vector<vector<Point>>& U, size_t memoryAvailable) : grid(_grid), Area(U.size(),0.0)
+GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const std::vector<std::vector<Point>>& U, size_t memoryAvailable) : grid(_grid), Area(U.size(),0.0)
 {
 	double sigma = VisibilityRangeInKm;
 
@@ -23,11 +23,11 @@ GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const
 
 void GraphCalculator::SetBlockSize(long memoryAvailable)
 {
-	cout << endl << "***************************** System Information *****************************" << endl;
+	std::cout << std::endl << "***************************** System Information *****************************" << std::endl;
 
 #if USE_BLAZE
 	blaze::setNumThreads( blaze::getNumThreads() );
-	cout << "Using: " << blaze::getNumThreads() << " threads" << endl;
+	std::cout << "Using: " << blaze::getNumThreads() << " threads" << std::endl;
 #endif
 	
 	auto numspecies = E.size();
@@ -37,24 +37,24 @@ void GraphCalculator::SetBlockSize(long memoryAvailable)
 	size_t memoryNeeded = numberOfColumns*memoryPerColumn;
 	size_t total_columns = grid*grid;
 	
-	num_cols_per_block = min(memoryAvailable/memoryPerColumn,total_columns);
+	num_cols_per_block = std::min(memoryAvailable/memoryPerColumn,total_columns);
 	num_full_blocks = total_columns/num_cols_per_block;
 	num_cols_partial_block = total_columns%num_cols_per_block;
 	if (num_cols_partial_block != 0)
 		num_partial_blocks = 1;
 	
-	cout << "Total memory (if everything was put on memory): " << double(memoryNeeded)/GB << "GB" << '\n';
-	cout << "Available memory: " << double(memoryAvailable)/GB << "GB\n";
-	cout << "Total number of columns: " << total_columns << '\n'; 
-	cout << "So I need " << num_full_blocks << " full blocks and " << num_partial_blocks << " partial blocks.\n";
+	std::cout << "Total memory (if everything was put on memory): " << double(memoryNeeded)/GB << "GB\n";
+	std::cout << "Available memory: " << double(memoryAvailable)/GB << "GB\n";
+	std::cout << "Total number of columns: " << total_columns << '\n'; 
+	std::cout << "So I need " << num_full_blocks << " full blocks and " << num_partial_blocks << " partial blocks.\n";
 	
-	cout << "Full blocks have " << num_cols_per_block << " columns and consume " 
+	std::cout << "Full blocks have " << num_cols_per_block << " columns and consume " 
 		 << double(num_cols_per_block*memoryPerColumn)/GB << "GB of memory.\n";
 		 
-	cout << "Partial block has " << num_cols_partial_block << " columns and consumes " 
+	std::cout << "Partial block has " << num_cols_partial_block << " columns and consumes " 
 		 << double(num_cols_partial_block*memoryPerColumn)/GB << "GB of memory.\n";
 		 
-	cout << "******************************************************************\n\n" << std::flush;
+	std::cout << "******************************************************************\n\n" << std::flush;
 }
 
 
@@ -76,23 +76,23 @@ inline long num_rows(const MatrixXd& A)
 
 void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 {
-	const vector<Point>& P = E[species];
+	const std::vector<Point>& P = E[species];
 	long N = grid;
 	double dx = MaxNonZeroDistance(Cmx);
 	double dy = MaxNonZeroDistance(Cmy);
 	long dxi = long(dx+2);
 	long dyi = long(dy+2);
 	
-// 	cout << "di = " << di << endl;
+// 	std::cout << "di = " << di << std::endl;
 	
-// 	cout << "Número de pixeles: " << 2*(dxi) << "*" << 2*dyi << " = " << 4*dxi*dyi << endl;
+// 	std::cout << "Número de pixeles: " << 2*(dxi) << "*" << 2*dyi << " = " << 4*dxi*dyi << std::endl;
 	
 	for (const Point& p : P)
 	{
-		long minX = max(0L,long(p.x)-dxi);
-		long maxX = min(N, long(p.x)+dxi);
-		long minY = max(0L,long(p.y)-dyi);
-		long maxY = min(N, long(p.y)+dyi);
+		long minX = std::max(0L,long(p.x)-dxi);
+		long maxX = std::min(N, long(p.x)+dxi);
+		long minY = std::max(0L,long(p.y)-dyi);
+		long maxY = std::min(N, long(p.y)+dyi);
 		assert(maxX-minX > 0);
 		assert(maxY-minY > 0);
 		
@@ -138,7 +138,7 @@ void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 }
 
 inline
-void UpdateArea(vector<double>& Area, const MatrixXd& A, size_t species)
+void UpdateArea(std::vector<double>& Area, const MatrixXd& A, size_t species)
 {
 	for (size_t col = 0; col < num_columns(A); ++col)
 	{
@@ -158,10 +158,10 @@ void printRowAsMatrix(const MatrixXd& A, int row, int grid)
 // 		int x = index/grid;
 		int y = index%grid;
 		if (y == 0)
-			cout << endl;
-		cout << A(row,index) << ' ';
+			std::cout << std::endl;
+		std::cout << A(row,index) << ' ';
 	}
-	cout << endl;
+	std::cout << std::endl;
 }
 
 void printNonZeros(const MatrixXd& A)
@@ -172,7 +172,7 @@ void printNonZeros(const MatrixXd& A)
 		{
 			if (A(x,y) > scalar_min_t(0.001))
 			{
-				cout << "(" << x << "," << y << "): " << A(x,y) << '\n';
+				std::cout << "(" << x << "," << y << "): " << A(x,y) << '\n';
 			}
 		}
 	}
@@ -181,19 +181,18 @@ void printNonZeros(const MatrixXd& A)
 template <class Mat>
 inline void ResetMatrix(Mat& A)
 {
-#if FUZZY_MIN
-	scalar_min_t startvalue = 0.0;
-#else
-	double startvalue = -1.0;
-#endif
-
 #if USE_BLAZE
 	A = -1.0;
-#endif
+#else
+	#if FUZZY_MIN
+		scalar_min_t startvalue = 0.0;
+	#else
+		double startvalue = -1.0;
+	#endif
 		
-#if USE_EIGEN
 	A = MatrixXd::Constant(A.rows(), A.cols(), startvalue);
 #endif
+
 }
 
 // This does M += A*A^T
@@ -223,13 +222,13 @@ Matrix GraphCalculator::CalculateGraph()
 	for (size_t block = 0; block < num_full_blocks + num_partial_blocks; ++block)
 	{
 		Chronometer BlockTimer;
-		cout << "\nStarting block " << block+1 << endl;
+		std::cout << "\nStarting block " << block+1 << std::endl;
 		if (block == num_full_blocks)
 			A.resize(numspecies,num_cols_partial_block);
 		
 		ResetMatrix(A);
 		
-		cout << "\tTook " << BlockTimer.Reset() << "s to initialize matrix to -1" << endl;
+		std::cout << "\tTook " << BlockTimer.Reset() << "s to initialize matrix to -1" << std::endl;
 		
 		#pragma omp parallel for
 		for (size_t species = 0; species < numspecies; ++species)
@@ -237,21 +236,21 @@ Matrix GraphCalculator::CalculateGraph()
 			Realize(A,species, block);
 			UpdateArea(Area,A,species);
 		}
-		cout << "\t Block " << block+1 << " took " << BlockTimer.Reset() << " to realize." << endl;
+		std::cout << "\t Block " << block+1 << " took " << BlockTimer.Reset() << " to realize." << std::endl;
 		
 		// M += A*A^T
 		AddTransposeProduct(M,A);
 
-		cout << "\t And " << BlockTimer.Reset() << "s to multiply the matrices.\n";
+		std::cout << "\t And " << BlockTimer.Reset() << "s to multiply the matrices.\n";
 		
 		double running_time = FromStart.Peek();
 		double total_time = running_time*double(num_blocks)/(block+1);
 		
-		cout << "Done with block " << block+1 << " of " << num_blocks 
-			 << ". Expected remaining time: " << total_time - running_time << 's' << endl;
+		std::cout << "Done with block " << block+1 << " of " << num_blocks 
+			 << ". Expected remaining time: " << total_time - running_time << 's' << std::endl;
 	}
 	
-	cout << "Total Time taken: " << FromStart.Reset() << endl;
+	std::cout << "Total Time taken: " << FromStart.Reset() << std::endl;
 	
 
 	return DivideByArea(M);
@@ -267,7 +266,7 @@ Matrix GraphCalculator::DivideByArea(const Mat& M) const
 	{
 		if (Area[x] <= tolerance)
 		{
-			cerr << "Area of X = 0! Increase grid size!" << endl;
+			std::cerr << "Area of X = 0! Increase grid size!" << std::endl;
 		}
 		for (size_t y = 0; y < numspecies; ++y)
 		{
@@ -290,7 +289,7 @@ double GraphCalculator::GetTotalArea(int species) const
 	return Area[species]*F.x*F.y/(grid*grid);
 }
 
-void GraphCalculator::Normalize(vector<vector<Point>>& U)
+void GraphCalculator::Normalize(std::vector<std::vector<Point>>& U)
 {
 	double minX = inf;
 	double maxX = -inf;
@@ -341,7 +340,7 @@ void GraphCalculator::printAreaVector(std::ostream& os, char sep)
 	{
 		os << sep << GetTotalArea(i);
 	}
-	os << endl;
+	os << std::endl;
 }
 
 

@@ -6,20 +6,16 @@
 #include <boost/program_options.hpp>
 #include "argumentparser.hpp"
 
-using std::cout;
-using std::endl;
-using std::string;
-using std::vector;
 namespace po = boost::program_options;
 
 ArgumentParser::ArgumentParser(int argc, char* argv[])
 {
-	string usage = string("Usage") + argv[0] + " [OPTION]... FILE";
+	std::string usage = std::string("Usage") + argv[0] + " [OPTION]... FILE";
 
 	if (argc == 1)
 	{
-		cout << usage << endl;
-		cout << "Option -h or --help prints options" << endl;
+		std::cout << usage << std::endl;
+		std::cout << "Option -h or --help prints options" << std::endl;
 		should_exit = true;
 		return;
 	}
@@ -29,15 +25,15 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	
 	desc.add_options()
 	("help,h", "produce help message")
-	("memory,m", po::value<string>(), "Maximum amount of memory in bytes to use. Leave blank or at 0 to autodetect. Can use KB, MB, GB")
+	("memory,m", po::value<std::string>(), "Maximum amount of memory in bytes to use. Leave blank or at 0 to autodetect. Can use KB, MB, GB")
 	("latitude,x", po::value<int>(&latitude)->default_value(value_not_set), "latitude")
 	("longitude,y", po::value<int>(&longitude)->default_value(value_not_set), "longitude")
 	("grid,g", po::value<int>(&grid)->default_value(grid), "grid size (The larger grid is, the more accurate the calculations will be, but it's also slower.)")
 	("visibility,v", po::value<double>(&visibility)->default_value(visibility), "visibility in km")
-	("namecolumns,I", po::value< vector<int> >(), "name columns")
-	("input-file,i", po::value< vector<string> >(), "input file. If left blank, the program will read from STDIN")
-	("output-file,o", po::value< string >(), "sage output file.")	
-	("arcgis-outfile", po::value< vector<string> >(), "ArcGIS output files (see )http://webhelp.esri.com/arcgisdesktop/9.3/index.cfm?TopicName=ESRI\%20ASCII\%20Raster\%20format")
+	("namecolumns,I", po::value< std::vector<int> >(), "name columns")
+	("input-file,i", po::value< std::vector<std::string> >(), "input file. If left blank, the program will read from STDIN")
+	("output-file,o", po::value< std::string >(), "sage output file.")	
+// 	("arcgis-outfile", po::value< std::vector<std::string> >(), "ArcGIS output files (see )http://webhelp.esri.com/arcgisdesktop/9.3/index.cfm?TopicName=ESRI\%20ASCII\%20Raster\%20format")
 	;
 
 	po::positional_options_description p;
@@ -49,72 +45,72 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 
 	if (vm.count("help"))
 	{
-		cout << usage << '\n';
-		cout << desc;
+		std::cout << usage << '\n';
+		std::cout << desc;
 		should_exit = true;
 		return;
 	}
 
 	if (vm.count("namecolumns"))
 	{
-		cout << "Name columns are: " << vm["namecolumns"].as< vector<int> >().size() << ": " << vm["namecolumns"].as< vector<int> >() << '\n';
+		std::cout << "Name columns are: " << vm["namecolumns"].as< std::vector<int> >().size() << ": " << vm["namecolumns"].as< std::vector<int> >() << '\n';
 	}
 
-	if (vm.count("arcgis-outfile"))
-	{
-		arcgisfile = vm["arcgis-outfile"].as< vector<string> >()[0];
-		cout << "Arcgis file prefix is: " << arcgisfile << '\n';
-	}
+// 	if (vm.count("arcgis-outfile"))
+// 	{
+// 		arcgisfile = vm["arcgis-outfile"].as< std::vector<std::string> >()[0];
+// 		std::cout << "Arcgis file prefix is: " << arcgisfile << '\n';
+// 	}
 	
 	if (vm.count("input-file"))
 	{
-		string filename = vm["input-file"].as< vector<string> >()[0];
-		cout << "Input file is: " << filename << '\n';
+		std::string filename = vm["input-file"].as< std::vector<std::string> >()[0];
+		std::cout << "Input file is: " << filename << '\n';
 		try
 		{
 		  file.open(filename);
 		  is = &file;
 		} catch (...)
 		{
-		  cout << "Error opening file: " << filename << endl;
+		  std::cout << "Error opening file: " << filename << std::endl;
 		  is = &std::cin;
 		}
 	} else
 	{
-	  cout << "No input file given. Will read from STDIN" << endl;
+	  std::cout << "No input file given. Will read from STDIN" << std::endl;
 	}
 	
 	if (vm.count("output-file"))
 	{
-		cout << "Sage output file is: " << vm["output-file"].as< string >() << '\n';
+		std::cout << "Sage output file is: " << vm["output-file"].as< std::string >() << '\n';
 	}
 
 	if (vm.count("namecolumns"))
 	{
-		NamedColumns = vm["namecolumns"].as< vector<int> >();
+		NamedColumns = vm["namecolumns"].as< std::vector<int> >();
 	}
 	
 	// If there is an output file, do this
 	if (vm.count("output-file"))
 	{
-		string outfile = vm["output-file"].as<string>();
+		std::string outfile = vm["output-file"].as<std::string>();
 		
 	}
 	
 	if (!vm.count("memory"))
 	{
-		cout << "Memory option not set. Attempting to use all system memory" << endl;
+		std::cout << "Memory option not set. Attempting to use all system memory" << std::endl;
 		memoryAvailable = getTotalSystemMemory();
 		
 		memoryAvailable -= 1*GB; // Leave at least 1 GB for the OS
 		memoryAvailable *= 0.9; // Don't use more than 90% of memory!
-		memoryAvailable = max(memoryAvailable,long(20L*MB)); // at least use 20MB
+		memoryAvailable = std::max(memoryAvailable,long(20L*MB)); // at least use 20MB
 	} else
 	{
-		size_t units = 1;
-		string val = vm["memory"].as<string>();
+		std::string val = vm["memory"].as<std::string>();
 		if (toupper(val.back()) == 'B')
 		{
+			size_t units = 1;
 			val.pop_back();
 			char c = toupper(val.back());
 			
@@ -135,8 +131,8 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 			}
 			catch (std::exception& e)
 			{
-				cerr << "Memory amount is in an invalid format. Use for example --memory=500MB" << endl;
-				throw e;
+				std::cerr << "Memory amount is in an invalid format. Use for example --memory=500MB" << std::endl;
+				throw;
 			}
 			
 		}

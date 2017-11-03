@@ -2,70 +2,71 @@
 #include <fstream>
 #include <istream>
 #include <sstream>
+#include <string>
 #include <locale>
 
-vector<vector<string>> ReadTable(istream& is)
+std::vector<std::vector<std::string>> ReadTable(std::istream& is)
 {
-	vector<vector<string>> R;
-	string line;
+	std::vector<std::vector<std::string>> table;
+	std::string line;
 	
 
 	int i = 0;
 	while (getline(is, line))
 	{
-		std::istringstream iss(line);
-// 			cout << "line = " << line << endl;
-		R.push_back({});
+		std::stringstream iss(line);
+// 			std::cout << "line = " << line << std::endl;
+		table.push_back({});
 		do
 		{
-			string sub;
+			std::string sub;
 			iss >> sub;
 			if (!sub.empty())
 			{
-				R[i].emplace_back(sub);
-// 					cout << "Substring: |" << sub << "| of length " << sub.size() << std::endl;
+				table[i].emplace_back(sub);
+// 					std::cout << "Substd::string: |" << sub << "| of length " << sub.size() << std::endl;
 			}
 		} while (iss);
-		if (i > 0 && R[i].size() != R[i-1].size())
+		if (i > 0 && table[i].size() != table[i-1].size())
 		{
-			cerr << "Error in file: Some lines have a different number of space-separated inputs" << endl;
-			cerr << "Error in line: " <<i << ":\n" << R[i] << "\n(which has " << R[i].size() << " inputs instead of " << R[i].size() << ")" << endl;
+			std::cerr << "Error in file: Some lines have a different number of space-separated inputs" << std::endl;
+			std::cerr << "Error in line: " <<i << ":\n" << table[i] << "\n(which has " << table[i].size() << " inputs instead of " << table[i].size() << ")" << std::endl;
 			throw;
 		}
 		++i;
 	}
 	
-	if (R.empty())
+	if (table.empty())
 	{
-		throw std::invalid_argument("Empy input stream!"s);
+		throw std::invalid_argument("Empy input stream!");
 	}
 	
-	return R;
+	return table;
 	
 }
 
 
-unordered_map<string,vector<Point>> ExtractLocations(const vector<vector<string>>& U, const vector<int>& names, int longitude, int latitude)
+std::unordered_map<std::string,std::vector<Point>> ExtractLocations(const std::vector<std::vector<std::string>>& U, const std::vector<int>& names, int longitude, int latitude)
 {
-	unordered_map<string,vector<Point>> R;
+	std::unordered_map<std::string,std::vector<Point>> result;
 	
 	if (longitude == -1 || latitude == -1)
 	{
 		for (int i = 0; i < U[0].size(); ++i)
 		{
-			string colname = U[0][i];
+			std::string colname = U[0][i];
 			std::transform(colname.begin(), colname.end(), colname.begin(), ::tolower);
 			
 			if (colname == "longitud" || colname == "longitude")
 			{
 				longitude = i;
-				cout << "Longitude deduced to be in column " << i << endl;
+				std::cout << "Longitude deduced to be in column " << i << std::endl;
 			}
 			
 			if (colname == "latitud" || colname == "latitude")
 			{
 				latitude = i;
-				cout << "Latitude deduced to be in column " << i << endl;
+				std::cout << "Latitude deduced to be in column " << i << std::endl;
 			}
 		}
 	}
@@ -74,9 +75,9 @@ unordered_map<string,vector<Point>> ExtractLocations(const vector<vector<string>
 		throw "Latitude or Longitude not specified, and could not deduce from file";
 	}
 	
-	for (int i = 1; i < U.size(); ++i)
+	for (size_t i = 1; i < U.size(); ++i)
 	{
-		string name;
+		std::string name;
 		for (auto j : names)
 		{
 			name += U[i][j];
@@ -88,15 +89,15 @@ unordered_map<string,vector<Point>> ExtractLocations(const vector<vector<string>
 			double x = stod(U[i][latitude])*KmInADegree;
 			double y = stod(U[i][longitude])*KmInADegree;
 			
-			R[name].emplace_back(x,y);
+			result[name].emplace_back(x,y);
 
 		} catch(...)
 		{
-			cerr << "Error: number not in a correct format: " << U[i][longitude] << ' ' << U[i][latitude] << endl;
+			std::cerr << "Error: number not in a correct format: " << U[i][longitude] << ' ' << U[i][latitude] << std::endl;
 		}
 	}
 	
 	
 	
-	return R;
+	return result;
 }

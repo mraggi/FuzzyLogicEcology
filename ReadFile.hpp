@@ -7,6 +7,6 @@
 
 #include "Point.hpp"
 
-vector<vector<string>> ReadTable(istream& is);
+std::vector<std::vector<std::string>> ReadTable(std::istream& is);
 
-unordered_map<string,vector<Point>> ExtractLocations(const vector<vector<string>>& U, const vector<int>& names, int longitude = -1, int latitude = -1);
+std::unordered_map<std::string,std::vector<Point>> ExtractLocations(const std::vector<std::vector<std::string>>& U, const std::vector<int>& names, int longitude = -1, int latitude = -1);

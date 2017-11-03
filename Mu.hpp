@@ -1,20 +1,15 @@
 #pragma once
 #include <vector>
 
-#ifdef USE_GPU
-	#include <arrayfire.h>
-#endif
 
 #include "Point.hpp"
 #include "TimeHelpers.hpp"
 #include "ReadFile.hpp"
 
-using namespace std;
-
 class Mu
 {
 public:
-	Mu(size_t n) : m_n(n), m_M(n,Row(n,0))
+	explicit Mu(size_t n) : m_n(n), m_M(n,Row(n,0))
 	{ 
 	}
 	
@@ -29,7 +24,7 @@ public:
 	size_t numcols() const { return m_n; }
 	size_t numrows() const { return m_n; }
 	
-	void Realize(const vector<Point>& P, double Cmx, double Cmy);
+	void Realize(const std::vector<Point>& P, double Cmx, double Cmy);
 	
 	double Integrate() const;
 	
