@@ -244,7 +244,7 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 
 	Mat A(numspecies,num_cols_per_block);
 	
-	Mat M(numspecies,numspecies);
+	Mat M = Mat::Constant(numspecies, numspecies, 0.0);
 	
 	for (size_t block = 0; block < num_full_blocks + num_partial_blocks; ++block)
 	{
@@ -264,12 +264,15 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 			UpdateArea(A,species);
 		}
 		
-// 		for (size_t species = 0; species < numspecies; ++species)
-// 		{
-// 			std::cout << species << " matrix is: \n";
-// 			printRowAsMatrix(A,species, grid);
-// 			std::cout << std::endl;
-// 		}
+		if (grid < 100)
+		{
+			for (size_t species = 0; species < numspecies; ++species)
+			{
+				std::cout << species << " matrix is: \n";
+				printRowAsMatrix(A,species, grid);
+				std::cout << std::endl;
+			}
+		}
 		
 		std::cout << "\t Block " << block+1 << " took " << BlockTimer.Reset() << " to realize." << std::endl;
 		
@@ -305,11 +308,13 @@ void FuzzyNetworkBase<Mat>::UpdateArea(const Mat& A, size_t species)
 template <class Mat>
 Mat FuzzyNetworkBase<Mat>::DivideByArea(const Mat& M) const
 {
+// 	std::cout << M << std::endl;
 	auto numspecies = num_species();
 	
 	Mat R(numspecies,numspecies);
 	for (size_t x = 0; x < numspecies; ++x)
 	{
+		
 		if (Area[x] <= tolerance)
 		{
 			std::cerr << "Area of X = 0! Increase grid size!" << std::endl;
