@@ -6,18 +6,7 @@
 #include "scalar_min.hpp"
 
 
-#if USE_BLAZE
-	#include <blaze/config/BLAS.h>
-	#include <blaze/Blaze.h>
-	using MatrixXd = blaze::DynamicMatrix<double>;
-#elif USE_EIGEN
-	#include <eigen3/Eigen/Dense>
-	#if FUZZY_MIN
-		using MatrixXd = Eigen::Matrix<scalar_min_t,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor>;
-	#else
-		using MatrixXd = Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor>;
-	#endif
-#endif
+
 
 class GraphCalculator
 {
@@ -39,7 +28,6 @@ private: //functions
 	template<class Mat>
 	Matrix DivideByArea(const Mat& M) const;
 
-	// A tiny bit faster if inlined. Who cares?
 	inline void UpdateFunction(const Point& p, const long& x, const long& y, double& a, int i = -1);
 	
 	
@@ -58,8 +46,6 @@ private: // variables
 
 	double bx; //border in continuum
 	double by; 
-	
-	std::vector<double> radius;
 	
 	Point O;
 	Point W;

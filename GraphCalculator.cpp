@@ -4,7 +4,7 @@
 
 #include "GraphCalculator.hpp"
 
-GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const std::vector<std::vector<Point>>& U, size_t memoryAvailable) : grid(_grid), Area(U.size(),0.0)
+GraphCalculator::GraphCalculator(size_t _grid, double VisibilityRangeInKm, const std::vector<std::vector<Point>>& U, size_t memoryAvailable) : Area(U.size(),0.0), grid(_grid)
 {
 	double sigma = VisibilityRangeInKm;
 
@@ -132,7 +132,7 @@ void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 	}
 	
 #if (!FUZZY_MIN)
-	for (size_t col = 0; col < num_columns(A); ++col)
+	for (long col = 0; col < num_columns(A); ++col)
 		A(species,col) += 1.0;
 #endif
 }
@@ -140,7 +140,7 @@ void GraphCalculator::Realize(MatrixXd& A, long species, long block)
 inline
 void UpdateArea(std::vector<double>& Area, const MatrixXd& A, size_t species)
 {
-	for (size_t col = 0; col < num_columns(A); ++col)
+	for (long col = 0; col < num_columns(A); ++col)
 	{
 #if FUZZY_MIN
 		Area[species] += A(species,col);

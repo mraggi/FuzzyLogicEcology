@@ -81,9 +81,6 @@ int signof(const T& a)
 }
 
 
-using Row = std::vector<double>;
-using Matrix = std::vector<Row>;
-
 const double tolerance = 0.000000153; //en el continuo original
 const double inf = 999999999999999.0;
 

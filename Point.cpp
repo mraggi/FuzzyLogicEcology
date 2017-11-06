@@ -20,19 +20,7 @@ Point Point::Normalized() const
 	return normalized;
 }
 
-double Point::Distance(const Point& vec) const
-{
-	double disX = vec.x - x;
-	double disY = vec.y - y;
-	return sqrt(disX*disX+disY*disY);
-}
 
-double Point::DistanceSq(const Point& vec) const
-{
-	double disX = (vec.x - x);
-	double disY = (vec.y - y);
-	return disX*disX+disY*disY;
-}
 
 Point Point::VectorWithAngle(double t) const
 {
@@ -250,24 +238,4 @@ bool operator<(const Point& A, const Point& B)
 	if (A.x < B.x)
 		return false;
 	return (A.y >= B.y);
-}
-
-std::vector<Point> GenerateRandomPoints(int n, int resolution)
-{
-	std::vector<Point> result;
-	
-	result.reserve(n);
-	
-	double r = resolution;
-	
-	Point Centro(random_double(0.0,r), random_double(0.0,r));
-	std::cout << "point2d("<< Centro << ")+";
-	while (result.size() < n)
-	{
-		Point P(random_double(0.0,r), random_double(0.0,r));
-		if (P.Distance(Centro) < 1000)
-			result.emplace_back(P);
-	}
-	
-	return result;
 }

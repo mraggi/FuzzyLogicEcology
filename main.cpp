@@ -9,8 +9,16 @@ namespace po = boost::program_options;
 #include "Point.hpp"
 #include "TimeHelpers.hpp"
 #include "ReadFile.hpp"
-#include "Mu.hpp"
-#include "GraphCalculator.hpp"
+// #include "GraphCalculator.hpp"
+
+#if defined FUZZY_MIN
+	#include "FuzzyNetworkMin.hpp"
+#elif defined USE_PROMISCUITY
+	#include "FuzzyNetworkPromiscuity.hpp"
+#else
+	#include "FuzzyNetworkProduct.hpp"
+#endif
+
 #include "argumentparser.hpp"
 #include "Graph.hpp"
 #include "GraphMeasures.hpp"
@@ -64,8 +72,13 @@ int main(int argc, char* argv[])
 			names.emplace_back(v.first);
 		}
 		
-		GraphCalculator GC(AP.grid, AP.visibility, Points, AP.memoryAvailable);
-
+#if defined FUZZY_MIN
+		FuzzyNetworkMin GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
+#elif defined USE_PROMISCUITY
+		FuzzyNetworkPromiscuity GC(AP.grid, Points, AP.memoryAvailable);
+#else
+		FuzzyNetworkProduct GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
+#endif
 		std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
 		Matrix M = GC.CalculateGraph();
 		
@@ -135,13 +148,11 @@ int main(int argc, char* argv[])
 
 void printLibraryMessage()
 {
-	#if FUZZY_MIN
-		std::cout << "USING EIGEN (FUZZY MIN mode)" << std::endl;
-	#elif USE_BLAZE
-		std::cout << "USING BLAZE (FUZZY PRODUCT mode)" << std::endl;
-	#elif USE_EIGEN
-		std::cout << "USING EIGEN (FUZZY PRODUCT mode)" << std::endl;
-	#else
-		std::cout << "Error: You must use either Eigen or Blaze!" << std::endl;
-	#endif
+#if defined FUZZY_MIN
+	std::cout << "USING EIGEN (FUZZY MIN mode)" << std::endl;
+#elif defined USE_PROMISCUITY
+	std::cout << "Using EIGEN (Promiscuity mode)" << std::endl;
+#else
+	std::cout << "USING EIGEN (FUZZY PRODUCT mode)" << std::endl;
+#endif
 }

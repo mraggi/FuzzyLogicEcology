@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <cassert>
 #include <unordered_map>
+#include "MatrixUtils.hpp"
 
 using vertex_t = int;
 const vertex_t INVALID_VERTEX = -1;
@@ -49,7 +50,7 @@ private:
 
 struct Edge
 {
-	Edge() : from(INVALID_VERTEX), to(INVALID_VERTEX), m_weight(0) {}
+	Edge() = default;
 	Edge(vertex_t f, vertex_t t, weight_t w = 1) : from(f), to(t), m_weight(w) {}
 	vertex_t operator[](bool i)
 	{
@@ -58,14 +59,19 @@ struct Edge
 		return from;
 	}
 	
+	void switch_from_to()
+	{
+		std::swap(from,to);
+	}
+	
 	weight_t weight() const
 	{
 		return m_weight;
 	}
 	
-	vertex_t from;
-	vertex_t to;
-	weight_t m_weight;
+	vertex_t from {INVALID_VERTEX};
+	vertex_t to {INVALID_VERTEX};
+	weight_t m_weight {0};
 };
 
 
@@ -135,11 +141,12 @@ public:
 	Graph induced_subgraph(const std::vector<vertex_t>& Vertices) const
 	{
 		Graph D(Vertices.size());
+		long new_num_vertices = Vertices.size();
 		
 		if (are_vertices_named())
 		{
 			std::vector<std::string> new_names(Vertices.size());
-			for (vertex_t u = 0; u < Vertices.size(); ++u)
+			for (vertex_t u = 0; u < new_num_vertices; ++u)
 			{
 				new_names[u] = get_name(Vertices[u]);
 			}
@@ -147,12 +154,12 @@ public:
 		}
 		
 		std::vector<vertex_t> inverse_map(m_n,INVALID_VERTEX);
-		for (vertex_t u = 0; u < Vertices.size(); ++u)
+		for (vertex_t u = 0; u < new_num_vertices; ++u)
 		{
 			inverse_map[Vertices[u]] = u;
 		}
 		
-		for (vertex_t u = 0; u < Vertices.size(); ++u)
+		for (vertex_t u = 0; u < new_num_vertices; ++u)
 		{
 			auto v = Vertices[u];
 			for (auto v_prime : outneighbors(v))
@@ -329,9 +336,9 @@ public:
 	{
 	}
 	
-	static DiGraph FromAdjacencyMatrix(const std::vector<std::vector<double>>& A, double tolerance = 0.001)
+	static DiGraph FromAdjacencyMatrix(const Matrix& A, double tolerance = 0.001)
 	{
-		auto n = A.size();
+		size_t n = A.rows();
 		DiGraph D(n);
 		for (size_t x = 0; x < n; ++x)
 		{
@@ -339,7 +346,7 @@ public:
 			{
 				if (x == y)
 					continue;
-				double weight = A[x][y];
+				double weight = A(x,y);
 				if (weight > tolerance)
 					D.add_edge(x,y,weight);
 			}
@@ -477,3 +484,49 @@ private:
 	std::vector<std::string> m_vertex_names;
 	std::unordered_map<std::string, vertex_t> m_name_map;
 };
+
+
+inline bool operator<(const Edge& a, const Edge& b)
+{
+	return a.m_weight > b.m_weight;
+}
+
+template <class graph_t>
+std::vector<Edge> primm(const graph_t& G)
+{
+    auto n = G.num_vertices();
+	
+	assert(n != 0);
+	
+    std::vector<Edge> T;
+	T.reserve(n);
+	
+    std::vector<char> explored(n,0);
+	
+    std::priority_queue<Edge> EdgesToExplore;
+	
+	explored[0] = 1;
+	
+	for (auto v : G.neighbors(0))
+	{
+		EdgesToExplore.push(Edge(0,v,v.weight()));
+	}
+
+    while (!EdgesToExplore.empty())
+    {
+        Edge s = EdgesToExplore.top();
+		EdgesToExplore.pop();
+		
+		if (explored[s.to])
+			continue;
+		
+		T.emplace_back(s.from,s.to,s.weight());
+		explored[s.to] = true;
+		for (const auto& v : G.neighbors(s.to))
+		{
+			if (explored[v] == 0)
+				EdgesToExplore.push( Edge(s.to,v,v.weight()) );
+		}
+    }
+    return T;
+}

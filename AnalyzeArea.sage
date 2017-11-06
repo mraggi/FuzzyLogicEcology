@@ -1,6 +1,6 @@
 import numpy as np
 
-def AnalyzeAreas(A):
+def PlotArea(A):
     A.sort()
     # First, we simply fit an exponential curve a*e^(ci) for (i,Area[i])
     print "Fitting exponential model"
@@ -39,6 +39,16 @@ def AnalyzeAreas(A):
 
 ##Second, we do a bin histogram
 
+def CumulativeDistribution(A):
+	A.sort()
+	B = []
+	i = 0
+	for a in A:
+		i += 1
+		B.append((log(a),i))
+	W = sum([point2d(b) for b in B])
+	W.show(dpi=300)
+
 def BinHistogram(A,num_bins=15):
     maxarea = max(A)
     print "min area =",min(A)
@@ -56,6 +66,9 @@ def BinHistogram(A,num_bins=15):
 
     print PH
 
+    var('a')
+    var('b')
+    var('c')
     def f(a,c):
         return sum([(c*(PH[i][0])^(-a) - PH[i][1])^2 for i in range(len(histograma))])
 

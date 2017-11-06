@@ -30,21 +30,20 @@ inline bool isAngleBetweenAngles(double a, double b1, double b2)
 	double c2 = MakeValidAngle(b2-b1+pi);
 	
 	return c2 <= c ;
-	
 }
 
 
 
 struct Point
 {
-	double x;
-	double y;
+	double x {0};
+	double y {0};
 
-	Point() : x(0), y(0) { }
+	Point() = default;
 	Point(double X, double Y) : x(X), y(Y) { }
 
 	void Zero(){x=0.0; y=0.0;}
-	bool isZero() const {return ((x*x + y*y) == 0);}
+	bool isZero() const {return (x == 0 && y == 0);}
 
 	inline double Length() const   { return sqrt(x*x + y*y); }
 	inline double LengthSq() const { return x*x + y*y; }
@@ -70,9 +69,20 @@ struct Point
 	void Scale(double xfactor, double yfactor) { x*=xfactor; y*=yfactor; }
 	void Scale(const Point& P) { x*=P.x; y*=P.y; }
 
-	double Distance(const Point & vec) const;
-	double DistanceSq(const Point & vec) const;
+	Point Scaled(const Point& P) const	{ return {x*P.x, y*P.y};	}
 
+	double DistanceSq(const Point& vec) const
+	{
+		double disX = (vec.x - x);
+		double disY = (vec.y - y);
+		return disX*disX + disY*disY;
+	}
+
+	double Distance(const Point& vec) const
+	{
+		return sqrt(DistanceSq(vec));
+	}
+	
 	void SetLength(double r);
 	void SetLengthSq(double r2); //This computes sqrt only once, instead of twice
 	void SetPolar(double r, double t);
@@ -159,17 +169,17 @@ inline double operator*(const Point &vecA, const Point &vecB)
 	return (vecA.x*vecB.x+vecA.y*vecB.y);
 }
 
-std::ostream& operator<<(std::ostream& os, const Point& rhs);
-
-inline Point Sum(const std::vector<Point>& SomePoints)
+inline double distance(const Point& A, const Point& B)
 {
-	Point sum(0,0);
-	for (unsigned i = 0; i < SomePoints.size(); ++i)
-	{
-		sum += SomePoints[i];
-	}
-	return sum;
+	return A.Distance(B);
 }
+
+inline double distance_squared(const Point& A, const Point& B)
+{
+	return A.DistanceSq(B);
+}
+
+std::ostream& operator<<(std::ostream& os, const Point& rhs);
 
 bool operator<(const Point& A, const Point& B);
 

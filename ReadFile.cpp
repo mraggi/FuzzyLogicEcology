@@ -52,7 +52,7 @@ std::unordered_map<std::string,std::vector<Point>> ExtractLocations(const std::v
 	
 	if (longitude == -1 || latitude == -1)
 	{
-		for (int i = 0; i < U[0].size(); ++i)
+		for (size_t i = 0; i < U[0].size(); ++i)
 		{
 			std::string colname = U[0][i];
 			std::transform(colname.begin(), colname.end(), colname.begin(), ::tolower);

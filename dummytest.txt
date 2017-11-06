@@ -1,3 +1,4 @@
 Name Longitude Latitude
 A	0.0		0.0
-B	0.01	0.01
+A	1.01	1.01
+A	0.8	0.11
