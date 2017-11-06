@@ -25,7 +25,7 @@ public:
 		A = Matrix::Constant(A.rows(), A.cols(), 0.0);
 	}
 	
-	double get_distancesq_to_spanning_tree(const Point& P, long species);
+	double get_distancesq_to_spanning_tree(const Point& P, long species) const;
 private:
 	std::vector<double> m_radius; //in continuum
 	using SpanningTree = std::vector<Edge>;

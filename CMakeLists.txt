@@ -21,9 +21,6 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 OPTION(BUILD_TESTS ON)
 
-OPTION(BUILD_FUZZY_MINIMUM "In addition to standard fuzzy product version, also build a verion using the model of fuzzy logic where the intersection is the minimum, not the product (warning: SLOW)" ON)
-OPTION(BUILD_PROPINCUITY "In addition to standard fuzzy product version, also build a version based on propincuity (based on avg. distance to minimum spanning tree)" ON)
-
 find_package(Eigen3 REQUIRED QUIET)
 include_directories(${EIGEN_INCLUDE_DIR})
 message("Using Eigen Library  (ver " ${EIGEN3_VERSION} ").")
@@ -62,16 +59,3 @@ endif()
 
 add_executable(fuzzylogic ${MYSOURCES})
 target_link_libraries(fuzzylogic ${EXTRA_LIBS})
-
-# if (${BUILD_FUZZY_MINIMUM})
-#   add_definitions(-DFUZZY_MIN)
-#   add_executable(fuzzylogic_min ${MYSOURCES} )
-#   target_link_libraries(fuzzylogic_min ${EXTRA_LIBS})
-# endif()
-# 
-# if (${BUILD_PROPINCUITY})
-#   add_definitions(-DUSE_PROMISCUITY)
-#   remove_definitions(-DFUZZY_MIN)
-#   add_executable(fuzzylogic_prop ${MYSOURCES} )
-#   target_link_libraries(fuzzylogic_prop ${EXTRA_LIBS})
-# endif()

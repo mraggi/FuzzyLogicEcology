@@ -7,6 +7,7 @@
 #include "TimeHelpers.hpp"
 #include "Point.hpp"
 #include "MatrixUtils.hpp"
+#include "Graph.hpp"
 
 struct Interval
 {
@@ -28,6 +29,8 @@ public:
 // 		std::cout << "At beginning, Area = " << Area << std::endl;
 	}
 	
+	void PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile);
+	
 	Mat CalculateGraph();
 	
 	double GetTotalArea(int species) const
@@ -39,12 +42,12 @@ public:
 
 	size_t num_species() const { return Area.size(); }
 	
-	Point ContinuumToGrid(const Point& P)
+	Point ContinuumToGrid(const Point& P) const
 	{
 		return (P-O).Scaled(grid/F);
 	}
 	
-	Point GridToContinuum(const Point& Q)
+	Point GridToContinuum(const Point& Q) const
 	{
 		return O + Q.Scaled(F/grid);
 	}
@@ -234,7 +237,6 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 	Normalize();
 	
 	PostInitialize();
-	
 	Chronometer FromStart;
 	
 	size_t numspecies = E.size();
@@ -265,8 +267,7 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 // 		for (size_t species = 0; species < numspecies; ++species)
 // 		{
 // 			std::cout << species << " matrix is: \n";
-// 			printRowAsMat(A,species, grid);
-// // 			printNonZeros(A);
+// 			printRowAsMatrix(A,species, grid);
 // 			std::cout << std::endl;
 // 		}
 		
@@ -329,4 +330,44 @@ Mat FuzzyNetworkBase<Mat>::DivideByArea(const Mat& M) const
 	}
 
 	return R;
+}
+
+template <class Mat>
+void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile)
+{
+	auto M = CalculateGraph();
+			
+	std::cout << std::endl << "Adjacency Matrix: " << std::endl;
+	std::cout << M << std::endl;
+
+	DiGraph D = DiGraph::FromAdjacencyMatrix(M);
+	
+	auto edges = D.edges();
+
+
+	auto by_weight = [](const Edge & a, const Edge & b)
+	{
+		return a.weight() < b.weight();
+	};
+	
+	sort(edges.begin(), edges.end(), by_weight);
+			
+	for (const auto& e : edges)
+	{
+		std::cout << '\"' << names[e.from] << "\" ---> \"" << names[e.to]  << '\"' << " with weight " << e.weight() << std::endl;
+	}
+	
+	if (sageoutfile != "")
+	{
+		std::ofstream out(sageoutfile);
+		out << "G = DiGraph()\n";
+		for (auto e : edges)
+		{
+			out << "G.add_edge(\"" << names[e.from] << "\",\"" << names[e.to]  << '\"' << "," << e.weight() << ")\n";
+		}
+	}
+
+	
+	std::cout << "Areas: ";
+	printAreaVector(std::cout, ',');
 }

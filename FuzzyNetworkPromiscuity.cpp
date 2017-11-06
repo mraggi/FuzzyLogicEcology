@@ -23,6 +23,7 @@ void FuzzyNetworkPromiscuity::PreInitialize()
 		double avglength = 0.0;
 		for (const Edge& e : m_spanningTree[s])
 		{
+// 			std::cout << "Edge: " << e << std::endl;
 			avglength += e.weight();
 		}
 		avglength /= m_spanningTree[s].size();
@@ -38,6 +39,8 @@ void FuzzyNetworkPromiscuity::PreInitialize()
 void FuzzyNetworkPromiscuity::PostInitialize()
 {
 	//empty because all tree calculations should be done before normalizing
+// 	std::cout << "radiuses: " << m_radius << std::endl;
+// 	std::cout << "max radius: " << max_radius << std::endl;
 }
 
 Point FuzzyNetworkPromiscuity::CalculateBorder() const
@@ -72,18 +75,28 @@ double distance_squared(const Point& P, const Segment& S)
 	return std::min(distance_squared(P,S.A),distance_squared(P,S.B));
 }
 
-double FuzzyNetworkPromiscuity::get_distancesq_to_spanning_tree(const Point& P, long species)
+double FuzzyNetworkPromiscuity::get_distancesq_to_spanning_tree(const Point& P, long species) const
 {
-	double d = 9999999999.0;
+// 	if (E[species].size() < 2)
+// 	{
+// 		return 0;
+// 	}
+	double d = 99999999.0;
 	
 	Point p = GridToContinuum(P);
+// 	Point p = P;
 	
 	for (const auto& t : m_spanningTree[species])
 	{
-		Point A = E[species][t.from];
-		Point B = E[species][t.to];
+		Point A = GridToContinuum(E[species][t.from]);
+		Point B = GridToContinuum(E[species][t.to]);
 		
 		double r = distance_squared(p,Segment(A,B));
+		
+// 		std::cout << "Distance from " << p << " to segment " << A << "<->" << B << " is " << sqrt(r) << std::endl; 
+		
+// 		std::cout << "Distance from " << A << " to " << B << " is " << distance(A,B) << std::endl;
+		
 		if (r < d)
 			d = r;
 	}
@@ -105,21 +118,23 @@ void FuzzyNetworkPromiscuity::Realize(Matrix& A, long species, long block)
 		
 		
 		double d2 = get_distancesq_to_spanning_tree(Point(x,y),species);
-// 		std::cout << "d2 = " << d2 << std::endl;
+		
 		double r = m_radius[species];
+// 		std::cout << Point(x,y) << ", d = " << sqrt(d2) << std::endl;
+// 		std::cout << "r = " << r << std::endl;
+		
 // 		r *= sqrt(grid/(F.x*F.y));
 		if (d2 < r*r)
 			A(species,index) = 1.0;
 		
-// 		for (auto p : E[species])
-// 		{
-// 			if (p.Distance(Point(x,y)) < 1)
-// 			{
-// 				A(species,index) = 5;
-// 			}
-// 		}
+		for (auto p : E[species])
+		{
+			if (p.Distance(Point(x,y)) < 1)
+			{
+				A(species,index) = 5;
+			}
+		}
 	}
-	
 	
 }
 

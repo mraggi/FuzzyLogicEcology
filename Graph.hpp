@@ -336,7 +336,8 @@ public:
 	{
 	}
 	
-	static DiGraph FromAdjacencyMatrix(const Matrix& A, double tolerance = 0.001)
+	template <class Mat>
+	static DiGraph FromAdjacencyMatrix(const Mat& A, double tolerance = 0.001)
 	{
 		size_t n = A.rows();
 		DiGraph D(n);
@@ -529,4 +530,10 @@ std::vector<Edge> primm(const graph_t& G)
 		}
     }
     return T;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Edge& E)
+{
+	os << "(" << E.from << ", " << E.to << ", " << E.weight() << ")";
+	return os;
 }

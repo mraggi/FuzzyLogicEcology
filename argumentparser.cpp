@@ -33,7 +33,8 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	("namecolumns,I", po::value< std::vector<int> >(), "name columns")
 	("input-file,i", po::value< std::vector<std::string> >(), "input file. If left blank, the program will read from STDIN")
 	("output-file,o", po::value< std::string >(), "sage output file.")	
-// 	("arcgis-outfile", po::value< std::vector<std::string> >(), "ArcGIS output files (see )http://webhelp.esri.com/arcgisdesktop/9.3/index.cfm?TopicName=ESRI\%20ASCII\%20Raster\%20format")
+	("fuzzy_min", "Use Fuzzy Minimum instead of Fuzzy Product for intersection (warning: SLOW)")
+	("propincuity", "Use Propincuity to calculate areas (warning: SLOW. Not recommended!)")
 	;
 
 	po::positional_options_description p;
@@ -50,6 +51,18 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 		should_exit = true;
 		return;
 	}
+	
+	fuzzy_min = vm.count("fuzzy_min");
+	propincuity = vm.count("propincuity");
+	
+	if (fuzzy_min && propincuity)
+	{
+		std::cout << "Cannot use both propincuity and fuzzy_min. Specify one or the other (or neither), but not both.\n";
+		should_exit = true;
+		return;
+	}
+	
+	
 
 	if (vm.count("namecolumns"))
 	{
@@ -136,8 +149,25 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 			}
 			
 		}
-		
-		
+	}
+}
+
+void ArgumentParser::printMessage() const
+{
+	std::cout << "Grid: " << grid << std::endl;
+	if (!fuzzy_min && !propincuity)
+		std::cout << "Visibility: " << visibility << std::endl;
+	if (fuzzy_min)
+	{
+		std::cout << "Using FUZZY MIN version of fuzzy logic.\n";
+	}
+	else if (propincuity)
+	{
+		std::cout << "Using PROPINCUITY (NOT FUZZY LOGIC!).\n";		
+	}
+	else
+	{
+		std::cout << "Using regular PRODUCT version of fuzzy logic.\n";		
 		
 	}
 }

@@ -11,19 +11,13 @@ namespace po = boost::program_options;
 #include "ReadFile.hpp"
 // #include "GraphCalculator.hpp"
 
-#if defined FUZZY_MIN
-	#include "FuzzyNetworkMin.hpp"
-#elif defined USE_PROMISCUITY
-	#include "FuzzyNetworkPromiscuity.hpp"
-#else
-	#include "FuzzyNetworkProduct.hpp"
-#endif
+#include "FuzzyNetworkProduct.hpp"
+#include "FuzzyNetworkMin.hpp"
+#include "FuzzyNetworkPromiscuity.hpp"
 
 #include "argumentparser.hpp"
 #include "Graph.hpp"
 #include "GraphMeasures.hpp"
-
-void printLibraryMessage();
 
 int main(int argc, char* argv[])
 {
@@ -72,68 +66,27 @@ int main(int argc, char* argv[])
 			names.emplace_back(v.first);
 		}
 		
-#if defined FUZZY_MIN
-		FuzzyNetworkMin GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
-#elif defined USE_PROMISCUITY
-		FuzzyNetworkPromiscuity GC(AP.grid, Points, AP.memoryAvailable);
-#else
-		FuzzyNetworkProduct GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
-#endif
-		std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-		Matrix M = GC.CalculateGraph();
-		
-		for (int i = 0; i < numspecies; ++i)
+		if (AP.propincuity)
 		{
-			std::cout << "  " << names[i] << " has area " << GC.GetTotalArea(i) << std::endl;
+			FuzzyNetworkPromiscuity GC(AP.grid, Points, AP.memoryAvailable);
+			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
+			GC.PrintEverything(names, AP.outfile);
+		}
+		else if (AP.fuzzy_min)
+		{
+			FuzzyNetworkMin GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
+			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
+			GC.PrintEverything(names, AP.outfile);
+		}
+		else
+		{	
+			FuzzyNetworkProduct GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
+			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
+			GC.PrintEverything(names, AP.outfile);
 		}
 		
-		std::cout << std::endl << "Adjacency Matrix: " << std::endl;
-		std::cout << M << std::endl;
+		AP.printMessage();
 
-		std::cout << "Done Calculating Graph in " << chrono.Peek() << "s." << std::endl;
-		std::cout  << std::endl << "------------------------------" << std::endl << std::endl;
-
-		DiGraph D = DiGraph::FromAdjacencyMatrix(M);
-		
-		auto edges = D.edges();
-
-
-		auto by_weight = [](const Edge & a, const Edge & b)
-		{
-			return a.weight() < b.weight();
-		};
-		
-		sort(edges.begin(), edges.end(), by_weight);
-				
-		for (const auto& e : edges)
-		{
-			std::cout << '\"' << names[e.from] << "\" ---> \"" << names[e.to]  << '\"' << " with weight " << e.weight() << std::endl;
-		}
-		
-		if (AP.outfile != "")
-		{
-			std::ofstream out(AP.outfile);
-			out << "G = DiGraph()\n";
-			for (auto e : edges)
-			{
-				out << "G.add_edge(\"" << names[e.from] << "\",\"" << names[e.to]  << '\"' << "," << e.weight() << ")\n";
-			}
-		}
-
-		std::cout << "Grid: " << AP.grid << std::endl;
-		std::cout << "Visibility: " << AP.visibility << std::endl;
-
-		printLibraryMessage();
-		
-		
-		std::cout << "Areas: ";
-		GC.printAreaVector(std::cout, ',');
-		
-// 		if (AP.arcgisfile != "")
-// 		{
-// //			 GC.WriteArcGis(AP.arcgisfile);
-// 			std::cout << "Operation writing to arcgis file not supported yet :(" << std::endl;
-// 		}
 	}
 	catch (std::exception& e)
 	{
@@ -143,16 +96,4 @@ int main(int argc, char* argv[])
 
 	std::cout << std::endl << "Total time: " << chrono.Peek() << std::endl;
 	return 0;
-}
-
-
-void printLibraryMessage()
-{
-#if defined FUZZY_MIN
-	std::cout << "USING EIGEN (FUZZY MIN mode)" << std::endl;
-#elif defined USE_PROMISCUITY
-	std::cout << "Using EIGEN (Promiscuity mode)" << std::endl;
-#else
-	std::cout << "USING EIGEN (FUZZY PRODUCT mode)" << std::endl;
-#endif
 }

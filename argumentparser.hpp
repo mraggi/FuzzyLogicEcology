@@ -18,5 +18,7 @@ struct ArgumentParser
 	long memoryAvailable{0};
 	std::istream* is{&std::cin};
 	std::ifstream file;
-// 	std::string arcgisfile {};
+	void printMessage() const;
+	bool fuzzy_min {false};
+	bool propincuity {false};
 };
