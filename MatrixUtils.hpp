@@ -45,6 +45,12 @@ inline void AddTransposeProduct(Mat& M, Mat& A)
 }
 
 template <>
+inline void AddTransposeProduct(Matrix& M, Matrix& A)
+{
+	M += A*A.transpose();
+}
+
+template <>
 inline void AddTransposeProduct(MatrixFM& M, MatrixFM& A)
 {
  	M += A.lazyProduct(A.transpose());	

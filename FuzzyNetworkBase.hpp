@@ -323,7 +323,7 @@ Mat FuzzyNetworkBase<Mat>::DivideByArea(const Mat& M) const
 				}
 				else
 				{
-					R(x,y) = M(x,y);
+					R(x,y) = 0.0;
 				}
 			}
 		}

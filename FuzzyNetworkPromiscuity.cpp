@@ -115,8 +115,6 @@ void FuzzyNetworkPromiscuity::Realize(Matrix& A, long species, long block)
 		
 		long y = index - x*N + offset;
 		
-		
-		
 		double d2 = get_distancesq_to_spanning_tree(Point(x,y),species);
 		
 		double r = m_radius[species];
@@ -126,14 +124,16 @@ void FuzzyNetworkPromiscuity::Realize(Matrix& A, long species, long block)
 // 		r *= sqrt(grid/(F.x*F.y));
 		if (d2 < r*r)
 			A(species,index) = 1.0;
+		else
+			A(species,index) = 0.0;
 		
-		for (auto p : E[species])
-		{
-			if (p.Distance(Point(x,y)) < 1)
-			{
-				A(species,index) = 5;
-			}
-		}
+// 		for (auto p : E[species])
+// 		{
+// 			if (p.Distance(Point(x,y)) < 1)
+// 			{
+// 				A(species,index) = 5;
+// 			}
+// 		}
 	}
 	
 }
