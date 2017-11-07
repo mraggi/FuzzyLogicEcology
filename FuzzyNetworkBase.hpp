@@ -244,7 +244,7 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 
 	Mat A(numspecies,num_cols_per_block);
 	
-	Mat M = Mat::Constant(numspecies, numspecies, 0.0);
+	Mat M = Mat::Zero(numspecies, numspecies);
 	
 	for (size_t block = 0; block < num_full_blocks + num_partial_blocks; ++block)
 	{
