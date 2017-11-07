@@ -392,5 +392,5 @@ void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& name
 	printAreaVector(std::cout, ',');
 	
 	std::cout << std::defaultfloat;
-	std::cout << endl;
+	std::cout << std::endl;
 }
