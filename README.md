@@ -27,6 +27,7 @@ From either of those (and many more) we could create a model for fuzzy logic (ac
  The standard way of defining the distribution area of a species is with *propincuity*, which is also available in this program (for comparison only. It's slow, and there are probably faster alternatives out there). 
  
  In propincuity, one takes a minimum spanning tree of the vertices, sets the *radius* to the average edge length, and then considers the area of distribution by moving a circle with said radius along all the edges of the spanning tree, like the following picture (radius adjusted for clarity).
+ 
  ![Propincuity](https://github.com/mraggi/FuzzyLogicEcology/blob/master/Paper/prop.png "Propincuity")
 
 ## Installing
