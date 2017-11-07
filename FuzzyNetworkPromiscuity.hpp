@@ -26,6 +26,9 @@ public:
 	}
 	
 	double get_distancesq_to_spanning_tree(const Point& P, long species) const;
+	
+	Interval GetXInterval(long species) const;
+	Interval GetYInterval(long species) const;
 private:
 	std::vector<double> m_radius; //in continuum
 	using SpanningTree = std::vector<Edge>;

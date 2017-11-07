@@ -104,36 +104,89 @@ double FuzzyNetworkPromiscuity::get_distancesq_to_spanning_tree(const Point& P, 
 	return d;
 }
 
+Interval FuzzyNetworkPromiscuity::GetXInterval(long species) const
+{
+	long m = grid;
+	long M = 0;
+	
+	for (const auto& P : E[species])
+	{
+		if (P.x < m)
+			m = P.x;
+		if (P.x > M)
+			M = P.x;
+	}
+	--m;
+	++M;
+	
+	auto W = MaxAffectedArea();
+	m -= W.x;
+	M += W.x;
+	
+	if (m < 0)
+		m = 0;
+	
+	if (M > grid)
+		M = grid;
+	
+	return {m,M};
+}
+
+Interval FuzzyNetworkPromiscuity::GetYInterval(long species) const
+{
+	long m = grid;
+	long M = 0;
+	
+	for (const auto& P : E[species])
+	{
+		if (P.y < m)
+			m = P.y;
+		if (P.y > M)
+			M = P.y;
+	}
+	--m;
+	++M;
+	
+	auto W = MaxAffectedArea();
+	m -= W.y;
+	M += W.y;
+	
+	if (m < 0)
+		m = 0;
+	
+	if (M > grid)
+		M = grid;
+	
+	return {m,M};
+}
+
 void FuzzyNetworkPromiscuity::Realize(Matrix& A, long species, long block)
 {
 	long N = grid;
 	long offset = block*num_cols_per_block;
 	
-	for (long index = 0; index < A.cols(); ++index)
+	auto X = GetXInterval(species);
+	auto Y = GetYInterval(species);
+	
+	
+	for (long x = X.L; x < X.R; ++x)
 	{
-		long x = (index+offset)/N;
-		
-		long y = index - x*N + offset;
-		
-		double d2 = get_distancesq_to_spanning_tree(Point(x,y),species);
-		
-		double r = m_radius[species];
-// 		std::cout << Point(x,y) << ", d = " << sqrt(d2) << std::endl;
-// 		std::cout << "r = " << r << std::endl;
-		
-// 		r *= sqrt(grid/(F.x*F.y));
-		if (d2 < r*r)
-			A(species,index) = 1.0;
-		else
-			A(species,index) = 0.0;
-		
-// 		for (auto p : E[species])
-// 		{
-// 			if (p.Distance(Point(x,y)) < 1)
-// 			{
-// 				A(species,index) = 5;
-// 			}
-// 		}
+		for (long y = Y.L; y < Y.R; ++y)
+		{
+			long index = x*N+y - offset;
+			
+			if (index < 0 || index >= A.cols())
+				continue;
+			
+			double d2 = get_distancesq_to_spanning_tree(Point(x,y),species);
+			
+			double r = m_radius[species];
+
+			if (d2 < r*r)
+				A(species,index) = 1.0;
+			else
+				A(species,index) = 0.0;
+		}
 	}
 	
 }

@@ -38,11 +38,11 @@ int main(int argc, char* argv[])
 
 		using SpeciesRegisters = std::pair<std::string, std::vector<Point>>;
 		std::vector< SpeciesRegisters > V(SpeciesMap.begin(), SpeciesMap.end());
-// 		sort(V.begin(), V.end(), [](const auto & L, const auto & R)
-// 		{
-// 			//Decreasing order by number of data points
-// 			return L.second.size() > R.second.size();
-// 		});
+		sort(V.begin(), V.end(), [](const auto & L, const auto & R)
+		{
+			//Decreasing order by number of data points
+			return L.second.size() > R.second.size();
+		});
 		
 		std::cout << std::endl << "********************* Species Found *******************" << std::endl;
 		int num = 0;

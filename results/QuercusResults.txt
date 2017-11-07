@@ -1,0 +1,1187 @@
+There are 2 name columns: 1 2 
+Input file is: QuercusOaxaca.txt
+Latitude deduced to be in column 3
+Longitude deduced to be in column 4
+
+********************* Species Found *******************
+# 0 Lobatae trinitatis has 20 observations 
+# 1 Lobatae skinneri has 13 observations 
+# 2 Lobatae scytophylla has 49 observations 
+# 3 Lobatae sartorii has 9 observations 
+# 4 Lobatae sapotiifolia has 37 observations 
+# 5 Lobatae salicifolia has 6 observations 
+# 6 Lobatae paxtalensis has 14 observations 
+# 7 Lobatae candicans has 78 observations 
+# 8 Quercus oleoides has 45 observations 
+# 9 Lobatae crispifolia has 14 observations 
+# 10 Lobatae rubramenta has 9 observations 
+# 11 Quercus glabrescens has 35 observations 
+# 12 Quercus obtusata has 98 observations 
+# 13 Quercus rekonis has 1 observations 
+# 14 Quercus leiophylla has 8 observations 
+# 15 Quercus microphylla has 9 observations 
+# 16 Lobatae acherdophylla has 2 observations 
+# 17 Lobatae laurina has 95 observations 
+# 18 Quercus magnoliifolia has 144 observations 
+# 19 Quercus macdougallii has 14 observations 
+# 20 Quercus glaucescens has 64 observations 
+# 21 Lobatae castanea has 169 observations 
+# 22 Quercus martinezii has 14 observations 
+# 23 Quercus polymorpha has 25 observations 
+# 24 Quercus deserticola has 17 observations 
+# 25 Quercus insignis has 11 observations 
+# 26 Quercus frutex has 12 observations 
+# 27 Lobatae cortesii has 9 observations 
+# 28 Quercus corrugata has 28 observations 
+# 29 Quercus peduncularis has 55 observations 
+# 30 Lobatae nixoniana has 7 observations 
+# 31 Lobatae uxoris has 18 observations 
+# 32 Lobatae pinnativenulosa has 9 observations 
+# 33 Quercus glaucoides has 173 observations 
+# 34 Quercus laeta has 39 observations 
+# 35 Lobatae acutifolia has 59 observations 
+# 36 Quercus lancifolia has 16 observations 
+# 37 Lobatae ocoteifolia has 23 observations 
+# 38 Quercus segoviensis has 20 observations 
+# 39 Lobatae delgadoana has 6 observations 
+# 40 Lobatae depressa has 11 observations 
+# 41 Quercus splendens has 22 observations 
+# 42 Lobatae acatenangensis has 6 observations 
+# 43 Lobatae affinis has 10 observations 
+# 44 Quercus liebmannii has 52 observations 
+# 45 Lobatae benthamii has 9 observations 
+# 46 Quercus sebifera has 12 observations 
+# 47 Lobatae conspersa has 87 observations 
+# 48 Lobatae conzattii has 70 observations 
+# 49 Lobatae crassipes has 10 observations 
+# 50 Lobatae grahamii has 68 observations 
+# 51 Quercus rugosa has 63 observations 
+# 52 Quercus greggii has 6 observations 
+# 53 Lobatae crassifolia has 120 observations 
+# 54 Lobatae elliptica has 114 observations 
+# 55 Lobatae mulleri has 9 observations 
+***********************************************
+
+***************************** System Information *****************************
+Total memory (if everything was put on memory): 10.9896GB
+Available memory: 2GB
+Total number of columns: 25000000
+So I need 5 full blocks and 1 partial blocks.
+Full blocks have 4549753 columns and consume 2GB of memory.
+Partial block has 2251235 columns and consumes 0.989607GB of memory.
+******************************************************************
+
+Done pre-processing in 0.007637s. Starting calculation...
+Took 3.3e-05s to initialize.
+Starting calculations.
+
+Starting block 1
+	Took 0.308545s to initialize matrix
+	Block 1 took 0.619397s to realize,
+	and 1.77466s to multiply the matrices.
+Done with block 1 of 6. Expected remaining time: 13.5133s
+
+Starting block 2
+	Took 0.394499s to initialize matrix
+	Block 2 took 0.598772s to realize,
+	and 1.98093s to multiply the matrices.
+Done with block 2 of 6. Expected remaining time: 11.3774s
+
+Starting block 3
+	Took 0.425792s to initialize matrix
+	Block 3 took 0.633991s to realize,
+	and 2.78733s to multiply the matrices.
+Done with block 3 of 6. Expected remaining time: 9.54643s
+
+Starting block 4
+	Took 0.393391s to initialize matrix
+	Block 4 took 0.626349s to realize,
+	and 2.07292s to multiply the matrices.
+Done with block 4 of 6. Expected remaining time: 6.3257s
+
+Starting block 5
+	Took 0.416899s to initialize matrix
+	Block 5 took 0.630774s to realize,
+	and 2.21772s to multiply the matrices.
+Done with block 5 of 6. Expected remaining time: 3.18388s
+
+Starting block 6
+	Took 0.17812s to initialize matrix
+	Block 6 took 0.301112s to realize,
+	and 1.07597s to multiply the matrices.
+Done with block 6 of 6. Expected remaining time: 0s
+Total Time taken to calculate network: 17.5022
+
+Adjacency Matrix: 
+0.535 0.000 0.065 0.003 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.032 0.000 0.000 0.039 0.000 0.015 0.032 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.184 0.000 0.020 0.000 0.008 0.018 0.000 0.000 0.000 0.003 0.000 0.066 0.006 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.033 0.010 0.000
+0.000 0.501 0.000 0.000 0.001 0.038 0.006 0.000 0.000 0.053 0.000 0.000 0.038 0.000 0.032 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.044 0.000 0.006 0.000 0.000 0.000 0.000 0.000 0.000 0.032 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.035 0.000 0.012 0.000 0.000 0.000 0.000 0.000 0.000 0.035 0.000
+0.027 0.000 0.534 0.001 0.000 0.007 0.014 0.104 0.000 0.000 0.000 0.023 0.032 0.000 0.000 0.000 0.007 0.045 0.035 0.000 0.000 0.032 0.007 0.000 0.000 0.011 0.000 0.000 0.029 0.000 0.006 0.044 0.000 0.016 0.000 0.024 0.000 0.023 0.011 0.001 0.002 0.023 0.000 0.011 0.011 0.007 0.000 0.034 0.028 0.000 0.014 0.000 0.000 0.065 0.089 0.000
+0.005 0.000 0.006 0.504 0.000 0.000 0.000 0.023 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.002 0.000 0.000 0.000 0.000 0.000 0.000 0.076 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.116 0.000 0.000 0.000 0.038 0.056 0.000 0.056 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.002 0.000
+0.000 0.000 0.000 0.000 0.516 0.014 0.013 0.000 0.099 0.000 0.000 0.000 0.000 0.000 0.015 0.000 0.000 0.000 0.000 0.000 0.186 0.000 0.000 0.000 0.000 0.015 0.000 0.011 0.000 0.018 0.000 0.000 0.000 0.000 0.000 0.000 0.033 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.014 0.000 0.014 0.000 0.000 0.000 0.000 0.000 0.000 0.043 0.000
+0.000 0.083 0.051 0.000 0.083 0.500 0.031 0.021 0.000 0.083 0.000 0.000 0.026 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.062 0.000 0.083 0.000 0.000 0.007 0.000 0.083 0.083 0.012 0.000 0.095 0.000 0.001 0.000 0.026 0.000 0.000 0.000 0.000 0.000 0.026 0.000 0.000 0.000 0.179 0.000 0.022 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+0.000 0.005 0.048 0.000 0.033 0.014 0.512 0.035 0.000 0.031 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.019 0.004 0.000 0.004 0.000 0.015 0.000 0.000 0.000 0.000 0.044 0.014 0.088 0.000 0.114 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.027 0.000 0.000 0.000 0.015 0.000 0.039 0.027 0.000 0.000 0.000 0.000 0.037 0.007 0.000
+0.000 0.000 0.062 0.003 0.000 0.002 0.006 0.518 0.000 0.000 0.000 0.020 0.091 0.000 0.000 0.000 0.000 0.051 0.022 0.007 0.000 0.080 0.013 0.018 0.000 0.012 0.000 0.000 0.015 0.027 0.000 0.009 0.007 0.044 0.007 0.058 0.000 0.028 0.021 0.000 0.000 0.013 0.000 0.020 0.022 0.002 0.000 0.044 0.071 0.009 0.013 0.006 0.000 0.104 0.068 0.000
+0.000 0.000 0.000 0.000 0.087 0.000 0.000 0.000 0.534 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.012 0.000 0.063 0.000 0.000 0.000 0.000 0.012 0.000 0.012 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.022 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.021 0.000
+0.000 0.055 0.000 0.000 0.000 0.040 0.034 0.000 0.000 0.553 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.024 0.049 0.000 0.000 0.004 0.000 0.000 0.000 0.000 0.000 0.070 0.000 0.010 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.014 0.000 0.011 0.000 0.000 0.000 0.043 0.000 0.040 0.010 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.519 0.000 0.000 0.000 0.000 0.000 0.000 0.162 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.066 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.057 0.000 0.123 0.075 0.000
+0.018 0.000 0.032 0.000 0.000 0.000 0.000 0.046 0.000 0.000 0.000 0.525 0.016 0.000 0.007 0.000 0.000 0.208 0.015 0.027 0.000 0.016 0.000 0.013 0.000 0.000 0.000 0.000 0.020 0.001 0.000 0.000 0.000 0.030 0.000 0.059 0.001 0.031 0.015 0.004 0.020 0.000 0.020 0.041 0.000 0.000 0.000 0.000 0.044 0.015 0.019 0.126 0.000 0.193 0.055 0.000
+0.000 0.005 0.016 0.000 0.000 0.002 0.000 0.076 0.000 0.000 0.000 0.006 0.535 0.000 0.000 0.001 0.000 0.022 0.086 0.006 0.000 0.092 0.006 0.013 0.024 0.000 0.004 0.000 0.000 0.005 0.000 0.000 0.000 0.050 0.029 0.034 0.000 0.001 0.000 0.000 0.007 0.005 0.000 0.000 0.000 0.000 0.009 0.014 0.029 0.000 0.049 0.018 0.003 0.050 0.021 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.500 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.500 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+0.091 0.052 0.000 0.000 0.066 0.000 0.000 0.000 0.000 0.000 0.000 0.029 0.000 0.000 0.500 0.000 0.000 0.006 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.063 0.000 0.003 0.192 0.020 0.000 0.000 0.000 0.000 0.000 0.000 0.250 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.063 0.000 0.000 0.000 0.000 0.000 0.029 0.085 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.008 0.000 0.000 0.508 0.000 0.000 0.000 0.000 0.000 0.004 0.000 0.000 0.064 0.000 0.147 0.000 0.000 0.000 0.000 0.000 0.000 0.003 0.060 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.061 0.000 0.000 0.001 0.000 0.000 0.137 0.000 0.056 0.000 0.000 0.000
+0.138 0.000 0.169 0.007 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.500 0.251 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.096 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.009 0.000 0.009 0.011 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.436 0.000
+0.007 0.000 0.023 0.000 0.000 0.000 0.003 0.043 0.000 0.003 0.016 0.079 0.023 0.000 0.001 0.000 0.006 0.542 0.023 0.021 0.000 0.062 0.026 0.007 0.000 0.000 0.000 0.000 0.028 0.014 0.000 0.000 0.000 0.018 0.014 0.034 0.000 0.027 0.006 0.014 0.014 0.000 0.019 0.030 0.017 0.000 0.000 0.011 0.025 0.000 0.000 0.112 0.000 0.144 0.037 0.000
+0.000 0.000 0.011 0.000 0.000 0.000 0.000 0.012 0.004 0.004 0.000 0.004 0.057 0.000 0.000 0.000 0.000 0.015 0.520 0.000 0.005 0.071 0.000 0.002 0.004 0.010 0.000 0.000 0.000 0.005 0.000 0.001 0.000 0.083 0.007 0.013 0.000 0.006 0.001 0.000 0.000 0.009 0.000 0.000 0.025 0.000 0.005 0.055 0.040 0.000 0.034 0.007 0.000 0.037 0.033 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.040 0.000 0.000 0.000 0.071 0.040 0.000 0.000 0.000 0.000 0.147 0.000 0.548 0.000 0.035 0.000 0.001 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.040 0.000 0.066 0.000 0.110 0.069 0.000 0.000 0.000 0.000 0.065 0.000 0.000 0.000 0.000 0.005 0.000 0.000 0.059 0.000 0.133 0.006 0.000
+0.000 0.000 0.000 0.000 0.106 0.006 0.001 0.000 0.041 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.011 0.000 0.510 0.000 0.000 0.000 0.000 0.008 0.000 0.008 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.024 0.000 0.000 0.000 0.000 0.000 0.000 0.013 0.000
+0.000 0.000 0.009 0.000 0.000 0.000 0.000 0.038 0.000 0.000 0.000 0.003 0.052 0.000 0.000 0.000 0.000 0.034 0.061 0.003 0.000 0.525 0.002 0.011 0.010 0.004 0.000 0.000 0.000 0.011 0.000 0.000 0.000 0.068 0.018 0.044 0.000 0.006 0.025 0.000 0.004 0.006 0.000 0.006 0.033 0.000 0.008 0.027 0.064 0.000 0.033 0.026 0.003 0.072 0.016 0.000
+0.000 0.000 0.023 0.000 0.000 0.038 0.015 0.075 0.000 0.000 0.000 0.000 0.043 0.000 0.000 0.000 0.000 0.173 0.000 0.000 0.000 0.027 0.527 0.000 0.000 0.000 0.000 0.000 0.095 0.050 0.000 0.043 0.000 0.004 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.038 0.000 0.003 0.000 0.000 0.000 0.000 0.000 0.075 0.002 0.000
+0.000 0.000 0.001 0.029 0.000 0.000 0.000 0.059 0.000 0.000 0.000 0.019 0.048 0.000 0.000 0.000 0.000 0.026 0.009 0.001 0.000 0.077 0.000 0.521 0.016 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.031 0.085 0.000 0.010 0.008 0.000 0.023 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.079 0.021 0.000 0.000 0.000 0.018 0.018 0.021 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.127 0.000 0.000 0.034 0.000 0.000 0.032 0.000 0.000 0.100 0.000 0.022 0.505 0.000 0.035 0.000 0.000 0.000 0.000 0.000 0.000 0.024 0.031 0.000 0.000 0.000 0.000 0.000 0.000 0.030 0.000 0.000 0.001 0.000 0.000 0.000 0.000 0.000 0.100 0.030 0.088 0.030 0.000 0.000
+0.000 0.000 0.047 0.000 0.053 0.004 0.000 0.088 0.048 0.000 0.000 0.000 0.004 0.000 0.048 0.000 0.000 0.000 0.136 0.000 0.048 0.063 0.000 0.001 0.000 0.516 0.000 0.092 0.047 0.000 0.000 0.000 0.000 0.005 0.007 0.000 0.048 0.047 0.042 0.000 0.000 0.009 0.000 0.000 0.000 0.004 0.000 0.066 0.000 0.000 0.000 0.000 0.000 0.063 0.065 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.031 0.000 0.000 0.124 0.000 0.000 0.000 0.000 0.000 0.001 0.000 0.000 0.056 0.000 0.542 0.000 0.000 0.000 0.000 0.000 0.000 0.038 0.092 0.000 0.000 0.000 0.000 0.000 0.044 0.000 0.000 0.000 0.075 0.000 0.069 0.000 0.000 0.070 0.085 0.000 0.096 0.000 0.000 0.000
+0.000 0.064 0.000 0.000 0.045 0.056 0.066 0.000 0.056 0.096 0.000 0.000 0.000 0.000 0.003 0.000 0.000 0.000 0.000 0.000 0.056 0.000 0.000 0.001 0.000 0.107 0.000 0.500 0.000 0.131 0.000 0.000 0.000 0.000 0.000 0.000 0.003 0.000 0.000 0.000 0.000 0.019 0.000 0.000 0.000 0.012 0.000 0.048 0.000 0.000 0.000 0.000 0.000 0.000 0.011 0.000
+0.135 0.000 0.052 0.000 0.000 0.020 0.007 0.044 0.000 0.000 0.000 0.026 0.000 0.000 0.061 0.000 0.008 0.098 0.000 0.000 0.000 0.000 0.050 0.000 0.000 0.019 0.000 0.000 0.542 0.000 0.057 0.023 0.036 0.026 0.000 0.000 0.020 0.067 0.000 0.028 0.001 0.000 0.000 0.003 0.000 0.020 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.012 0.055 0.000
+0.000 0.001 0.000 0.000 0.012 0.001 0.023 0.039 0.000 0.002 0.000 0.001 0.010 0.000 0.003 0.000 0.000 0.024 0.012 0.000 0.000 0.034 0.013 0.000 0.000 0.000 0.000 0.023 0.000 0.532 0.000 0.033 0.000 0.031 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.051 0.000 0.000 0.041 0.008 0.000 0.083 0.032 0.000 0.000 0.017 0.000 0.044 0.055 0.001
+0.060 0.000 0.045 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.228 0.000 0.563 0.000 0.103 0.036 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.094 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.094 0.000
+0.000 0.000 0.123 0.000 0.000 0.035 0.097 0.044 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.009 0.000 0.000 0.000 0.035 0.000 0.000 0.000 0.000 0.000 0.035 0.106 0.000 0.562 0.000 0.051 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.070 0.000 0.000 0.012 0.035 0.000 0.000 0.032 0.000 0.000 0.000 0.000 0.023 0.066 0.000
+0.018 0.000 0.000 0.126 0.000 0.000 0.000 0.066 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.088 0.000 0.000 0.000 0.000 0.109 0.000 0.079 0.000 0.550 0.015 0.000 0.000 0.075 0.060 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.060 0.060 0.000
+0.002 0.000 0.005 0.000 0.000 0.000 0.000 0.020 0.000 0.000 0.000 0.006 0.028 0.000 0.000 0.000 0.000 0.010 0.071 0.003 0.000 0.067 0.000 0.012 0.002 0.000 0.002 0.000 0.004 0.010 0.001 0.005 0.001 0.527 0.004 0.017 0.000 0.003 0.010 0.000 0.000 0.010 0.000 0.003 0.029 0.000 0.003 0.057 0.030 0.004 0.002 0.009 0.000 0.028 0.002 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.013 0.000 0.000 0.000 0.000 0.069 0.000 0.000 0.014 0.000 0.033 0.024 0.000 0.000 0.075 0.000 0.000 0.014 0.002 0.026 0.000 0.000 0.000 0.000 0.000 0.000 0.017 0.518 0.045 0.013 0.000 0.000 0.000 0.010 0.000 0.000 0.000 0.012 0.000 0.013 0.000 0.043 0.018 0.073 0.027 0.013 0.088 0.075 0.000
+0.000 0.000 0.020 0.000 0.000 0.003 0.000 0.079 0.000 0.000 0.000 0.036 0.057 0.000 0.000 0.000 0.000 0.054 0.033 0.015 0.000 0.129 0.000 0.004 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.050 0.031 0.526 0.000 0.013 0.028 0.001 0.009 0.018 0.000 0.022 0.016 0.000 0.000 0.007 0.101 0.011 0.009 0.024 0.000 0.127 0.060 0.000
+0.000 0.027 0.000 0.022 0.076 0.000 0.000 0.000 0.058 0.000 0.000 0.001 0.000 0.000 0.129 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.013 0.000 0.032 0.000 0.001 0.032 0.000 0.000 0.000 0.040 0.000 0.032 0.000 0.511 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.067 0.000
+0.002 0.000 0.046 0.022 0.000 0.000 0.000 0.093 0.000 0.000 0.000 0.046 0.004 0.000 0.000 0.000 0.001 0.105 0.039 0.061 0.000 0.044 0.000 0.000 0.000 0.022 0.000 0.000 0.074 0.000 0.000 0.000 0.022 0.025 0.000 0.032 0.000 0.506 0.045 0.066 0.002 0.022 0.000 0.024 0.000 0.000 0.000 0.067 0.000 0.000 0.028 0.000 0.000 0.098 0.097 0.000
+0.000 0.000 0.029 0.000 0.000 0.000 0.000 0.093 0.000 0.000 0.000 0.029 0.000 0.000 0.000 0.000 0.000 0.032 0.005 0.050 0.000 0.228 0.000 0.032 0.000 0.025 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.092 0.000 0.088 0.000 0.060 0.567 0.000 0.024 0.000 0.000 0.027 0.000 0.000 0.000 0.017 0.237 0.000 0.000 0.073 0.000 0.152 0.031 0.000
+0.203 0.000 0.010 0.083 0.000 0.000 0.000 0.001 0.000 0.000 0.097 0.024 0.000 0.000 0.000 0.000 0.003 0.202 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.120 0.000 0.000 0.000 0.000 0.000 0.000 0.010 0.000 0.250 0.000 0.500 0.006 0.000 0.000 0.014 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.031 0.004 0.000
+0.011 0.000 0.007 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.065 0.063 0.000 0.000 0.000 0.002 0.117 0.000 0.000 0.000 0.070 0.000 0.000 0.000 0.000 0.046 0.000 0.003 0.000 0.000 0.000 0.000 0.000 0.037 0.050 0.000 0.003 0.041 0.003 0.533 0.000 0.049 0.018 0.000 0.000 0.000 0.000 0.051 0.076 0.014 0.059 0.000 0.036 0.001 0.000
+0.000 0.000 0.047 0.000 0.000 0.007 0.016 0.045 0.000 0.000 0.000 0.000 0.023 0.000 0.000 0.000 0.000 0.001 0.059 0.000 0.000 0.047 0.000 0.000 0.023 0.004 0.000 0.008 0.000 0.120 0.000 0.051 0.000 0.074 0.000 0.045 0.000 0.023 0.000 0.000 0.000 0.500 0.000 0.000 0.000 0.000 0.000 0.114 0.045 0.015 0.023 0.000 0.000 0.017 0.033 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.111 0.000 0.000 0.000 0.000 0.000 0.286 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.083 0.000 0.500 0.015 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.213 0.000 0.044 0.000 0.000
+0.000 0.000 0.057 0.000 0.000 0.000 0.000 0.172 0.000 0.000 0.000 0.156 0.000 0.000 0.000 0.000 0.000 0.305 0.000 0.094 0.000 0.108 0.000 0.001 0.000 0.000 0.000 0.000 0.010 0.000 0.068 0.000 0.000 0.057 0.000 0.139 0.000 0.063 0.054 0.010 0.021 0.000 0.010 0.555 0.000 0.000 0.000 0.000 0.115 0.000 0.000 0.092 0.000 0.345 0.120 0.000
+0.000 0.000 0.011 0.000 0.000 0.000 0.000 0.035 0.000 0.000 0.000 0.000 0.001 0.000 0.000 0.011 0.000 0.031 0.072 0.000 0.000 0.111 0.000 0.000 0.001 0.000 0.017 0.000 0.000 0.045 0.000 0.004 0.000 0.099 0.010 0.018 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.534 0.000 0.000 0.085 0.043 0.000 0.021 0.033 0.000 0.052 0.011 0.000
+0.000 0.050 0.034 0.000 0.056 0.119 0.023 0.014 0.000 0.019 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.056 0.000 0.000 0.004 0.000 0.012 0.056 0.047 0.000 0.063 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.500 0.000 0.062 0.000 0.000 0.000 0.000 0.000 0.000 0.057 0.066
+0.000 0.000 0.001 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.071 0.000 0.000 0.000 0.000 0.000 0.062 0.000 0.000 0.116 0.000 0.000 0.000 0.000 0.064 0.000 0.000 0.000 0.000 0.000 0.000 0.043 0.043 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.515 0.000 0.000 0.000 0.055 0.000 0.020 0.000 0.049 0.000
+0.000 0.002 0.019 0.000 0.006 0.002 0.007 0.041 0.000 0.002 0.000 0.000 0.016 0.000 0.006 0.000 0.000 0.012 0.094 0.000 0.018 0.052 0.001 0.023 0.000 0.008 0.000 0.005 0.000 0.053 0.000 0.000 0.000 0.113 0.000 0.005 0.000 0.019 0.004 0.000 0.000 0.030 0.000 0.000 0.050 0.007 0.000 0.529 0.021 0.000 0.000 0.014 0.000 0.031 0.014 0.000
+0.000 0.000 0.019 0.000 0.000 0.000 0.005 0.080 0.000 0.000 0.000 0.022 0.039 0.007 0.000 0.000 0.000 0.033 0.081 0.001 0.000 0.153 0.000 0.007 0.000 0.000 0.000 0.000 0.000 0.025 0.000 0.008 0.000 0.074 0.025 0.083 0.000 0.000 0.061 0.000 0.008 0.015 0.000 0.015 0.030 0.000 0.000 0.026 0.520 0.000 0.012 0.057 0.000 0.118 0.043 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.075 0.000 0.000 0.000 0.055 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.001 0.000 0.001 0.000 0.000 0.082 0.000 0.000 0.000 0.000 0.000 0.000 0.073 0.078 0.070 0.000 0.000 0.000 0.000 0.085 0.037 0.000 0.000 0.000 0.000 0.000 0.000 0.001 0.554 0.067 0.001 0.000 0.000 0.026 0.000
+0.000 0.000 0.010 0.000 0.000 0.000 0.000 0.016 0.000 0.000 0.000 0.010 0.071 0.000 0.000 0.019 0.000 0.000 0.076 0.000 0.000 0.086 0.000 0.000 0.027 0.000 0.014 0.000 0.000 0.000 0.000 0.000 0.000 0.006 0.044 0.008 0.000 0.010 0.000 0.000 0.002 0.008 0.000 0.000 0.016 0.000 0.010 0.000 0.013 0.010 0.545 0.024 0.010 0.033 0.010 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.008 0.000 0.009 0.008 0.071 0.028 0.000 0.000 0.000 0.000 0.167 0.017 0.013 0.000 0.070 0.000 0.000 0.008 0.000 0.000 0.000 0.000 0.015 0.000 0.000 0.000 0.026 0.017 0.023 0.000 0.000 0.021 0.000 0.010 0.000 0.021 0.014 0.027 0.000 0.000 0.019 0.064 0.000 0.025 0.524 0.008 0.156 0.037 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.040 0.000 0.000 0.084 0.000 0.000 0.000 0.000 0.000 0.084 0.000 0.070 0.250 0.000 0.173 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.085 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.040 0.000 0.000 0.000 0.103 0.084 0.509 0.084 0.000 0.000
+0.005 0.000 0.026 0.000 0.000 0.000 0.004 0.068 0.000 0.004 0.009 0.057 0.040 0.000 0.002 0.000 0.000 0.111 0.045 0.015 0.000 0.102 0.009 0.004 0.004 0.006 0.000 0.000 0.003 0.020 0.000 0.003 0.004 0.039 0.029 0.061 0.000 0.019 0.023 0.002 0.003 0.003 0.002 0.026 0.022 0.000 0.000 0.022 0.070 0.000 0.018 0.081 0.004 0.529 0.046 0.000
+0.002 0.004 0.037 0.000 0.014 0.000 0.001 0.047 0.008 0.001 0.006 0.017 0.018 0.000 0.006 0.000 0.008 0.030 0.042 0.001 0.007 0.023 0.000 0.005 0.000 0.006 0.000 0.001 0.013 0.026 0.005 0.010 0.005 0.002 0.026 0.030 0.010 0.020 0.005 0.000 0.000 0.007 0.000 0.010 0.005 0.005 0.005 0.010 0.027 0.002 0.006 0.020 0.000 0.048 0.528 0.000
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.005 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.082 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.002 0.608
+"Lobatae conzattii" ---> "Quercus macdougallii" with weight 0.001
+"Quercus magnoliifolia" ---> "Lobatae uxoris" with weight 0.001
+"Quercus macdougallii" ---> "Quercus polymorpha" with weight 0.001
+"Lobatae acutifolia" ---> "Lobatae delgadoana" with weight 0.001
+"Lobatae elliptica" ---> "Lobatae crispifolia" with weight 0.001
+"Lobatae scytophylla" ---> "Lobatae sartorii" with weight 0.001
+"Lobatae scytophylla" ---> "Lobatae delgadoana" with weight 0.001
+"Quercus lancifolia" ---> "Quercus glabrescens" with weight 0.001
+"Quercus corrugata" ---> "Lobatae depressa" with weight 0.001
+"Quercus glaucoides" ---> "Lobatae nixoniana" with weight 0.001
+"Lobatae depressa" ---> "Lobatae elliptica" with weight 0.001
+"Quercus peduncularis" ---> "Lobatae salicifolia" with weight 0.001
+"Quercus splendens" ---> "Lobatae laurina" with weight 0.001
+"Quercus deserticola" ---> "Quercus liebmannii" with weight 0.001
+"Quercus frutex" ---> "Lobatae castanea" with weight 0.001
+"Quercus peduncularis" ---> "Lobatae skinneri" with weight 0.001
+"Quercus lancifolia" ---> "Lobatae cortesii" with weight 0.001
+"Quercus glaucoides" ---> "Lobatae elliptica" with weight 0.002
+"Lobatae ocoteifolia" ---> "Lobatae depressa" with weight 0.002
+"Quercus magnoliifolia" ---> "Quercus polymorpha" with weight 0.002
+"Lobatae scytophylla" ---> "Lobatae depressa" with weight 0.002
+"Lobatae sartorii" ---> "Lobatae elliptica" with weight 0.002
+"Lobatae conspersa" ---> "Lobatae salicifolia" with weight 0.002
+"Lobatae conspersa" ---> "Lobatae crispifolia" with weight 0.002
+"Lobatae candicans" ---> "Lobatae benthamii" with weight 0.002
+"Lobatae candicans" ---> "Lobatae salicifolia" with weight 0.002
+"Quercus martinezii" ---> "Lobatae elliptica" with weight 0.002
+"Lobatae crassifolia" ---> "Lobatae delgadoana" with weight 0.002
+"Lobatae sartorii" ---> "Lobatae acherdophylla" with weight 0.002
+"Lobatae elliptica" ---> "Lobatae trinitatis" with weight 0.002
+"Quercus obtusata" ---> "Lobatae salicifolia" with weight 0.002
+"Quercus laeta" ---> "Quercus insignis" with weight 0.002
+"Lobatae conspersa" ---> "Lobatae skinneri" with weight 0.002
+"Quercus glaucoides" ---> "Lobatae trinitatis" with weight 0.002
+"Lobatae crassifolia" ---> "Quercus leiophylla" with weight 0.002
+"Lobatae castanea" ---> "Quercus martinezii" with weight 0.002
+"Lobatae mulleri" ---> "Lobatae elliptica" with weight 0.002
+"Lobatae elliptica" ---> "Lobatae crassipes" with weight 0.002
+"Lobatae ocoteifolia" ---> "Lobatae trinitatis" with weight 0.002
+"Lobatae depressa" ---> "Lobatae acherdophylla" with weight 0.002
+"Lobatae elliptica" ---> "Quercus glaucoides" with weight 0.002
+"Lobatae crassifolia" ---> "Lobatae acatenangensis" with weight 0.002
+"Lobatae grahamii" ---> "Lobatae depressa" with weight 0.002
+"Quercus glaucoides" ---> "Lobatae grahamii" with weight 0.002
+"Quercus peduncularis" ---> "Lobatae crispifolia" with weight 0.002
+"Quercus glaucoides" ---> "Quercus deserticola" with weight 0.002
+"Quercus glaucoides" ---> "Quercus frutex" with weight 0.002
+"Lobatae crassifolia" ---> "Quercus corrugata" with weight 0.003
+"Lobatae cortesii" ---> "Quercus leiophylla" with weight 0.003
+"Lobatae cortesii" ---> "Quercus lancifolia" with weight 0.003
+"Quercus obtusata" ---> "Quercus greggii" with weight 0.003
+"Lobatae trinitatis" ---> "Lobatae sartorii" with weight 0.003
+"Lobatae castanea" ---> "Quercus macdougallii" with weight 0.003
+"Lobatae candicans" ---> "Lobatae sartorii" with weight 0.003
+"Lobatae trinitatis" ---> "Lobatae ocoteifolia" with weight 0.003
+"Lobatae acutifolia" ---> "Lobatae salicifolia" with weight 0.003
+"Quercus leiophylla" ---> "Lobatae cortesii" with weight 0.003
+"Lobatae laurina" ---> "Lobatae paxtalensis" with weight 0.003
+"Lobatae delgadoana" ---> "Lobatae acherdophylla" with weight 0.003
+"Quercus glaucoides" ---> "Lobatae affinis" with weight 0.003
+"Quercus glaucoides" ---> "Quercus sebifera" with weight 0.003
+"Quercus glaucoides" ---> "Quercus macdougallii" with weight 0.003
+"Lobatae castanea" ---> "Quercus greggii" with weight 0.003
+"Quercus peduncularis" ---> "Quercus leiophylla" with weight 0.003
+"Lobatae crassifolia" ---> "Lobatae uxoris" with weight 0.003
+"Lobatae crassifolia" ---> "Lobatae depressa" with weight 0.003
+"Quercus microphylla" ---> "Quercus glaucoides" with weight 0.003
+"Quercus martinezii" ---> "Lobatae conspersa" with weight 0.003
+"Lobatae crassifolia" ---> "Quercus splendens" with weight 0.003
+"Lobatae laurina" ---> "Lobatae crispifolia" with weight 0.003
+"Lobatae depressa" ---> "Quercus corrugata" with weight 0.003
+"Quercus corrugata" ---> "Lobatae affinis" with weight 0.003
+"Lobatae castanea" ---> "Quercus glabrescens" with weight 0.003
+"Lobatae depressa" ---> "Lobatae ocoteifolia" with weight 0.003
+"Lobatae depressa" ---> "Lobatae delgadoana" with weight 0.003
+"Quercus glaucoides" ---> "Lobatae ocoteifolia" with weight 0.003
+"Quercus insignis" ---> "Quercus obtusata" with weight 0.004
+"Quercus magnoliifolia" ---> "Quercus glabrescens" with weight 0.004
+"Lobatae conspersa" ---> "Quercus segoviensis" with weight 0.004
+"Quercus magnoliifolia" ---> "Quercus oleoides" with weight 0.004
+"Lobatae ocoteifolia" ---> "Quercus obtusata" with weight 0.004
+"Quercus obtusata" ---> "Quercus frutex" with weight 0.004
+"Lobatae crassifolia" ---> "Quercus polymorpha" with weight 0.004
+"Quercus insignis" ---> "Lobatae benthamii" with weight 0.004
+"Quercus insignis" ---> "Lobatae salicifolia" with weight 0.004
+"Lobatae paxtalensis" ---> "Quercus magnoliifolia" with weight 0.004
+"Quercus glaucoides" ---> "Quercus laeta" with weight 0.004
+"Quercus magnoliifolia" ---> "Quercus deserticola" with weight 0.004
+"Quercus liebmannii" ---> "Lobatae uxoris" with weight 0.004
+"Quercus microphylla" ---> "Lobatae castanea" with weight 0.004
+"Quercus glaucoides" ---> "Quercus corrugata" with weight 0.004
+"Lobatae crispifolia" ---> "Lobatae castanea" with weight 0.004
+"Quercus glaucoides" ---> "Lobatae crassipes" with weight 0.004
+"Lobatae castanea" ---> "Quercus insignis" with weight 0.004
+"Quercus splendens" ---> "Quercus insignis" with weight 0.004
+"Lobatae elliptica" ---> "Lobatae skinneri" with weight 0.004
+"Quercus glabrescens" ---> "Lobatae delgadoana" with weight 0.004
+"Lobatae crassifolia" ---> "Quercus greggii" with weight 0.004
+"Lobatae crassifolia" ---> "Quercus deserticola" with weight 0.004
+"Lobatae crassifolia" ---> "Lobatae pinnativenulosa" with weight 0.004
+"Lobatae crassifolia" ---> "Lobatae paxtalensis" with weight 0.004
+"Lobatae crassifolia" ---> "Lobatae crispifolia" with weight 0.004
+"Lobatae castanea" ---> "Lobatae depressa" with weight 0.004
+"Quercus magnoliifolia" ---> "Lobatae crispifolia" with weight 0.004
+"Lobatae benthamii" ---> "Quercus insignis" with weight 0.004
+"Lobatae paxtalensis" ---> "Quercus glaucescens" with weight 0.004
+"Lobatae acutifolia" ---> "Quercus polymorpha" with weight 0.004
+"Quercus martinezii" ---> "Quercus glaucoides" with weight 0.004
+"Lobatae delgadoana" ---> "Lobatae elliptica" with weight 0.004
+"Quercus glaucoides" ---> "Lobatae scytophylla" with weight 0.005
+"Lobatae elliptica" ---> "Lobatae pinnativenulosa" with weight 0.005
+"Quercus magnoliifolia" ---> "Quercus peduncularis" with weight 0.005
+"Lobatae elliptica" ---> "Quercus liebmannii" with weight 0.005
+"Lobatae elliptica" ---> "Quercus polymorpha" with weight 0.005
+"Lobatae conspersa" ---> "Lobatae acutifolia" with weight 0.005
+"Lobatae elliptica" ---> "Lobatae benthamii" with weight 0.005
+"Lobatae elliptica" ---> "Quercus segoviensis" with weight 0.005
+"Quercus insignis" ---> "Quercus glaucoides" with weight 0.005
+"Quercus glaucoides" ---> "Lobatae uxoris" with weight 0.005
+"Quercus segoviensis" ---> "Quercus magnoliifolia" with weight 0.005
+"Quercus magnoliifolia" ---> "Quercus glaucescens" with weight 0.005
+"Quercus magnoliifolia" ---> "Quercus sebifera" with weight 0.005
+"Lobatae elliptica" ---> "Quercus sebifera" with weight 0.005
+"Lobatae conspersa" ---> "Lobatae cortesii" with weight 0.005
+"Lobatae mulleri" ---> "Quercus peduncularis" with weight 0.005
+"Lobatae crassifolia" ---> "Lobatae trinitatis" with weight 0.005
+"Lobatae conzattii" ---> "Lobatae paxtalensis" with weight 0.005
+"Lobatae paxtalensis" ---> "Lobatae skinneri" with weight 0.005
+"Quercus macdougallii" ---> "Lobatae conzattii" with weight 0.005
+"Quercus obtusata" ---> "Quercus splendens" with weight 0.005
+"Quercus obtusata" ---> "Lobatae skinneri" with weight 0.005
+"Quercus obtusata" ---> "Quercus peduncularis" with weight 0.005
+"Lobatae elliptica" ---> "Lobatae nixoniana" with weight 0.005
+"Lobatae sartorii" ---> "Lobatae trinitatis" with weight 0.005
+"Quercus macdougallii" ---> "Lobatae elliptica" with weight 0.006
+"Quercus obtusata" ---> "Quercus macdougallii" with weight 0.006
+"Lobatae skinneri" ---> "Lobatae paxtalensis" with weight 0.006
+"Lobatae laurina" ---> "Lobatae acherdophylla" with weight 0.006
+"Quercus obtusata" ---> "Quercus glabrescens" with weight 0.006
+"Lobatae crassifolia" ---> "Quercus insignis" with weight 0.006
+"Lobatae delgadoana" ---> "Lobatae depressa" with weight 0.006
+"Lobatae castanea" ---> "Lobatae affinis" with weight 0.006
+"Quercus glaucescens" ---> "Lobatae salicifolia" with weight 0.006
+"Lobatae elliptica" ---> "Lobatae grahamii" with weight 0.006
+"Lobatae skinneri" ---> "Quercus peduncularis" with weight 0.006
+"Lobatae trinitatis" ---> "Lobatae depressa" with weight 0.006
+"Lobatae elliptica" ---> "Lobatae rubramenta" with weight 0.006
+"Quercus glaucoides" ---> "Quercus glabrescens" with weight 0.006
+"Lobatae conspersa" ---> "Quercus leiophylla" with weight 0.006
+"Lobatae conspersa" ---> "Lobatae sapotiifolia" with weight 0.006
+"Lobatae grahamii" ---> "Quercus glaucoides" with weight 0.006
+"Quercus obtusata" ---> "Quercus martinezii" with weight 0.006
+"Lobatae castanea" ---> "Lobatae ocoteifolia" with weight 0.006
+"Lobatae elliptica" ---> "Quercus leiophylla" with weight 0.006
+"Lobatae laurina" ---> "Quercus segoviensis" with weight 0.006
+"Lobatae elliptica" ---> "Quercus insignis" with weight 0.006
+"Lobatae sartorii" ---> "Lobatae scytophylla" with weight 0.006
+"Quercus magnoliifolia" ---> "Lobatae ocoteifolia" with weight 0.006
+"Lobatae candicans" ---> "Lobatae paxtalensis" with weight 0.006
+"Lobatae scytophylla" ---> "Lobatae nixoniana" with weight 0.006
+"Lobatae castanea" ---> "Quercus splendens" with weight 0.006
+"Lobatae candicans" ---> "Quercus rugosa" with weight 0.006
+"Quercus leiophylla" ---> "Lobatae laurina" with weight 0.006
+"Lobatae conspersa" ---> "Lobatae paxtalensis" with weight 0.007
+"Quercus magnoliifolia" ---> "Quercus laeta" with weight 0.007
+"Lobatae candicans" ---> "Quercus laeta" with weight 0.007
+"Lobatae salicifolia" ---> "Quercus insignis" with weight 0.007
+"Quercus insignis" ---> "Quercus laeta" with weight 0.007
+"Lobatae laurina" ---> "Lobatae trinitatis" with weight 0.007
+"Lobatae candicans" ---> "Quercus macdougallii" with weight 0.007
+"Lobatae elliptica" ---> "Quercus splendens" with weight 0.007
+"Lobatae conspersa" ---> "Lobatae benthamii" with weight 0.007
+"Lobatae scytophylla" ---> "Lobatae salicifolia" with weight 0.007
+"Lobatae scytophylla" ---> "Lobatae benthamii" with weight 0.007
+"Lobatae scytophylla" ---> "Quercus martinezii" with weight 0.007
+"Quercus glabrescens" ---> "Quercus leiophylla" with weight 0.007
+"Lobatae laurina" ---> "Quercus polymorpha" with weight 0.007
+"Lobatae acutifolia" ---> "Lobatae conspersa" with weight 0.007
+"Lobatae depressa" ---> "Lobatae scytophylla" with weight 0.007
+"Quercus obtusata" ---> "Lobatae depressa" with weight 0.007
+"Quercus splendens" ---> "Lobatae salicifolia" with weight 0.007
+"Quercus magnoliifolia" ---> "Quercus rugosa" with weight 0.007
+"Lobatae candicans" ---> "Lobatae pinnativenulosa" with weight 0.007
+"Quercus corrugata" ---> "Lobatae paxtalensis" with weight 0.007
+"Lobatae elliptica" ---> "Quercus glaucescens" with weight 0.007
+"Lobatae paxtalensis" ---> "Lobatae elliptica" with weight 0.007
+"Lobatae acherdophylla" ---> "Lobatae sartorii" with weight 0.007
+"Lobatae conzattii" ---> "Quercus rekonis" with weight 0.007
+"Lobatae scytophylla" ---> "Lobatae acherdophylla" with weight 0.007
+"Lobatae conzattii" ---> "Quercus polymorpha" with weight 0.007
+"Quercus corrugata" ---> "Lobatae acherdophylla" with weight 0.008
+"Lobatae conzattii" ---> "Lobatae uxoris" with weight 0.008
+"Lobatae conzattii" ---> "Lobatae depressa" with weight 0.008
+"Quercus splendens" ---> "Lobatae cortesii" with weight 0.008
+"Lobatae trinitatis" ---> "Lobatae pinnativenulosa" with weight 0.008
+"Quercus glaucescens" ---> "Quercus insignis" with weight 0.008
+"Lobatae grahamii" ---> "Lobatae acutifolia" with weight 0.008
+"Quercus glaucescens" ---> "Lobatae cortesii" with weight 0.008
+"Lobatae elliptica" ---> "Lobatae acherdophylla" with weight 0.008
+"Lobatae elliptica" ---> "Quercus oleoides" with weight 0.008
+"Lobatae grahamii" ---> "Quercus splendens" with weight 0.008
+"Quercus peduncularis" ---> "Lobatae benthamii" with weight 0.008
+"Quercus rugosa" ---> "Lobatae candicans" with weight 0.008
+"Quercus microphylla" ---> "Quercus obtusata" with weight 0.008
+"Lobatae castanea" ---> "Quercus sebifera" with weight 0.008
+"Quercus polymorpha" ---> "Quercus lancifolia" with weight 0.008
+"Quercus rugosa" ---> "Quercus greggii" with weight 0.008
+"Quercus rugosa" ---> "Lobatae rubramenta" with weight 0.008
+"Quercus rugosa" ---> "Quercus deserticola" with weight 0.008
+"Lobatae conspersa" ---> "Quercus insignis" with weight 0.008
+"Quercus insignis" ---> "Quercus splendens" with weight 0.009
+"Lobatae crassifolia" ---> "Quercus martinezii" with weight 0.009
+"Lobatae acherdophylla" ---> "Lobatae ocoteifolia" with weight 0.009
+"Lobatae acherdophylla" ---> "Lobatae delgadoana" with weight 0.009
+"Quercus rugosa" ---> "Lobatae crispifolia" with weight 0.009
+"Lobatae castanea" ---> "Lobatae scytophylla" with weight 0.009
+"Lobatae candicans" ---> "Lobatae crassipes" with weight 0.009
+"Quercus polymorpha" ---> "Quercus magnoliifolia" with weight 0.009
+"Quercus obtusata" ---> "Quercus sebifera" with weight 0.009
+"Lobatae acutifolia" ---> "Lobatae grahamii" with weight 0.009
+"Lobatae acutifolia" ---> "Lobatae depressa" with weight 0.009
+"Lobatae uxoris" ---> "Quercus magnoliifolia" with weight 0.009
+"Quercus magnoliifolia" ---> "Quercus splendens" with weight 0.009
+"Lobatae candicans" ---> "Lobatae uxoris" with weight 0.009
+"Lobatae crassifolia" ---> "Lobatae rubramenta" with weight 0.009
+"Quercus glaucoides" ---> "Quercus rugosa" with weight 0.009
+"Lobatae elliptica" ---> "Quercus lancifolia" with weight 0.010
+"Quercus peduncularis" ---> "Quercus obtusata" with weight 0.010
+"Lobatae elliptica" ---> "Lobatae affinis" with weight 0.010
+"Lobatae delgadoana" ---> "Lobatae scytophylla" with weight 0.010
+"Lobatae grahamii" ---> "Lobatae crassipes" with weight 0.010
+"Quercus glaucoides" ---> "Quercus peduncularis" with weight 0.010
+"Lobatae grahamii" ---> "Quercus greggii" with weight 0.010
+"Quercus glaucoides" ---> "Quercus segoviensis" with weight 0.010
+"Lobatae affinis" ---> "Lobatae delgadoana" with weight 0.010
+"Lobatae elliptica" ---> "Lobatae uxoris" with weight 0.010
+"Lobatae affinis" ---> "Quercus corrugata" with weight 0.010
+"Lobatae crispifolia" ---> "Lobatae elliptica" with weight 0.010
+"Quercus laeta" ---> "Lobatae depressa" with weight 0.010
+"Quercus liebmannii" ---> "Quercus laeta" with weight 0.010
+"Quercus glaucoides" ---> "Quercus splendens" with weight 0.010
+"Lobatae trinitatis" ---> "Lobatae elliptica" with weight 0.010
+"Quercus glaucoides" ---> "Lobatae laurina" with weight 0.010
+"Lobatae grahamii" ---> "Quercus sebifera" with weight 0.010
+"Quercus rugosa" ---> "Lobatae depressa" with weight 0.010
+"Lobatae delgadoana" ---> "Lobatae acutifolia" with weight 0.010
+"Lobatae crispifolia" ---> "Quercus peduncularis" with weight 0.010
+"Quercus magnoliifolia" ---> "Quercus insignis" with weight 0.010
+"Quercus polymorpha" ---> "Lobatae acutifolia" with weight 0.010
+"Lobatae grahamii" ---> "Quercus glabrescens" with weight 0.010
+"Lobatae grahamii" ---> "Lobatae elliptica" with weight 0.010
+"Lobatae grahamii" ---> "Lobatae scytophylla" with weight 0.010
+"Lobatae grahamii" ---> "Lobatae ocoteifolia" with weight 0.010
+"Lobatae elliptica" ---> "Lobatae conspersa" with weight 0.010
+"Lobatae affinis" ---> "Lobatae acatenangensis" with weight 0.010
+"Lobatae castanea" ---> "Quercus deserticola" with weight 0.010
+"Quercus liebmannii" ---> "Lobatae elliptica" with weight 0.011
+"Lobatae crispifolia" ---> "Lobatae conspersa" with weight 0.011
+"Quercus liebmannii" ---> "Lobatae scytophylla" with weight 0.011
+"Lobatae laurina" ---> "Lobatae conspersa" with weight 0.011
+"Lobatae scytophylla" ---> "Quercus insignis" with weight 0.011
+"Lobatae castanea" ---> "Quercus peduncularis" with weight 0.011
+"Lobatae depressa" ---> "Lobatae trinitatis" with weight 0.011
+"Lobatae scytophylla" ---> "Quercus segoviensis" with weight 0.011
+"Lobatae scytophylla" ---> "Lobatae affinis" with weight 0.011
+"Lobatae sapotiifolia" ---> "Lobatae cortesii" with weight 0.011
+"Quercus glaucescens" ---> "Quercus magnoliifolia" with weight 0.011
+"Lobatae scytophylla" ---> "Quercus liebmannii" with weight 0.011
+"Lobatae castanea" ---> "Quercus polymorpha" with weight 0.011
+"Quercus magnoliifolia" ---> "Lobatae scytophylla" with weight 0.011
+"Quercus liebmannii" ---> "Quercus microphylla" with weight 0.011
+"Lobatae cortesii" ---> "Lobatae elliptica" with weight 0.011
+"Lobatae acherdophylla" ---> "Lobatae depressa" with weight 0.011
+"Lobatae acutifolia" ---> "Lobatae crassipes" with weight 0.011
+"Lobatae conspersa" ---> "Lobatae laurina" with weight 0.012
+"Quercus corrugata" ---> "Lobatae crassifolia" with weight 0.012
+"Lobatae uxoris" ---> "Quercus liebmannii" with weight 0.012
+"Lobatae cortesii" ---> "Lobatae benthamii" with weight 0.012
+"Lobatae benthamii" ---> "Lobatae cortesii" with weight 0.012
+"Quercus magnoliifolia" ---> "Lobatae candicans" with weight 0.012
+"Lobatae conzattii" ---> "Lobatae grahamii" with weight 0.012
+"Quercus oleoides" ---> "Lobatae cortesii" with weight 0.012
+"Lobatae candicans" ---> "Quercus insignis" with weight 0.012
+"Quercus oleoides" ---> "Quercus insignis" with weight 0.012
+"Quercus oleoides" ---> "Quercus magnoliifolia" with weight 0.012
+"Quercus glaucoides" ---> "Quercus polymorpha" with weight 0.012
+"Quercus peduncularis" ---> "Lobatae sapotiifolia" with weight 0.012
+"Quercus peduncularis" ---> "Quercus magnoliifolia" with weight 0.012
+"Quercus laeta" ---> "Quercus liebmannii" with weight 0.012
+"Lobatae skinneri" ---> "Lobatae conspersa" with weight 0.012
+"Lobatae salicifolia" ---> "Quercus peduncularis" with weight 0.012
+"Quercus obtusata" ---> "Quercus polymorpha" with weight 0.013
+"Lobatae sapotiifolia" ---> "Lobatae paxtalensis" with weight 0.013
+"Quercus rugosa" ---> "Quercus macdougallii" with weight 0.013
+"Quercus peduncularis" ---> "Quercus martinezii" with weight 0.013
+"Lobatae grahamii" ---> "Lobatae conzattii" with weight 0.013
+"Lobatae elliptica" ---> "Quercus corrugata" with weight 0.013
+"Quercus glaucescens" ---> "Lobatae elliptica" with weight 0.013
+"Quercus lancifolia" ---> "Quercus polymorpha" with weight 0.013
+"Quercus magnoliifolia" ---> "Lobatae acutifolia" with weight 0.013
+"Quercus laeta" ---> "Quercus lancifolia" with weight 0.013
+"Quercus glabrescens" ---> "Quercus polymorpha" with weight 0.013
+"Quercus laeta" ---> "Quercus sebifera" with weight 0.013
+"Quercus laeta" ---> "Lobatae candicans" with weight 0.013
+"Lobatae candicans" ---> "Quercus martinezii" with weight 0.013
+"Lobatae candicans" ---> "Quercus splendens" with weight 0.013
+"Quercus laeta" ---> "Quercus greggii" with weight 0.013
+"Lobatae candicans" ---> "Lobatae grahamii" with weight 0.013
+"Lobatae acutifolia" ---> "Lobatae ocoteifolia" with weight 0.013
+"Lobatae laurina" ---> "Lobatae depressa" with weight 0.014
+"Quercus laeta" ---> "Quercus deserticola" with weight 0.014
+"Quercus rugosa" ---> "Lobatae affinis" with weight 0.014
+"Lobatae paxtalensis" ---> "Lobatae salicifolia" with weight 0.014
+"Lobatae paxtalensis" ---> "Quercus corrugata" with weight 0.014
+"Lobatae benthamii" ---> "Lobatae candicans" with weight 0.014
+"Lobatae laurina" ---> "Lobatae delgadoana" with weight 0.014
+"Lobatae conspersa" ---> "Lobatae elliptica" with weight 0.014
+"Lobatae crispifolia" ---> "Lobatae benthamii" with weight 0.014
+"Lobatae sapotiifolia" ---> "Lobatae benthamii" with weight 0.014
+"Lobatae sapotiifolia" ---> "Lobatae salicifolia" with weight 0.014
+"Lobatae sapotiifolia" ---> "Lobatae conspersa" with weight 0.014
+"Quercus laeta" ---> "Quercus microphylla" with weight 0.014
+"Lobatae conspersa" ---> "Quercus rugosa" with weight 0.014
+"Lobatae laurina" ---> "Quercus peduncularis" with weight 0.014
+"Lobatae elliptica" ---> "Lobatae sapotiifolia" with weight 0.014
+"Lobatae depressa" ---> "Lobatae grahamii" with weight 0.014
+"Lobatae delgadoana" ---> "Lobatae affinis" with weight 0.014
+"Lobatae scytophylla" ---> "Lobatae grahamii" with weight 0.014
+"Lobatae laurina" ---> "Quercus laeta" with weight 0.014
+"Lobatae grahamii" ---> "Quercus frutex" with weight 0.014
+"Quercus obtusata" ---> "Lobatae conspersa" with weight 0.014
+"Lobatae scytophylla" ---> "Lobatae paxtalensis" with weight 0.014
+"Quercus magnoliifolia" ---> "Lobatae laurina" with weight 0.015
+"Lobatae sapotiifolia" ---> "Quercus leiophylla" with weight 0.015
+"Lobatae crassifolia" ---> "Quercus macdougallii" with weight 0.015
+"Quercus rugosa" ---> "Quercus peduncularis" with weight 0.015
+"Lobatae conzattii" ---> "Quercus splendens" with weight 0.015
+"Lobatae paxtalensis" ---> "Quercus martinezii" with weight 0.015
+"Lobatae candicans" ---> "Quercus corrugata" with weight 0.015
+"Lobatae conzattii" ---> "Lobatae affinis" with weight 0.015
+"Quercus glabrescens" ---> "Lobatae crassipes" with weight 0.015
+"Quercus glabrescens" ---> "Quercus magnoliifolia" with weight 0.015
+"Lobatae trinitatis" ---> "Lobatae acherdophylla" with weight 0.015
+"Quercus glabrescens" ---> "Quercus segoviensis" with weight 0.015
+"Lobatae paxtalensis" ---> "Lobatae benthamii" with weight 0.015
+"Lobatae acutifolia" ---> "Quercus macdougallii" with weight 0.015
+"Quercus martinezii" ---> "Lobatae paxtalensis" with weight 0.015
+"Lobatae acatenangensis" ---> "Lobatae affinis" with weight 0.015
+"Lobatae pinnativenulosa" ---> "Quercus glaucoides" with weight 0.015
+"Quercus splendens" ---> "Lobatae crassipes" with weight 0.015
+"Lobatae sapotiifolia" ---> "Quercus insignis" with weight 0.015
+"Quercus polymorpha" ---> "Quercus deserticola" with weight 0.016
+"Quercus glabrescens" ---> "Quercus obtusata" with weight 0.016
+"Lobatae castanea" ---> "Lobatae elliptica" with weight 0.016
+"Quercus obtusata" ---> "Lobatae scytophylla" with weight 0.016
+"Lobatae acutifolia" ---> "Quercus liebmannii" with weight 0.016
+"Lobatae grahamii" ---> "Lobatae candicans" with weight 0.016
+"Lobatae grahamii" ---> "Quercus liebmannii" with weight 0.016
+"Lobatae conspersa" ---> "Quercus obtusata" with weight 0.016
+"Lobatae laurina" ---> "Lobatae rubramenta" with weight 0.016
+"Quercus glabrescens" ---> "Lobatae castanea" with weight 0.016
+"Lobatae scytophylla" ---> "Quercus glaucoides" with weight 0.016
+"Quercus splendens" ---> "Lobatae paxtalensis" with weight 0.016
+"Quercus liebmannii" ---> "Quercus frutex" with weight 0.017
+"Quercus laeta" ---> "Quercus glaucoides" with weight 0.017
+"Lobatae laurina" ---> "Quercus liebmannii" with weight 0.017
+"Quercus splendens" ---> "Lobatae crassifolia" with weight 0.017
+"Quercus rugosa" ---> "Quercus magnoliifolia" with weight 0.017
+"Lobatae elliptica" ---> "Quercus glabrescens" with weight 0.017
+"Quercus peduncularis" ---> "Quercus rugosa" with weight 0.017
+"Quercus segoviensis" ---> "Lobatae conspersa" with weight 0.017
+"Quercus glaucoides" ---> "Lobatae acutifolia" with weight 0.017
+"Quercus rugosa" ---> "Quercus laeta" with weight 0.017
+"Lobatae pinnativenulosa" ---> "Lobatae trinitatis" with weight 0.018
+"Lobatae trinitatis" ---> "Quercus glaucoides" with weight 0.018
+"Quercus polymorpha" ---> "Quercus greggii" with weight 0.018
+"Lobatae elliptica" ---> "Quercus obtusata" with weight 0.018
+"Lobatae castanea" ---> "Quercus laeta" with weight 0.018
+"Quercus glabrescens" ---> "Lobatae trinitatis" with weight 0.018
+"Lobatae crassifolia" ---> "Lobatae grahamii" with weight 0.018
+"Quercus polymorpha" ---> "Lobatae crassifolia" with weight 0.018
+"Lobatae sapotiifolia" ---> "Quercus peduncularis" with weight 0.018
+"Lobatae acutifolia" ---> "Quercus splendens" with weight 0.018
+"Lobatae depressa" ---> "Lobatae affinis" with weight 0.018
+"Quercus obtusata" ---> "Quercus rugosa" with weight 0.018
+"Quercus liebmannii" ---> "Lobatae acutifolia" with weight 0.018
+"Lobatae conspersa" ---> "Quercus glaucescens" with weight 0.018
+"Lobatae laurina" ---> "Quercus glaucoides" with weight 0.018
+"Lobatae candicans" ---> "Quercus polymorpha" with weight 0.018
+"Quercus laeta" ---> "Lobatae crassipes" with weight 0.018
+"Quercus polymorpha" ---> "Quercus glabrescens" with weight 0.019
+"Lobatae conspersa" ---> "Lobatae ocoteifolia" with weight 0.019
+"Lobatae conspersa" ---> "Lobatae scytophylla" with weight 0.019
+"Lobatae paxtalensis" ---> "Lobatae laurina" with weight 0.019
+"Lobatae conzattii" ---> "Lobatae scytophylla" with weight 0.019
+"Lobatae cortesii" ---> "Quercus splendens" with weight 0.019
+"Lobatae benthamii" ---> "Lobatae crispifolia" with weight 0.019
+"Quercus glabrescens" ---> "Lobatae grahamii" with weight 0.019
+"Quercus rugosa" ---> "Lobatae conspersa" with weight 0.019
+"Lobatae laurina" ---> "Lobatae acatenangensis" with weight 0.019
+"Lobatae grahamii" ---> "Quercus microphylla" with weight 0.019
+"Quercus corrugata" ---> "Quercus insignis" with weight 0.019
+"Lobatae crassifolia" ---> "Lobatae ocoteifolia" with weight 0.019
+"Lobatae acutifolia" ---> "Lobatae scytophylla" with weight 0.020
+"Quercus corrugata" ---> "Lobatae benthamii" with weight 0.020
+"Quercus corrugata" ---> "Lobatae salicifolia" with weight 0.020
+"Quercus corrugata" ---> "Quercus lancifolia" with weight 0.020
+"Quercus glabrescens" ---> "Lobatae acatenangensis" with weight 0.020
+"Quercus glabrescens" ---> "Lobatae depressa" with weight 0.020
+"Quercus glabrescens" ---> "Quercus corrugata" with weight 0.020
+"Lobatae candicans" ---> "Lobatae affinis" with weight 0.020
+"Lobatae elliptica" ---> "Quercus rugosa" with weight 0.020
+"Lobatae crassifolia" ---> "Quercus peduncularis" with weight 0.020
+"Lobatae candicans" ---> "Quercus glabrescens" with weight 0.020
+"Lobatae elliptica" ---> "Lobatae ocoteifolia" with weight 0.020
+"Quercus glaucoides" ---> "Lobatae candicans" with weight 0.020
+"Quercus leiophylla" ---> "Quercus peduncularis" with weight 0.020
+"Lobatae trinitatis" ---> "Lobatae nixoniana" with weight 0.020
+"Quercus sebifera" ---> "Quercus greggii" with weight 0.020
+"Lobatae salicifolia" ---> "Lobatae candicans" with weight 0.021
+"Quercus liebmannii" ---> "Lobatae grahamii" with weight 0.021
+"Lobatae laurina" ---> "Quercus macdougallii" with weight 0.021
+"Lobatae affinis" ---> "Lobatae depressa" with weight 0.021
+"Quercus obtusata" ---> "Lobatae elliptica" with weight 0.021
+"Quercus polymorpha" ---> "Lobatae conzattii" with weight 0.021
+"Quercus rugosa" ---> "Quercus segoviensis" with weight 0.021
+"Lobatae candicans" ---> "Quercus segoviensis" with weight 0.021
+"Quercus oleoides" ---> "Lobatae elliptica" with weight 0.021
+"Lobatae conspersa" ---> "Lobatae conzattii" with weight 0.021
+"Quercus rugosa" ---> "Lobatae acatenangensis" with weight 0.021
+"Quercus polymorpha" ---> "Lobatae elliptica" with weight 0.021
+"Lobatae candicans" ---> "Quercus magnoliifolia" with weight 0.022
+"Lobatae ocoteifolia" ---> "Quercus insignis" with weight 0.022
+"Lobatae conzattii" ---> "Quercus glabrescens" with weight 0.022
+"Lobatae ocoteifolia" ---> "Quercus splendens" with weight 0.022
+"Lobatae ocoteifolia" ---> "Lobatae pinnativenulosa" with weight 0.022
+"Lobatae ocoteifolia" ---> "Lobatae sartorii" with weight 0.022
+"Quercus oleoides" ---> "Quercus lancifolia" with weight 0.022
+"Quercus deserticola" ---> "Quercus polymorpha" with weight 0.022
+"Lobatae salicifolia" ---> "Lobatae conspersa" with weight 0.022
+"Lobatae acutifolia" ---> "Lobatae affinis" with weight 0.022
+"Lobatae crassifolia" ---> "Quercus liebmannii" with weight 0.022
+"Lobatae candicans" ---> "Quercus liebmannii" with weight 0.022
+"Quercus lancifolia" ---> "Lobatae sartorii" with weight 0.022
+"Lobatae crassifolia" ---> "Lobatae conspersa" with weight 0.022
+"Quercus obtusata" ---> "Lobatae laurina" with weight 0.022
+"Quercus rugosa" ---> "Lobatae acutifolia" with weight 0.023
+"Quercus corrugata" ---> "Lobatae uxoris" with weight 0.023
+"Lobatae scytophylla" ---> "Quercus splendens" with weight 0.023
+"Lobatae uxoris" ---> "Lobatae crassifolia" with weight 0.023
+"Quercus peduncularis" ---> "Lobatae cortesii" with weight 0.023
+"Lobatae benthamii" ---> "Lobatae paxtalensis" with weight 0.023
+"Quercus splendens" ---> "Quercus obtusata" with weight 0.023
+"Quercus splendens" ---> "Quercus deserticola" with weight 0.023
+"Quercus splendens" ---> "Lobatae ocoteifolia" with weight 0.023
+"Lobatae laurina" ---> "Lobatae scytophylla" with weight 0.023
+"Lobatae conspersa" ---> "Quercus polymorpha" with weight 0.023
+"Quercus peduncularis" ---> "Lobatae paxtalensis" with weight 0.023
+"Lobatae sartorii" ---> "Lobatae candicans" with weight 0.023
+"Lobatae laurina" ---> "Quercus magnoliifolia" with weight 0.023
+"Lobatae crassifolia" ---> "Quercus segoviensis" with weight 0.023
+"Quercus splendens" ---> "Lobatae grahamii" with weight 0.023
+"Lobatae laurina" ---> "Quercus obtusata" with weight 0.023
+"Lobatae elliptica" ---> "Lobatae castanea" with weight 0.023
+"Quercus polymorpha" ---> "Quercus segoviensis" with weight 0.023
+"Lobatae scytophylla" ---> "Lobatae ocoteifolia" with weight 0.023
+"Quercus martinezii" ---> "Lobatae scytophylla" with weight 0.023
+"Lobatae scytophylla" ---> "Quercus glabrescens" with weight 0.023
+"Quercus obtusata" ---> "Quercus deserticola" with weight 0.024
+"Lobatae crispifolia" ---> "Lobatae laurina" with weight 0.024
+"Lobatae grahamii" ---> "Quercus rugosa" with weight 0.024
+"Quercus segoviensis" ---> "Lobatae depressa" with weight 0.024
+"Lobatae delgadoana" ---> "Quercus glabrescens" with weight 0.024
+"Quercus laeta" ---> "Quercus magnoliifolia" with weight 0.024
+"Quercus peduncularis" ---> "Lobatae laurina" with weight 0.024
+"Quercus glaucescens" ---> "Lobatae conspersa" with weight 0.024
+"Lobatae scytophylla" ---> "Lobatae acutifolia" with weight 0.024
+"Quercus deserticola" ---> "Quercus glaucoides" with weight 0.024
+"Lobatae ocoteifolia" ---> "Lobatae affinis" with weight 0.024
+"Lobatae acutifolia" ---> "Quercus rugosa" with weight 0.024
+"Lobatae conzattii" ---> "Quercus laeta" with weight 0.025
+"Lobatae castanea" ---> "Quercus segoviensis" with weight 0.025
+"Quercus magnoliifolia" ---> "Quercus liebmannii" with weight 0.025
+"Lobatae conzattii" ---> "Quercus peduncularis" with weight 0.025
+"Lobatae ocoteifolia" ---> "Quercus glaucoides" with weight 0.025
+"Quercus rugosa" ---> "Lobatae grahamii" with weight 0.025
+"Quercus segoviensis" ---> "Quercus insignis" with weight 0.025
+"Lobatae laurina" ---> "Lobatae conzattii" with weight 0.025
+"Lobatae castanea" ---> "Quercus rugosa" with weight 0.026
+"Quercus polymorpha" ---> "Lobatae laurina" with weight 0.026
+"Lobatae crassifolia" ---> "Lobatae scytophylla" with weight 0.026
+"Quercus laeta" ---> "Quercus frutex" with weight 0.026
+"Quercus corrugata" ---> "Quercus glaucoides" with weight 0.026
+"Lobatae laurina" ---> "Quercus martinezii" with weight 0.026
+"Lobatae conzattii" ---> "Lobatae conspersa" with weight 0.026
+"Lobatae elliptica" ---> "Quercus peduncularis" with weight 0.026
+"Quercus rugosa" ---> "Quercus glaucoides" with weight 0.026
+"Lobatae salicifolia" ---> "Quercus splendens" with weight 0.026
+"Lobatae salicifolia" ---> "Quercus obtusata" with weight 0.026
+"Lobatae salicifolia" ---> "Lobatae acutifolia" with weight 0.026
+"Lobatae elliptica" ---> "Quercus laeta" with weight 0.026
+"Quercus corrugata" ---> "Quercus glabrescens" with weight 0.026
+"Lobatae crassifolia" ---> "Lobatae affinis" with weight 0.026
+"Lobatae crassipes" ---> "Lobatae elliptica" with weight 0.026
+"Lobatae castanea" ---> "Lobatae conspersa" with weight 0.027
+"Lobatae scytophylla" ---> "Lobatae trinitatis" with weight 0.027
+"Quercus martinezii" ---> "Lobatae castanea" with weight 0.027
+"Lobatae paxtalensis" ---> "Lobatae conzattii" with weight 0.027
+"Lobatae paxtalensis" ---> "Quercus splendens" with weight 0.027
+"Lobatae candicans" ---> "Quercus peduncularis" with weight 0.027
+"Lobatae elliptica" ---> "Lobatae conzattii" with weight 0.027
+"Quercus rugosa" ---> "Quercus liebmannii" with weight 0.027
+"Quercus lancifolia" ---> "Lobatae skinneri" with weight 0.027
+"Quercus glabrescens" ---> "Quercus macdougallii" with weight 0.027
+"Lobatae grahamii" ---> "Quercus deserticola" with weight 0.027
+"Lobatae laurina" ---> "Lobatae ocoteifolia" with weight 0.027
+"Quercus laeta" ---> "Quercus rugosa" with weight 0.027
+"Quercus segoviensis" ---> "Lobatae affinis" with weight 0.027
+"Quercus glaucoides" ---> "Lobatae crassifolia" with weight 0.028
+"Lobatae acutifolia" ---> "Quercus segoviensis" with weight 0.028
+"Quercus rugosa" ---> "Quercus obtusata" with weight 0.028
+"Lobatae laurina" ---> "Quercus corrugata" with weight 0.028
+"Lobatae candicans" ---> "Lobatae ocoteifolia" with weight 0.028
+"Quercus glaucoides" ---> "Quercus obtusata" with weight 0.028
+"Lobatae scytophylla" ---> "Lobatae conzattii" with weight 0.028
+"Lobatae ocoteifolia" ---> "Lobatae grahamii" with weight 0.028
+"Quercus corrugata" ---> "Lobatae delgadoana" with weight 0.028
+"Quercus obtusata" ---> "Lobatae conzattii" with weight 0.029
+"Quercus polymorpha" ---> "Lobatae sartorii" with weight 0.029
+"Quercus segoviensis" ---> "Lobatae scytophylla" with weight 0.029
+"Quercus segoviensis" ---> "Quercus glabrescens" with weight 0.029
+"Quercus obtusata" ---> "Quercus laeta" with weight 0.029
+"Quercus leiophylla" ---> "Quercus glabrescens" with weight 0.029
+"Quercus leiophylla" ---> "Lobatae crassifolia" with weight 0.029
+"Quercus glaucoides" ---> "Quercus liebmannii" with weight 0.029
+"Lobatae scytophylla" ---> "Quercus corrugata" with weight 0.029
+"Lobatae crassifolia" ---> "Quercus laeta" with weight 0.029
+"Quercus deserticola" ---> "Lobatae crassifolia" with weight 0.030
+"Quercus deserticola" ---> "Quercus splendens" with weight 0.030
+"Quercus deserticola" ---> "Quercus rugosa" with weight 0.030
+"Quercus glabrescens" ---> "Quercus glaucoides" with weight 0.030
+"Lobatae laurina" ---> "Lobatae affinis" with weight 0.030
+"Lobatae elliptica" ---> "Lobatae acutifolia" with weight 0.030
+"Quercus glaucoides" ---> "Lobatae conzattii" with weight 0.030
+"Lobatae conzattii" ---> "Quercus liebmannii" with weight 0.030
+"Lobatae elliptica" ---> "Lobatae laurina" with weight 0.030
+"Lobatae conspersa" ---> "Quercus splendens" with weight 0.030
+"Quercus deserticola" ---> "Quercus laeta" with weight 0.031
+"Quercus peduncularis" ---> "Quercus glaucoides" with weight 0.031
+"Quercus segoviensis" ---> "Lobatae elliptica" with weight 0.031
+"Quercus polymorpha" ---> "Lobatae pinnativenulosa" with weight 0.031
+"Lobatae paxtalensis" ---> "Lobatae crispifolia" with weight 0.031
+"Quercus liebmannii" ---> "Lobatae laurina" with weight 0.031
+"Lobatae salicifolia" ---> "Lobatae paxtalensis" with weight 0.031
+"Quercus glabrescens" ---> "Lobatae ocoteifolia" with weight 0.031
+"Quercus frutex" ---> "Quercus obtusata" with weight 0.031
+"Lobatae delgadoana" ---> "Lobatae crassifolia" with weight 0.031
+"Lobatae acutifolia" ---> "Quercus laeta" with weight 0.031
+"Lobatae conspersa" ---> "Lobatae crassifolia" with weight 0.031
+"Quercus segoviensis" ---> "Lobatae laurina" with weight 0.032
+"Quercus glabrescens" ---> "Lobatae scytophylla" with weight 0.032
+"Lobatae scytophylla" ---> "Lobatae castanea" with weight 0.032
+"Lobatae uxoris" ---> "Lobatae conzattii" with weight 0.032
+"Lobatae trinitatis" ---> "Lobatae laurina" with weight 0.032
+"Lobatae skinneri" ---> "Quercus leiophylla" with weight 0.032
+"Quercus segoviensis" ---> "Quercus polymorpha" with weight 0.032
+"Lobatae scytophylla" ---> "Quercus obtusata" with weight 0.032
+"Quercus peduncularis" ---> "Lobatae conzattii" with weight 0.032
+"Quercus deserticola" ---> "Quercus magnoliifolia" with weight 0.032
+"Quercus lancifolia" ---> "Quercus laeta" with weight 0.032
+"Quercus lancifolia" ---> "Quercus corrugata" with weight 0.032
+"Lobatae skinneri" ---> "Quercus lancifolia" with weight 0.032
+"Quercus lancifolia" ---> "Quercus insignis" with weight 0.032
+"Lobatae trinitatis" ---> "Quercus glabrescens" with weight 0.032
+"Lobatae ocoteifolia" ---> "Lobatae acutifolia" with weight 0.032
+"Quercus magnoliifolia" ---> "Lobatae elliptica" with weight 0.033
+"Lobatae grahamii" ---> "Lobatae crassifolia" with weight 0.033
+"Lobatae acutifolia" ---> "Quercus magnoliifolia" with weight 0.033
+"Quercus peduncularis" ---> "Lobatae uxoris" with weight 0.033
+"Lobatae conzattii" ---> "Lobatae laurina" with weight 0.033
+"Lobatae castanea" ---> "Quercus liebmannii" with weight 0.033
+"Lobatae paxtalensis" ---> "Lobatae sapotiifolia" with weight 0.033
+"Lobatae sapotiifolia" ---> "Quercus lancifolia" with weight 0.033
+"Lobatae trinitatis" ---> "Lobatae crassifolia" with weight 0.033
+"Quercus splendens" ---> "Lobatae elliptica" with weight 0.033
+"Quercus liebmannii" ---> "Quercus rugosa" with weight 0.033
+"Quercus laeta" ---> "Lobatae laurina" with weight 0.033
+"Lobatae castanea" ---> "Lobatae grahamii" with weight 0.033
+"Lobatae castanea" ---> "Lobatae laurina" with weight 0.034
+"Lobatae crispifolia" ---> "Lobatae paxtalensis" with weight 0.034
+"Quercus deserticola" ---> "Quercus microphylla" with weight 0.034
+"Lobatae laurina" ---> "Lobatae acutifolia" with weight 0.034
+"Quercus peduncularis" ---> "Lobatae castanea" with weight 0.034
+"Lobatae scytophylla" ---> "Lobatae conspersa" with weight 0.034
+"Lobatae benthamii" ---> "Lobatae scytophylla" with weight 0.034
+"Quercus magnoliifolia" ---> "Lobatae grahamii" with weight 0.034
+"Quercus obtusata" ---> "Lobatae acutifolia" with weight 0.034
+"Quercus macdougallii" ---> "Lobatae castanea" with weight 0.035
+"Lobatae skinneri" ---> "Lobatae benthamii" with weight 0.035
+"Quercus liebmannii" ---> "Lobatae candicans" with weight 0.035
+"Lobatae scytophylla" ---> "Quercus magnoliifolia" with weight 0.035
+"Quercus deserticola" ---> "Quercus frutex" with weight 0.035
+"Lobatae skinneri" ---> "Lobatae elliptica" with weight 0.035
+"Lobatae uxoris" ---> "Quercus corrugata" with weight 0.035
+"Lobatae uxoris" ---> "Lobatae benthamii" with weight 0.035
+"Lobatae paxtalensis" ---> "Lobatae candicans" with weight 0.035
+"Lobatae uxoris" ---> "Lobatae salicifolia" with weight 0.035
+"Lobatae uxoris" ---> "Quercus martinezii" with weight 0.035
+"Quercus corrugata" ---> "Lobatae pinnativenulosa" with weight 0.036
+"Lobatae acutifolia" ---> "Quercus glabrescens" with weight 0.036
+"Lobatae nixoniana" ---> "Quercus glaucoides" with weight 0.036
+"Lobatae depressa" ---> "Lobatae crassifolia" with weight 0.036
+"Quercus rugosa" ---> "Lobatae elliptica" with weight 0.037
+"Lobatae paxtalensis" ---> "Lobatae crassifolia" with weight 0.037
+"Lobatae elliptica" ---> "Lobatae scytophylla" with weight 0.037
+"Lobatae crassipes" ---> "Quercus splendens" with weight 0.037
+"Quercus magnoliifolia" ---> "Lobatae crassifolia" with weight 0.037
+"Lobatae depressa" ---> "Quercus laeta" with weight 0.037
+"Lobatae laurina" ---> "Lobatae elliptica" with weight 0.037
+"Lobatae castanea" ---> "Lobatae candicans" with weight 0.038
+"Quercus martinezii" ---> "Lobatae salicifolia" with weight 0.038
+"Quercus martinezii" ---> "Lobatae benthamii" with weight 0.038
+"Quercus frutex" ---> "Quercus glaucoides" with weight 0.038
+"Lobatae sartorii" ---> "Quercus lancifolia" with weight 0.038
+"Lobatae skinneri" ---> "Lobatae salicifolia" with weight 0.038
+"Lobatae skinneri" ---> "Quercus obtusata" with weight 0.038
+"Lobatae conzattii" ---> "Quercus obtusata" with weight 0.039
+"Lobatae ocoteifolia" ---> "Quercus magnoliifolia" with weight 0.039
+"Quercus peduncularis" ---> "Lobatae candicans" with weight 0.039
+"Lobatae trinitatis" ---> "Quercus leiophylla" with weight 0.039
+"Lobatae paxtalensis" ---> "Lobatae conspersa" with weight 0.039
+"Lobatae crassifolia" ---> "Quercus glaucoides" with weight 0.039
+"Quercus magnoliifolia" ---> "Lobatae conzattii" with weight 0.040
+"Quercus macdougallii" ---> "Quercus glaucoides" with weight 0.040
+"Quercus greggii" ---> "Quercus sebifera" with weight 0.040
+"Lobatae crassifolia" ---> "Quercus obtusata" with weight 0.040
+"Quercus greggii" ---> "Quercus obtusata" with weight 0.040
+"Quercus macdougallii" ---> "Quercus obtusata" with weight 0.040
+"Quercus lancifolia" ---> "Lobatae pinnativenulosa" with weight 0.040
+"Quercus macdougallii" ---> "Lobatae candicans" with weight 0.040
+"Lobatae crispifolia" ---> "Lobatae salicifolia" with weight 0.040
+"Lobatae crispifolia" ---> "Lobatae crassifolia" with weight 0.040
+"Lobatae depressa" ---> "Quercus segoviensis" with weight 0.041
+"Quercus glabrescens" ---> "Lobatae affinis" with weight 0.041
+"Quercus glaucescens" ---> "Quercus oleoides" with weight 0.041
+"Lobatae conspersa" ---> "Lobatae candicans" with weight 0.041
+"Quercus peduncularis" ---> "Quercus liebmannii" with weight 0.041
+"Lobatae elliptica" ---> "Quercus magnoliifolia" with weight 0.042
+"Quercus insignis" ---> "Quercus segoviensis" with weight 0.042
+"Lobatae crispifolia" ---> "Quercus rugosa" with weight 0.043
+"Quercus martinezii" ---> "Quercus obtusata" with weight 0.043
+"Quercus liebmannii" ---> "Lobatae conzattii" with weight 0.043
+"Quercus martinezii" ---> "Lobatae uxoris" with weight 0.043
+"Lobatae sapotiifolia" ---> "Lobatae elliptica" with weight 0.043
+"Quercus sebifera" ---> "Quercus glaucoides" with weight 0.043
+"Quercus sebifera" ---> "Quercus laeta" with weight 0.043
+"Lobatae laurina" ---> "Lobatae candicans" with weight 0.043
+"Lobatae conzattii" ---> "Lobatae elliptica" with weight 0.043
+"Quercus laeta" ---> "Lobatae conzattii" with weight 0.043
+"Lobatae paxtalensis" ---> "Lobatae cortesii" with weight 0.044
+"Lobatae acatenangensis" ---> "Lobatae crassifolia" with weight 0.044
+"Quercus glabrescens" ---> "Lobatae conzattii" with weight 0.044
+"Lobatae ocoteifolia" ---> "Lobatae castanea" with weight 0.044
+"Lobatae scytophylla" ---> "Lobatae uxoris" with weight 0.044
+"Lobatae castanea" ---> "Lobatae acutifolia" with weight 0.044
+"Lobatae candicans" ---> "Quercus glaucoides" with weight 0.044
+"Lobatae uxoris" ---> "Lobatae candicans" with weight 0.044
+"Quercus peduncularis" ---> "Lobatae crassifolia" with weight 0.044
+"Quercus frutex" ---> "Lobatae depressa" with weight 0.044
+"Lobatae grahamii" ---> "Quercus laeta" with weight 0.044
+"Quercus corrugata" ---> "Lobatae candicans" with weight 0.044
+"Lobatae skinneri" ---> "Lobatae cortesii" with weight 0.044
+"Lobatae candicans" ---> "Lobatae conspersa" with weight 0.044
+"Lobatae scytophylla" ---> "Lobatae laurina" with weight 0.045
+"Quercus liebmannii" ---> "Quercus peduncularis" with weight 0.045
+"Lobatae cortesii" ---> "Lobatae sapotiifolia" with weight 0.045
+"Lobatae crassifolia" ---> "Quercus magnoliifolia" with weight 0.045
+"Quercus laeta" ---> "Lobatae acutifolia" with weight 0.045
+"Lobatae nixoniana" ---> "Lobatae scytophylla" with weight 0.045
+"Lobatae ocoteifolia" ---> "Quercus segoviensis" with weight 0.045
+"Quercus splendens" ---> "Lobatae acutifolia" with weight 0.045
+"Quercus splendens" ---> "Lobatae conzattii" with weight 0.045
+"Quercus splendens" ---> "Lobatae candicans" with weight 0.045
+"Quercus glabrescens" ---> "Lobatae candicans" with weight 0.046
+"Lobatae ocoteifolia" ---> "Quercus glabrescens" with weight 0.046
+"Lobatae crassifolia" ---> "Lobatae elliptica" with weight 0.046
+"Lobatae depressa" ---> "Quercus frutex" with weight 0.046
+"Lobatae ocoteifolia" ---> "Lobatae scytophylla" with weight 0.046
+"Quercus splendens" ---> "Lobatae scytophylla" with weight 0.047
+"Lobatae benthamii" ---> "Quercus peduncularis" with weight 0.047
+"Quercus insignis" ---> "Quercus corrugata" with weight 0.047
+"Quercus insignis" ---> "Lobatae scytophylla" with weight 0.047
+"Lobatae elliptica" ---> "Lobatae candicans" with weight 0.047
+"Quercus insignis" ---> "Lobatae ocoteifolia" with weight 0.047
+"Quercus splendens" ---> "Lobatae castanea" with weight 0.047
+"Quercus insignis" ---> "Quercus leiophylla" with weight 0.048
+"Quercus insignis" ---> "Quercus glaucescens" with weight 0.048
+"Quercus insignis" ---> "Quercus oleoides" with weight 0.048
+"Quercus insignis" ---> "Quercus lancifolia" with weight 0.048
+"Lobatae paxtalensis" ---> "Lobatae scytophylla" with weight 0.048
+"Lobatae cortesii" ---> "Lobatae conspersa" with weight 0.048
+"Quercus polymorpha" ---> "Quercus obtusata" with weight 0.048
+"Lobatae elliptica" ---> "Lobatae crassifolia" with weight 0.048
+"Quercus obtusata" ---> "Lobatae grahamii" with weight 0.049
+"Lobatae crispifolia" ---> "Quercus magnoliifolia" with weight 0.049
+"Lobatae depressa" ---> "Lobatae acatenangensis" with weight 0.049
+"Quercus sebifera" ---> "Lobatae elliptica" with weight 0.049
+"Lobatae depressa" ---> "Lobatae acutifolia" with weight 0.050
+"Lobatae conspersa" ---> "Quercus liebmannii" with weight 0.050
+"Quercus martinezii" ---> "Quercus peduncularis" with weight 0.050
+"Quercus corrugata" ---> "Quercus martinezii" with weight 0.050
+"Quercus obtusata" ---> "Lobatae crassifolia" with weight 0.050
+"Quercus segoviensis" ---> "Quercus macdougallii" with weight 0.050
+"Lobatae benthamii" ---> "Lobatae skinneri" with weight 0.050
+"Quercus obtusata" ---> "Quercus glaucoides" with weight 0.050
+"Lobatae acutifolia" ---> "Quercus glaucoides" with weight 0.050
+"Lobatae candicans" ---> "Lobatae laurina" with weight 0.051
+"Quercus peduncularis" ---> "Quercus splendens" with weight 0.051
+"Lobatae depressa" ---> "Lobatae conzattii" with weight 0.051
+"Lobatae uxoris" ---> "Quercus glaucoides" with weight 0.051
+"Lobatae salicifolia" ---> "Lobatae scytophylla" with weight 0.051
+"Quercus splendens" ---> "Lobatae uxoris" with weight 0.051
+"Quercus leiophylla" ---> "Lobatae skinneri" with weight 0.052
+"Lobatae castanea" ---> "Quercus obtusata" with weight 0.052
+"Quercus corrugata" ---> "Lobatae scytophylla" with weight 0.052
+"Lobatae conspersa" ---> "Lobatae castanea" with weight 0.052
+"Quercus liebmannii" ---> "Lobatae crassifolia" with weight 0.052
+"Quercus insignis" ---> "Lobatae sapotiifolia" with weight 0.053
+"Lobatae conspersa" ---> "Quercus peduncularis" with weight 0.053
+"Lobatae skinneri" ---> "Lobatae crispifolia" with weight 0.053
+"Lobatae affinis" ---> "Quercus segoviensis" with weight 0.054
+"Lobatae acutifolia" ---> "Lobatae laurina" with weight 0.054
+"Quercus peduncularis" ---> "Lobatae elliptica" with weight 0.055
+"Quercus sebifera" ---> "Lobatae grahamii" with weight 0.055
+"Quercus glabrescens" ---> "Lobatae elliptica" with weight 0.055
+"Lobatae crassipes" ---> "Quercus glabrescens" with weight 0.055
+"Quercus corrugata" ---> "Lobatae elliptica" with weight 0.055
+"Lobatae crispifolia" ---> "Lobatae skinneri" with weight 0.055
+"Quercus magnoliifolia" ---> "Lobatae conspersa" with weight 0.055
+"Lobatae cortesii" ---> "Lobatae salicifolia" with weight 0.056
+"Lobatae cortesii" ---> "Quercus oleoides" with weight 0.056
+"Lobatae benthamii" ---> "Quercus corrugata" with weight 0.056
+"Lobatae benthamii" ---> "Quercus martinezii" with weight 0.056
+"Lobatae benthamii" ---> "Lobatae sapotiifolia" with weight 0.056
+"Lobatae sartorii" ---> "Lobatae delgadoana" with weight 0.056
+"Lobatae sartorii" ---> "Lobatae ocoteifolia" with weight 0.056
+"Lobatae cortesii" ---> "Quercus glaucescens" with weight 0.056
+"Quercus microphylla" ---> "Quercus greggii" with weight 0.056
+"Quercus frutex" ---> "Quercus deserticola" with weight 0.056
+"Lobatae crassifolia" ---> "Quercus glabrescens" with weight 0.057
+"Quercus glaucoides" ---> "Lobatae conspersa" with weight 0.057
+"Quercus magnoliifolia" ---> "Quercus obtusata" with weight 0.057
+"Lobatae rubramenta" ---> "Quercus rugosa" with weight 0.057
+"Lobatae conzattii" ---> "Quercus rugosa" with weight 0.057
+"Lobatae acutifolia" ---> "Quercus obtusata" with weight 0.057
+"Lobatae benthamii" ---> "Lobatae elliptica" with weight 0.057
+"Lobatae affinis" ---> "Lobatae scytophylla" with weight 0.057
+"Lobatae affinis" ---> "Quercus glaucoides" with weight 0.057
+"Quercus corrugata" ---> "Lobatae nixoniana" with weight 0.057
+"Lobatae candicans" ---> "Lobatae acutifolia" with weight 0.058
+"Quercus lancifolia" ---> "Quercus oleoides" with weight 0.058
+"Quercus splendens" ---> "Quercus magnoliifolia" with weight 0.059
+"Quercus polymorpha" ---> "Lobatae candicans" with weight 0.059
+"Quercus glabrescens" ---> "Lobatae acutifolia" with weight 0.059
+"Lobatae depressa" ---> "Quercus rugosa" with weight 0.059
+"Quercus macdougallii" ---> "Quercus rugosa" with weight 0.059
+"Lobatae nixoniana" ---> "Lobatae trinitatis" with weight 0.060
+"Lobatae acutifolia" ---> "Lobatae elliptica" with weight 0.060
+"Quercus microphylla" ---> "Quercus laeta" with weight 0.060
+"Quercus segoviensis" ---> "Lobatae ocoteifolia" with weight 0.060
+"Lobatae pinnativenulosa" ---> "Lobatae crassifolia" with weight 0.060
+"Lobatae pinnativenulosa" ---> "Lobatae ocoteifolia" with weight 0.060
+"Lobatae pinnativenulosa" ---> "Lobatae elliptica" with weight 0.060
+"Quercus corrugata" ---> "Quercus leiophylla" with weight 0.061
+"Lobatae conzattii" ---> "Quercus segoviensis" with weight 0.061
+"Lobatae castanea" ---> "Quercus magnoliifolia" with weight 0.061
+"Quercus microphylla" ---> "Quercus liebmannii" with weight 0.061
+"Lobatae ocoteifolia" ---> "Quercus macdougallii" with weight 0.061
+"Lobatae crassifolia" ---> "Lobatae acutifolia" with weight 0.061
+"Lobatae laurina" ---> "Lobatae castanea" with weight 0.062
+"Lobatae benthamii" ---> "Lobatae conspersa" with weight 0.062
+"Quercus sebifera" ---> "Quercus magnoliifolia" with weight 0.062
+"Lobatae salicifolia" ---> "Quercus glaucescens" with weight 0.062
+"Lobatae candicans" ---> "Lobatae scytophylla" with weight 0.062
+"Quercus leiophylla" ---> "Quercus insignis" with weight 0.063
+"Quercus leiophylla" ---> "Lobatae conspersa" with weight 0.063
+"Lobatae depressa" ---> "Quercus obtusata" with weight 0.063
+"Quercus oleoides" ---> "Quercus glaucescens" with weight 0.063
+"Lobatae affinis" ---> "Lobatae ocoteifolia" with weight 0.063
+"Lobatae benthamii" ---> "Lobatae uxoris" with weight 0.063
+"Quercus insignis" ---> "Lobatae crassifolia" with weight 0.063
+"Quercus insignis" ---> "Lobatae castanea" with weight 0.063
+"Quercus sebifera" ---> "Quercus frutex" with weight 0.064
+"Lobatae castanea" ---> "Lobatae conzattii" with weight 0.064
+"Quercus microphylla" ---> "Quercus deserticola" with weight 0.064
+"Lobatae cortesii" ---> "Lobatae skinneri" with weight 0.064
+"Quercus rugosa" ---> "Lobatae conzattii" with weight 0.064
+"Quercus insignis" ---> "Lobatae elliptica" with weight 0.065
+"Quercus macdougallii" ---> "Lobatae affinis" with weight 0.065
+"Lobatae trinitatis" ---> "Lobatae scytophylla" with weight 0.065
+"Lobatae scytophylla" ---> "Lobatae crassifolia" with weight 0.065
+"Lobatae depressa" ---> "Quercus glabrescens" with weight 0.065
+"Lobatae ocoteifolia" ---> "Lobatae delgadoana" with weight 0.066
+"Lobatae trinitatis" ---> "Lobatae delgadoana" with weight 0.066
+"Quercus leiophylla" ---> "Lobatae sapotiifolia" with weight 0.066
+"Quercus macdougallii" ---> "Lobatae acutifolia" with weight 0.066
+"Lobatae cortesii" ---> "Lobatae paxtalensis" with weight 0.066
+"Lobatae pinnativenulosa" ---> "Lobatae candicans" with weight 0.066
+"Lobatae benthamii" ---> "Lobatae mulleri" with weight 0.066
+"Lobatae uxoris" ---> "Lobatae elliptica" with weight 0.066
+"Quercus insignis" ---> "Lobatae conspersa" with weight 0.066
+"Lobatae rubramenta" ---> "Lobatae delgadoana" with weight 0.066
+"Lobatae crassipes" ---> "Lobatae grahamii" with weight 0.067
+"Lobatae ocoteifolia" ---> "Lobatae conspersa" with weight 0.067
+"Quercus corrugata" ---> "Lobatae ocoteifolia" with weight 0.067
+"Quercus lancifolia" ---> "Lobatae elliptica" with weight 0.067
+"Quercus glaucoides" ---> "Lobatae castanea" with weight 0.067
+"Lobatae candicans" ---> "Lobatae elliptica" with weight 0.068
+"Lobatae affinis" ---> "Lobatae nixoniana" with weight 0.068
+"Lobatae castanea" ---> "Quercus glaucoides" with weight 0.068
+"Lobatae crassifolia" ---> "Lobatae candicans" with weight 0.068
+"Quercus macdougallii" ---> "Quercus segoviensis" with weight 0.069
+"Quercus frutex" ---> "Quercus sebifera" with weight 0.069
+"Quercus laeta" ---> "Quercus obtusata" with weight 0.069
+"Quercus rugosa" ---> "Lobatae castanea" with weight 0.070
+"Lobatae depressa" ---> "Lobatae castanea" with weight 0.070
+"Lobatae crispifolia" ---> "Lobatae cortesii" with weight 0.070
+"Lobatae crassifolia" ---> "Lobatae conzattii" with weight 0.070
+"Lobatae crassipes" ---> "Lobatae acutifolia" with weight 0.070
+"Quercus frutex" ---> "Lobatae crassipes" with weight 0.070
+"Lobatae uxoris" ---> "Quercus splendens" with weight 0.070
+"Quercus greggii" ---> "Quercus polymorpha" with weight 0.070
+"Quercus magnoliifolia" ---> "Lobatae castanea" with weight 0.071
+"Quercus glaucoides" ---> "Quercus magnoliifolia" with weight 0.071
+"Quercus rugosa" ---> "Quercus glabrescens" with weight 0.071
+"Lobatae grahamii" ---> "Quercus obtusata" with weight 0.071
+"Lobatae candicans" ---> "Lobatae conzattii" with weight 0.071
+"Quercus sebifera" ---> "Quercus obtusata" with weight 0.071
+"Quercus macdougallii" ---> "Quercus glabrescens" with weight 0.071
+"Quercus liebmannii" ---> "Quercus magnoliifolia" with weight 0.072
+"Lobatae castanea" ---> "Lobatae crassifolia" with weight 0.072
+"Quercus laeta" ---> "Lobatae grahamii" with weight 0.073
+"Quercus segoviensis" ---> "Quercus rugosa" with weight 0.073
+"Lobatae crassipes" ---> "Quercus glaucoides" with weight 0.073
+"Lobatae conzattii" ---> "Quercus glaucoides" with weight 0.074
+"Lobatae ocoteifolia" ---> "Quercus corrugata" with weight 0.074
+"Quercus splendens" ---> "Quercus glaucoides" with weight 0.074
+"Lobatae crassipes" ---> "Lobatae candicans" with weight 0.075
+"Quercus frutex" ---> "Quercus liebmannii" with weight 0.075
+"Quercus laeta" ---> "Lobatae castanea" with weight 0.075
+"Lobatae rubramenta" ---> "Lobatae elliptica" with weight 0.075
+"Quercus laeta" ---> "Lobatae elliptica" with weight 0.075
+"Lobatae pinnativenulosa" ---> "Quercus lancifolia" with weight 0.075
+"Quercus martinezii" ---> "Lobatae candicans" with weight 0.075
+"Quercus martinezii" ---> "Lobatae crassifolia" with weight 0.075
+"Quercus obtusata" ---> "Lobatae candicans" with weight 0.076
+"Lobatae sartorii" ---> "Quercus polymorpha" with weight 0.076
+"Lobatae grahamii" ---> "Quercus magnoliifolia" with weight 0.076
+"Lobatae depressa" ---> "Lobatae crassipes" with weight 0.076
+"Quercus lancifolia" ---> "Lobatae sapotiifolia" with weight 0.076
+"Quercus polymorpha" ---> "Lobatae castanea" with weight 0.077
+"Lobatae crassipes" ---> "Quercus laeta" with weight 0.078
+"Lobatae laurina" ---> "Quercus glabrescens" with weight 0.079
+"Lobatae acutifolia" ---> "Lobatae candicans" with weight 0.079
+"Quercus polymorpha" ---> "Lobatae conspersa" with weight 0.079
+"Lobatae pinnativenulosa" ---> "Lobatae nixoniana" with weight 0.079
+"Lobatae conzattii" ---> "Lobatae candicans" with weight 0.080
+"Lobatae candicans" ---> "Lobatae castanea" with weight 0.080
+"Lobatae crassifolia" ---> "Quercus rugosa" with weight 0.081
+"Lobatae conzattii" ---> "Quercus magnoliifolia" with weight 0.081
+"Lobatae crassipes" ---> "Quercus frutex" with weight 0.082
+"Lobatae mulleri" ---> "Lobatae benthamii" with weight 0.082
+"Lobatae conzattii" ---> "Lobatae acutifolia" with weight 0.083
+"Quercus peduncularis" ---> "Lobatae conspersa" with weight 0.083
+"Lobatae delgadoana" ---> "Lobatae sartorii" with weight 0.083
+"Lobatae acatenangensis" ---> "Lobatae depressa" with weight 0.083
+"Lobatae salicifolia" ---> "Quercus corrugata" with weight 0.083
+"Lobatae salicifolia" ---> "Quercus martinezii" with weight 0.083
+"Lobatae salicifolia" ---> "Lobatae cortesii" with weight 0.083
+"Lobatae salicifolia" ---> "Lobatae skinneri" with weight 0.083
+"Lobatae salicifolia" ---> "Lobatae crispifolia" with weight 0.083
+"Lobatae salicifolia" ---> "Lobatae sapotiifolia" with weight 0.083
+"Quercus magnoliifolia" ---> "Quercus glaucoides" with weight 0.083
+"Quercus greggii" ---> "Lobatae castanea" with weight 0.084
+"Quercus greggii" ---> "Lobatae crassifolia" with weight 0.084
+"Quercus greggii" ---> "Quercus microphylla" with weight 0.084
+"Quercus greggii" ---> "Quercus rugosa" with weight 0.084
+"Quercus greggii" ---> "Quercus laeta" with weight 0.085
+"Quercus liebmannii" ---> "Lobatae conspersa" with weight 0.085
+"Quercus leiophylla" ---> "Lobatae elliptica" with weight 0.085
+"Quercus polymorpha" ---> "Quercus glaucoides" with weight 0.085
+"Lobatae crassipes" ---> "Lobatae depressa" with weight 0.085
+"Quercus frutex" ---> "Lobatae grahamii" with weight 0.085
+"Lobatae grahamii" ---> "Lobatae castanea" with weight 0.086
+"Quercus obtusata" ---> "Quercus magnoliifolia" with weight 0.086
+"Quercus oleoides" ---> "Lobatae sapotiifolia" with weight 0.087
+"Lobatae paxtalensis" ---> "Quercus peduncularis" with weight 0.088
+"Quercus laeta" ---> "Lobatae crassifolia" with weight 0.088
+"Quercus deserticola" ---> "Quercus greggii" with weight 0.088
+"Lobatae pinnativenulosa" ---> "Quercus polymorpha" with weight 0.088
+"Quercus segoviensis" ---> "Lobatae acutifolia" with weight 0.088
+"Quercus insignis" ---> "Lobatae candicans" with weight 0.088
+"Lobatae scytophylla" ---> "Lobatae elliptica" with weight 0.089
+"Quercus leiophylla" ---> "Lobatae trinitatis" with weight 0.091
+"Lobatae candicans" ---> "Quercus obtusata" with weight 0.091
+"Quercus insignis" ---> "Lobatae cortesii" with weight 0.092
+"Quercus segoviensis" ---> "Quercus glaucoides" with weight 0.092
+"Quercus frutex" ---> "Quercus laeta" with weight 0.092
+"Quercus obtusata" ---> "Lobatae castanea" with weight 0.092
+"Lobatae affinis" ---> "Quercus rugosa" with weight 0.092
+"Lobatae ocoteifolia" ---> "Lobatae candicans" with weight 0.093
+"Quercus segoviensis" ---> "Lobatae candicans" with weight 0.093
+"Lobatae affinis" ---> "Quercus macdougallii" with weight 0.094
+"Lobatae nixoniana" ---> "Lobatae affinis" with weight 0.094
+"Lobatae nixoniana" ---> "Lobatae elliptica" with weight 0.094
+"Lobatae conspersa" ---> "Quercus magnoliifolia" with weight 0.094
+"Quercus martinezii" ---> "Quercus corrugata" with weight 0.095
+"Lobatae salicifolia" ---> "Lobatae uxoris" with weight 0.095
+"Lobatae acherdophylla" ---> "Quercus corrugata" with weight 0.096
+"Lobatae cortesii" ---> "Lobatae crispifolia" with weight 0.096
+"Quercus frutex" ---> "Quercus greggii" with weight 0.096
+"Lobatae uxoris" ---> "Lobatae paxtalensis" with weight 0.097
+"Lobatae ocoteifolia" ---> "Lobatae elliptica" with weight 0.097
+"Lobatae delgadoana" ---> "Lobatae rubramenta" with weight 0.097
+"Lobatae ocoteifolia" ---> "Lobatae crassifolia" with weight 0.098
+"Quercus corrugata" ---> "Lobatae laurina" with weight 0.098
+"Lobatae sapotiifolia" ---> "Quercus oleoides" with weight 0.099
+"Quercus liebmannii" ---> "Quercus glaucoides" with weight 0.099
+"Quercus deserticola" ---> "Lobatae castanea" with weight 0.100
+"Quercus deserticola" ---> "Lobatae grahamii" with weight 0.100
+"Lobatae acutifolia" ---> "Lobatae conzattii" with weight 0.101
+"Lobatae crassifolia" ---> "Lobatae castanea" with weight 0.102
+"Quercus greggii" ---> "Lobatae grahamii" with weight 0.103
+"Lobatae nixoniana" ---> "Lobatae pinnativenulosa" with weight 0.103
+"Lobatae candicans" ---> "Lobatae crassifolia" with weight 0.104
+"Lobatae scytophylla" ---> "Lobatae candicans" with weight 0.104
+"Lobatae ocoteifolia" ---> "Lobatae laurina" with weight 0.105
+"Quercus glaucescens" ---> "Lobatae sapotiifolia" with weight 0.106
+"Lobatae uxoris" ---> "Quercus peduncularis" with weight 0.106
+"Lobatae cortesii" ---> "Quercus insignis" with weight 0.107
+"Lobatae affinis" ---> "Lobatae castanea" with weight 0.108
+"Lobatae pinnativenulosa" ---> "Quercus corrugata" with weight 0.109
+"Quercus macdougallii" ---> "Lobatae ocoteifolia" with weight 0.110
+"Lobatae acatenangensis" ---> "Quercus glabrescens" with weight 0.111
+"Quercus liebmannii" ---> "Lobatae castanea" with weight 0.111
+"Lobatae crassifolia" ---> "Lobatae laurina" with weight 0.111
+"Lobatae laurina" ---> "Quercus rugosa" with weight 0.112
+"Lobatae conspersa" ---> "Quercus glaucoides" with weight 0.113
+"Quercus splendens" ---> "Lobatae conspersa" with weight 0.114
+"Lobatae paxtalensis" ---> "Lobatae uxoris" with weight 0.114
+"Lobatae affinis" ---> "Lobatae conzattii" with weight 0.115
+"Lobatae sartorii" ---> "Lobatae pinnativenulosa" with weight 0.116
+"Quercus sebifera" ---> "Lobatae castanea" with weight 0.116
+"Lobatae depressa" ---> "Lobatae laurina" with weight 0.117
+"Lobatae conzattii" ---> "Lobatae crassifolia" with weight 0.118
+"Lobatae benthamii" ---> "Lobatae salicifolia" with weight 0.119
+"Lobatae delgadoana" ---> "Quercus corrugata" with weight 0.120
+"Lobatae affinis" ---> "Lobatae elliptica" with weight 0.120
+"Quercus splendens" ---> "Quercus peduncularis" with weight 0.120
+"Lobatae rubramenta" ---> "Lobatae crassifolia" with weight 0.123
+"Lobatae uxoris" ---> "Lobatae scytophylla" with weight 0.123
+"Quercus frutex" ---> "Quercus microphylla" with weight 0.124
+"Quercus glabrescens" ---> "Quercus rugosa" with weight 0.126
+"Lobatae pinnativenulosa" ---> "Lobatae sartorii" with weight 0.126
+"Lobatae acutifolia" ---> "Lobatae crassifolia" with weight 0.127
+"Quercus deserticola" ---> "Quercus obtusata" with weight 0.127
+"Quercus lancifolia" ---> "Quercus leiophylla" with weight 0.129
+"Lobatae acutifolia" ---> "Lobatae castanea" with weight 0.129
+"Lobatae cortesii" ---> "Quercus peduncularis" with weight 0.131
+"Quercus macdougallii" ---> "Lobatae crassifolia" with weight 0.133
+"Quercus corrugata" ---> "Lobatae trinitatis" with weight 0.135
+"Quercus insignis" ---> "Quercus magnoliifolia" with weight 0.136
+"Quercus microphylla" ---> "Lobatae grahamii" with weight 0.137
+"Lobatae acherdophylla" ---> "Lobatae trinitatis" with weight 0.138
+"Lobatae affinis" ---> "Lobatae acutifolia" with weight 0.139
+"Lobatae laurina" ---> "Lobatae crassifolia" with weight 0.144
+"Quercus macdougallii" ---> "Lobatae laurina" with weight 0.147
+"Quercus microphylla" ---> "Quercus frutex" with weight 0.147
+"Quercus segoviensis" ---> "Lobatae crassifolia" with weight 0.152
+"Lobatae conzattii" ---> "Lobatae castanea" with weight 0.153
+"Quercus rugosa" ---> "Lobatae crassifolia" with weight 0.156
+"Lobatae affinis" ---> "Quercus glabrescens" with weight 0.156
+"Lobatae rubramenta" ---> "Lobatae laurina" with weight 0.162
+"Quercus rugosa" ---> "Lobatae laurina" with weight 0.167
+"Lobatae acherdophylla" ---> "Lobatae scytophylla" with weight 0.169
+"Lobatae affinis" ---> "Lobatae candicans" with weight 0.172
+"Quercus greggii" ---> "Quercus frutex" with weight 0.173
+"Quercus martinezii" ---> "Lobatae laurina" with weight 0.173
+"Lobatae salicifolia" ---> "Lobatae benthamii" with weight 0.179
+"Lobatae trinitatis" ---> "Quercus corrugata" with weight 0.184
+"Lobatae sapotiifolia" ---> "Quercus glaucescens" with weight 0.186
+"Quercus leiophylla" ---> "Quercus corrugata" with weight 0.192
+"Quercus glabrescens" ---> "Lobatae crassifolia" with weight 0.193
+"Lobatae delgadoana" ---> "Lobatae laurina" with weight 0.202
+"Lobatae delgadoana" ---> "Lobatae trinitatis" with weight 0.203
+"Quercus glabrescens" ---> "Lobatae laurina" with weight 0.208
+"Lobatae acatenangensis" ---> "Quercus rugosa" with weight 0.213
+"Lobatae nixoniana" ---> "Quercus corrugata" with weight 0.228
+"Quercus segoviensis" ---> "Lobatae castanea" with weight 0.228
+"Quercus segoviensis" ---> "Lobatae conzattii" with weight 0.237
+"Lobatae delgadoana" ---> "Lobatae ocoteifolia" with weight 0.250
+"Quercus leiophylla" ---> "Quercus lancifolia" with weight 0.250
+"Quercus greggii" ---> "Quercus deserticola" with weight 0.250
+"Lobatae acherdophylla" ---> "Lobatae laurina" with weight 0.251
+"Lobatae acatenangensis" ---> "Lobatae laurina" with weight 0.286
+"Lobatae affinis" ---> "Lobatae laurina" with weight 0.305
+"Lobatae affinis" ---> "Lobatae crassifolia" with weight 0.345
+"Lobatae acherdophylla" ---> "Lobatae elliptica" with weight 0.436
+"Quercus rekonis" ---> "Lobatae conzattii" with weight 0.500
+Areas: 29.133,20.411,71.209,14.107,56.344,9.425,21.391,119.105,64.274,19.535,13.857,52.772,143.735,1.571,12.566,14.054,3.142,139.028,219.063,19.895,99.080,254.210,20.832,37.335,26.599,16.495,16.766,14.137,39.704,81.819,9.983,25.328,13.003,258.127,60.026,86.827,24.413,35.938,27.326,9.425,15.978,34.552,9.425,13.765,75.484,14.137,18.163,129.010,106.236,14.309,98.969,93.607,9.361,180.168,171.616,11.356
+Grid: 5000
+Visibility: 0.5
+Using regular PRODUCT version of fuzzy logic.
+
+------------------------
+Total time: 17.5s
