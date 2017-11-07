@@ -18,10 +18,10 @@ Construction of a digraph based on data points from observations of ecological d
 See [wikipedia's entry on fuzzy logic](https://en.wikipedia.org/wiki/Fuzzy_logic) for a more in-depth explanation.
 
 There are many models for fuzzy logic, depending on what one means when talking about the *intersection*. If property A is 70% true and property B is 50% true, how true is property (A and B)? Consider the following two:
-	* (A and B) is 35% true (product)
-	* (A and B) is 50% true (minimum)
+	* (A and B) is 35% true (product). This mimics independent events in probability.
+	* (A and B) is 50% true (minimum). Also called the Zadeh operators.
 
-From both of those (and many more) we could create a model for fuzzy logic (actually, from any monotone function which satisfies the same properties as crisp intersection and some more).
+From either of those (and many more) we could create a model for fuzzy logic (actually, from any monotone function which satisfies the same properties as crisp intersection and some more).
  
 ### Propincuity
  The standard way of defining the distribution area of a species is with *propincuity*, which is also available in this program (for comparison only. It's slow, and there are probably faster alternatives out there). 
