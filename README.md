@@ -8,7 +8,7 @@ Construction of a digraph based on data points from observations of ecological d
  In short, for each species we produce a matrix of probability. Each observation stenghthens the entries of the matrix: each entry goes from 0.0 up to 1.0, depending on how close other points are.
  
  Here is a visual representation:
- ![Fuzzy Logic](https://github.com/mraggi/FuzzyLogicEcology/blob/master/Paper/distribucion.png "Fuzzy Logic Blobs")
+ ![Fuzzy Logic](https://github.com/mraggi/FuzzyLogicEcology/blob/master/Paper/fuzzyinverted.png "Fuzzy Logic Blobs")
  
  Then, for each pair of species, we calculate the area of overlap and produce a (directed) edge from species A to species B whose weight is the weight of the overlap area over the area of A (*i.e.* how much of A is inside B).
 
