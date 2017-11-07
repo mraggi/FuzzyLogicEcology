@@ -25,16 +25,14 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	
 	basic_options.add_options()
 	("help,h", "produce help message")
+	("namecolumns,I", po::value< std::vector<int> >(), "Name columns (starting at 0).")
+	("grid,g", po::value<int>(&grid)->default_value(grid), "Grid size. A larger grid means more accurate the calculations (but slower).")
 	("memory,m", po::value<std::string>(), "Maximum amount of memory (in bytes) to use. Leave blank or at 0 to use all available memory (not recommended!). Can use KB, MB, GB.")
-	("namecolumns,I", po::value< std::vector<int> >(), "name columns")
-	("latitude,x", po::value<int>(&latitude)->default_value(value_not_set), "latitude")
-	("longitude,y", po::value<int>(&longitude)->default_value(value_not_set), "longitude")
-	("grid,g", po::value<int>(&grid)->default_value(grid), "grid size. A larger grid means more accurate the calculations (but slower).")
-	("input-file,i", po::value< std::vector<std::string> >(), "input file. If not given, the program will read from STDIN")
-	("visibility,v", po::value<double>(&visibility)->default_value(visibility), "visibility in km. When doing the exponential decay model, the coefficient (in e^(-Cx^2)")
+	("input-file,i", po::value< std::vector<std::string> >(), "Input file. If not given, the program will read from STDIN")
+	("visibility,v", po::value<double>(&visibility)->default_value(visibility), "Visibility in km. When doing the exponential decay model, coefficient C (in e^(-Cx^2))")
 	("fuzzy_min,f", "Use minimum instead of product as the fuzzy logic model of intersection (warning: SLOW)")
-	("propincuity,p", "Use Propincuity to calculate areas (warning: SLOW. Not recommended!)")
-	("output-file,o", po::value< std::string >(), "sage output file.")	
+	("propincuity,p", "Use Propincuity to calculate areas instead of exponential decay (warning: SLOW. Not recommended!)")
+	("output-file,o", po::value< std::string >(), "sagemath output file.")	
 	;
 
 	po::positional_options_description p;
@@ -49,10 +47,10 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 		std::cout << usage << '\n';
 		std::cout << 
 		"\nThis program takes input of the form:\n\n"
-		"Species SomeInfo Latitude Longitude MoreInfo\n"
-		"Lobatae 99 50.3 58.8 blah\n"
-		"Quercus 99 50.3 58.8 blah\n\n"
-		"And produces an intersection matrix. See README.md for more details.\n\n";
+		"\tSpecies SomeInfo Latitude Longitude MoreInfo\n"
+		"\trubra 99 50.3 58.8 blah\n"
+		"\tpalustris 99 50.3 58.8 blah\n\n"
+		"and produces an intersection matrix. See README.md for more details. The name can span multiple columns.\n\n";
 		
 		std::cout << basic_options;
 		should_exit = true;
