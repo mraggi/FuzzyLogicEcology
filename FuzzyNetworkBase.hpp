@@ -369,7 +369,9 @@ void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& name
 	};
 	
 	sort(edges.begin(), edges.end(), by_weight);
-			
+	
+	std::cout << "\nThese are the edges (sorted by weight):\n";
+	
 	for (const auto& e : edges)
 	{
 		std::cout << '\"' << names[e.from] << "\" ---> \"" << names[e.to]  << '\"' << " with weight " << e.weight() << std::endl;
@@ -386,9 +388,9 @@ void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& name
 	}
 
 	
-	std::cout << "Areas: ";
+	std::cout << "\nAreas: ";
 	printAreaVector(std::cout, ',');
 	
 	std::cout << std::defaultfloat;
-
+	std::cout << endl;
 }
