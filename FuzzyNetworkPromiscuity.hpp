@@ -22,7 +22,7 @@ public:
 
 	void ResetFullMatrix(Matrix& A) override
 	{
-		A = Matrix::Constant(A.rows(), A.cols(), 0.0);
+		A.setZero();
 	}
 	
 	double get_distancesq_to_spanning_tree(const Point& P, long species) const;

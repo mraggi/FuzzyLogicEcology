@@ -2,16 +2,16 @@ load AnalyzeArea.sage
 load Areas.sage
 
 print "************* Analyzing QUERCUS with PRODUCT *************"
-AnalyzeAreas(QuercusAreas)
+PlotAndFitArea(QuercusAreas)
 print "************* Analyzing QUERCUS with MIN *************"
-AnalyzeAreas(QuercusFuzzyMin)
+PlotAndFitArea(QuercusFuzzyMin)
 
 print "************* Analyzing LOBATAE with PRODUCT *************"
-AnalyzeAreas(LobataeAreas)
+PlotAndFitArea(LobataeAreas)
 print "************* Analyzing LOBATAE with MIN *************"
-AnalyzeAreas(LobataeFuzzyMin)
+PlotAndFitArea(LobataeFuzzyMin)
 
 print "************* Analyzing CENTRO with PRODUCT *************"
-AnalyzeAreas(CentroAreas)
+PlotAndFitArea(CentroAreas)
 print "************* Analyzing CENTRO with MIN *************"
-AnalyzeAreas(CentroFuzzyMin)
+PlotAndFitArea(CentroFuzzyMin)

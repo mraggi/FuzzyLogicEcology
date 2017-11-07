@@ -31,9 +31,6 @@ set(EXTRA_LIBS ${Boost_LIBRARIES}
 #################### Optional dependencies
 OPTION(BUILD_USING_MP "Build Using OpenMP for parallelism" ON)
 if (${BUILD_USING_MP})
-#	 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopenmp=libomp")
-#	 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp=libomp")
-#	 include_directories("/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/include/")
 	find_package(OpenMP)
 	if (OPENMP_FOUND) 
 		message("Open MP Found! Code will use multiple cores!")

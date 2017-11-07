@@ -122,7 +122,7 @@ private:
 	
 	virtual void UpdateArea(const Mat& A, size_t species);
 
-	Mat DivideByArea(const Mat& M) const;
+	Mat DividedByArea(const Mat& M) const;
 
 protected: // variables
 	std::vector<double> Area;	
@@ -193,10 +193,12 @@ void FuzzyNetworkBase<Mat>::Normalize()
 		{
 			double x = p.x;
 			double y = p.y;
+			
 			if (x < minX)
 				minX = x;
 			if (y < minY)
 				minY = y;
+			
 			if (x > maxX)
 				maxX = x;
 			if (y > maxY)
@@ -220,6 +222,12 @@ void FuzzyNetworkBase<Mat>::Normalize()
 template <class Mat>
 void FuzzyNetworkBase<Mat>::printAreaVector(std::ostream& os, char sep)
 {
+	if (num_species() == 0)
+	{
+		os << std::endl;
+		return;
+	}
+	
 	os << GetTotalArea(0);
 	for (size_t i = 1; i < num_species(); ++i)
 	{
@@ -232,19 +240,23 @@ void FuzzyNetworkBase<Mat>::printAreaVector(std::ostream& os, char sep)
 template <class Mat>
 Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 {
+	Chronometer FromStart;
+
 	PreInitialize();
 	
 	Normalize();
 	
 	PostInitialize();
-	Chronometer FromStart;
 	
-	size_t numspecies = E.size();
+	size_t numspecies = num_species();
+	
 	size_t num_blocks = num_full_blocks + num_partial_blocks;
 
 	Mat A(numspecies,num_cols_per_block);
 	
 	Mat M = Mat::Zero(numspecies, numspecies);
+	
+	std::cout << "Took " << FromStart.Peek() << "s to initialize.\nStarting calculations.\n";
 	
 	for (size_t block = 0; block < num_full_blocks + num_partial_blocks; ++block)
 	{
@@ -274,12 +286,12 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 			}
 		}
 		
-		std::cout << "\t Block " << block+1 << " took " << BlockTimer.Reset() << " to realize." << std::endl;
+		std::cout << "\tBlock " << block+1 << " took " << BlockTimer.Reset() << "s to realize," << std::endl;
 		
 		// M += A*A^T
 		AddTransposeProduct(M,A);
 
-		std::cout << "\t And " << BlockTimer.Reset() << "s to multiply the matrices.\n";
+		std::cout << "\tand " << BlockTimer.Reset() << "s to multiply the matrices.\n";
 		
 		double running_time = FromStart.Peek();
 		double total_time = running_time*double(num_blocks)/(block+1);
@@ -288,10 +300,10 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 			<< ". Expected remaining time: " << total_time - running_time << 's' << std::endl;
 	}
 	
-	std::cout << "Total Time taken: " << FromStart.Reset() << std::endl;
+	std::cout << "Total Time taken to calculate network: " << FromStart.Reset() << std::endl;
 	
 
-	return DivideByArea(M);
+	return DividedByArea(M);
 		
 }
 
@@ -306,7 +318,7 @@ void FuzzyNetworkBase<Mat>::UpdateArea(const Mat& A, size_t species)
 }
 
 template <class Mat>
-Mat FuzzyNetworkBase<Mat>::DivideByArea(const Mat& M) const
+Mat FuzzyNetworkBase<Mat>::DividedByArea(const Mat& M) const
 {
 // 	std::cout << M << std::endl;
 	auto numspecies = num_species();
@@ -341,14 +353,15 @@ template <class Mat>
 void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile)
 {
 	auto M = CalculateGraph();
-			
+	
+	std::cout << std::setprecision(3) << std::fixed;
+
 	std::cout << std::endl << "Adjacency Matrix: " << std::endl;
 	std::cout << M << std::endl;
 
 	DiGraph D = DiGraph::FromAdjacencyMatrix(M);
 	
 	auto edges = D.edges();
-
 
 	auto by_weight = [](const Edge & a, const Edge & b)
 	{
@@ -375,4 +388,7 @@ void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& name
 	
 	std::cout << "Areas: ";
 	printAreaVector(std::cout, ',');
+	
+	std::cout << std::defaultfloat;
+
 }

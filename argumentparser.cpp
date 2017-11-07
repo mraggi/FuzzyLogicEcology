@@ -15,39 +15,46 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	if (argc == 1)
 	{
 		std::cout << usage << std::endl;
-		std::cout << "Option -h or --help prints options" << std::endl;
+		std::cout << "Option -h or --help prints full options" << std::endl;
 		should_exit = true;
 		return;
 	}
 
 	
-	po::options_description desc("Allowed options");
+	po::options_description basic_options("Allowed options");
 	
-	desc.add_options()
+	basic_options.add_options()
 	("help,h", "produce help message")
-	("memory,m", po::value<std::string>(), "Maximum amount of memory in bytes to use. Leave blank or at 0 to autodetect. Can use KB, MB, GB")
+	("memory,m", po::value<std::string>(), "Maximum amount of memory (in bytes) to use. Leave blank or at 0 to use all available memory (not recommended!). Can use KB, MB, GB.")
+	("namecolumns,I", po::value< std::vector<int> >(), "name columns")
 	("latitude,x", po::value<int>(&latitude)->default_value(value_not_set), "latitude")
 	("longitude,y", po::value<int>(&longitude)->default_value(value_not_set), "longitude")
-	("grid,g", po::value<int>(&grid)->default_value(grid), "grid size (The larger grid is, the more accurate the calculations will be, but it's also slower.)")
-	("visibility,v", po::value<double>(&visibility)->default_value(visibility), "visibility in km")
-	("namecolumns,I", po::value< std::vector<int> >(), "name columns")
-	("input-file,i", po::value< std::vector<std::string> >(), "input file. If left blank, the program will read from STDIN")
+	("grid,g", po::value<int>(&grid)->default_value(grid), "grid size. A larger grid means more accurate the calculations (but slower).")
+	("input-file,i", po::value< std::vector<std::string> >(), "input file. If not given, the program will read from STDIN")
+	("visibility,v", po::value<double>(&visibility)->default_value(visibility), "visibility in km. When doing the exponential decay model, the coefficient (in e^(-Cx^2)")
+	("fuzzy_min,f", "Use minimum instead of product as the fuzzy logic model of intersection (warning: SLOW)")
+	("propincuity,p", "Use Propincuity to calculate areas (warning: SLOW. Not recommended!)")
 	("output-file,o", po::value< std::string >(), "sage output file.")	
-	("fuzzy_min", "Use Fuzzy Minimum instead of Fuzzy Product for intersection (warning: SLOW)")
-	("propincuity", "Use Propincuity to calculate areas (warning: SLOW. Not recommended!)")
 	;
 
 	po::positional_options_description p;
 	p.add("input-file", -1);
 
 	po::variables_map vm;
-	po::store(po::command_line_parser(argc, argv).options(desc).positional(p).run(), vm);
+	po::store(po::command_line_parser(argc, argv).options(basic_options).positional(p).run(), vm);
 	po::notify(vm);
 
 	if (vm.count("help"))
 	{
 		std::cout << usage << '\n';
-		std::cout << desc;
+		std::cout << 
+		"\nThis program takes input of the form:\n\n"
+		"Species SomeInfo Latitude Longitude MoreInfo\n"
+		"Lobatae 99 50.3 58.8 blah\n"
+		"Quercus 99 50.3 58.8 blah\n\n"
+		"And produces an intersection matrix. See README.md for more details.\n\n";
+		
+		std::cout << basic_options;
 		should_exit = true;
 		return;
 	}
@@ -57,7 +64,7 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	
 	if (fuzzy_min && propincuity)
 	{
-		std::cout << "Cannot use both propincuity and fuzzy_min. Specify one or the other (or neither), but not both.\n";
+		std::cout << "Cannot use both propincuity and fuzzy_min. Specify one or the other (or, preferably, neither), but not both.\n";
 		should_exit = true;
 		return;
 	}
@@ -66,7 +73,8 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 
 	if (vm.count("namecolumns"))
 	{
-		std::cout << "Name columns are: " << vm["namecolumns"].as< std::vector<int> >().size() << ": " << vm["namecolumns"].as< std::vector<int> >() << '\n';
+		NamedColumns = vm["namecolumns"].as< std::vector<int> >();
+		std::cout << "There are " << NamedColumns.size() << " name columns: " << NamedColumns << '\n';
 	}
 
 // 	if (vm.count("arcgis-outfile"))
@@ -90,64 +98,59 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 		}
 	} else
 	{
-	  std::cout << "No input file given. Will read from STDIN" << std::endl;
+	  std::cout << "No input file given. Will read from STDIN... " << std::endl;
 	}
 	
-	if (vm.count("output-file"))
-	{
-		std::cout << "Sage output file is: " << vm["output-file"].as< std::string >() << '\n';
-	}
-
-	if (vm.count("namecolumns"))
-	{
-		NamedColumns = vm["namecolumns"].as< std::vector<int> >();
-	}
-	
-	// If there is an output file, do this
 	if (vm.count("output-file"))
 	{
 		std::string outfile = vm["output-file"].as<std::string>();
-		
+		std::cout << "Sage output file is: " << outfile << '\n';
 	}
 	
 	if (!vm.count("memory"))
 	{
-		std::cout << "Memory option not set. Attempting to use all system memory" << std::endl;
 		memoryAvailable = getTotalSystemMemory();
 		
 		memoryAvailable -= 1*GB; // Leave at least 1 GB for the OS
-		memoryAvailable *= 0.9; // Don't use more than 90% of memory!
+		memoryAvailable *= 0.90;
 		memoryAvailable = std::max(memoryAvailable,long(20L*MB)); // at least use 20MB
-	} else
+		std::cout << "Memory option not set. Using (almost) all available system memory: " << double(memoryAvailable)/MB << "MB" << std::endl;
+	}
+	else
 	{
 		std::string val = vm["memory"].as<std::string>();
+		
 		if (toupper(val.back()) == 'B')
-		{
-			size_t units = 1;
 			val.pop_back();
-			char c = toupper(val.back());
-			
-			if (c == 'G')
-				units = GB;
-			if (c == 'M')
-				units = MB;
-			if (c == 'K')
-				units = KB;
-			
-			if (units != 1)
-			{
-				val.pop_back();
-			}
-			try
-			{
-				memoryAvailable = stol(val)*units;
-			}
-			catch (std::exception& e)
-			{
-				std::cerr << "Memory amount is in an invalid format. Use for example --memory=500MB" << std::endl;
-				throw;
-			}
-			
+		
+		size_t units = 1;
+		
+		char c = toupper(val.back());
+		
+		if (c == 'G')
+			units = GB;
+		if (c == 'M')
+			units = MB;
+		if (c == 'K')
+			units = KB;
+		
+		if (units != 1)
+			val.pop_back();
+		
+		try
+		{
+			memoryAvailable = stod(val)*units;
+		}
+		catch (...)
+		{
+			std::cerr << "Memory amount is in an invalid format. Use for example --memory=500MB" << std::endl;
+			throw;
+		}
+		
+		if (memoryAvailable < 20L*MB)
+		{
+			std::cerr << "You need at least 20 MB of memory. Setting it for you to 20MB." << std::endl;
+			memoryAvailable = 20L*MB;
 		}
 	}
 }
@@ -168,6 +171,5 @@ void ArgumentParser::printMessage() const
 	else
 	{
 		std::cout << "Using regular PRODUCT version of fuzzy logic.\n";		
-		
 	}
 }

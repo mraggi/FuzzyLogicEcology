@@ -10,8 +10,8 @@ public:
 						 size_t memoryAvailable, 
 						 double VisibilityRangeInKm) :
 			FuzzyNetworkExpDecay<Matrix>(_grid,U,memoryAvailable,VisibilityRangeInKm)
-{
-}
+	{
+	}
 	
 	void ResetFullMatrix(Matrix& A) override
 	{

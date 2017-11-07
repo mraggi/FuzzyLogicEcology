@@ -9,9 +9,9 @@ inline double diffclock(clock_t a, clock_t b)
 	return double(a - b) * c;
 }
 
-typedef std::chrono::time_point<std::chrono::high_resolution_clock> clockt;
+using time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
-inline double diffclockt(clockt a, clockt b)
+inline double diff_time_point(time_point a, time_point b)
 {
 
 	const double t = 0.000001;
@@ -27,7 +27,7 @@ public:
 		return A;
 	}
 
-	std::chrono::time_point<std::chrono::high_resolution_clock> start_timer;
+	time_point start_timer;
 
 
 private:
@@ -44,22 +44,22 @@ public:
 		auto tlast = m_timer;
 		m_timer = std::chrono::high_resolution_clock::now();
 
-		return diffclockt(m_timer, tlast);
+		return diff_time_point(m_timer, tlast);
 	}
 
 	double Peek() const
 	{
 		auto tnow = std::chrono::high_resolution_clock::now();
 
-		return diffclockt(tnow, m_timer);
+		return diff_time_point(tnow, m_timer);
 	}
 
-	std::chrono::time_point<std::chrono::high_resolution_clock> m_timer;
+	time_point m_timer;
 };
 
 inline double TimeFromStart()
 {
 	auto tnow = std::chrono::high_resolution_clock::now();
 
-	return diffclockt(tnow, RClock::Instance().start_timer);
+	return diff_time_point(tnow, RClock::Instance().start_timer);
 }

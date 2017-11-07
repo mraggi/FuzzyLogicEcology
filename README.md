@@ -41,9 +41,9 @@ Suppose the above file is saved as `myspecies.txt`
 
 Then run the program as follows:
 ```bash
-	./fuzzylogic -I1 --grid=5000 --memory=1GB myspecies.txt
+	./fuzzylogic -I0 --grid=5000 --memory=1GB myspecies.txt
 ```
-The I1 means that the name with which the species will be identified is in column 1. If there is more than one column with the name, just pass all the columns as arguments (i.e. -I1 -I2)
+The I1 means that the name with which the species will be identified is in column 1. If there is more than one column with the name, just pass all the columns as arguments (i.e. -I0 -I2). **Note that the columns start at 0, not 1**
 
 
 ### A more complete example
@@ -59,7 +59,26 @@ Of course, more detailed options can be found by typing
 ```
 
 
-
 ### Usage and Tutorial
 
-Let's write this.
+```tex
+Basic options:
+  -h [ --help ]                  produce help message
+  -m [ --memory ] arg            Maximum amount of memory (in bytes) to use. 
+                                 Leave blank or at 0 to use all available 
+                                 memory (not recommended!). Can use KB, MB, GB.
+  -I [ --namecolumns ] arg       name columns
+  -x [ --latitude ] arg (=-1)    latitude
+  -y [ --longitude ] arg (=-1)   longitude
+  -g [ --grid ] arg (=2000)      grid size. A larger grid means more accurate 
+                                 the calculations (but slower).
+  -i [ --input-file ] arg        input file. If not given, the program will 
+                                 read from STDIN
+  -v [ --visibility ] arg (=0.5) visibility in km. When doing the exponential 
+                                 decay model, the coefficient (in e^(-Cx^2)
+  -f [ --fuzzy_min ]             Use minimum instead of product as the fuzzy 
+                                 logic model of intersection (warning: SLOW)
+  -p [ --propincuity ]           Use Propincuity to calculate areas (warning: 
+                                 SLOW. Not recommended!)
+  -o [ --output-file ] arg       sage output file.
+ ```

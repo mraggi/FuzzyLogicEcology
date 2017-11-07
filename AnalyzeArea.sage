@@ -1,6 +1,6 @@
 import numpy as np
 
-def PlotArea(A):
+def PlotAndFitArea(A):
     A.sort()
     # First, we simply fit an exponential curve a*e^(ci) for (i,Area[i])
     print "Fitting exponential model"

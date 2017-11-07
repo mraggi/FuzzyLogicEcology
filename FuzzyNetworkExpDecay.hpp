@@ -56,6 +56,7 @@ void FuzzyNetworkExpDecay<Mat>::PreInitialize()
 template <class Mat>
 void FuzzyNetworkExpDecay<Mat>::PostInitialize()
 {
+	// fucking c++!
 	const auto& F = FuzzyNetworkBase<Mat>::F;
 	const auto& grid = FuzzyNetworkBase<Mat>::grid;
 	

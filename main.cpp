@@ -22,9 +22,7 @@ namespace po = boost::program_options;
 int main(int argc, char* argv[])
 {
 	std::ios_base::sync_with_stdio(false);
-	std::cout << std::setprecision(3) << std::fixed;
 	srand(time(NULL));
-
 	
 	Chronometer chrono;
 	try
@@ -66,6 +64,8 @@ int main(int argc, char* argv[])
 			names.emplace_back(v.first);
 		}
 		
+
+		
 		if (AP.propincuity)
 		{
 			FuzzyNetworkPromiscuity GC(AP.grid, Points, AP.memoryAvailable);
@@ -94,6 +94,6 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	std::cout << std::endl << "Total time: " << chrono.Peek() << std::endl;
+	std::cout << "\n------------------------\nTotal time: " << chrono.Peek() << "s\n";
 	return 0;
 }
