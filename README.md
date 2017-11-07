@@ -3,7 +3,7 @@ Construction of a digraph based on data points from observations of ecological d
 
 ## Some (brief) theory
  
- See paper for more details. 
+ See paper (upcoming!) for more details. 
  
  In short, for each species we produce a matrix of probability. Each observation stenghthens the entries of the matrix: each entry goes from 0.0 up to 1.0, depending on how close other points are.
  
@@ -119,4 +119,8 @@ Basic options:
 	-o [ --output-file ] arg     sagemath output file.
  ```
 
- 
+### Acknowledgements
+
+This work was done by a group of researchers at *Escuela Nacional de Estudios Superiores unidad Morelia, Universidad Nacional Autónoma de México* with a research grant **PAPIIT IA106316**. For the complete list of authors, see the paper.
+
+If you find it useful, or if you have any comments, suggestions, feature requests, *etc.* feel free to email us at [mraggi@gmail.com](mailto:mraggi@gmail.com).
