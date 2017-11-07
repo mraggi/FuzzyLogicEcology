@@ -122,3 +122,110 @@ Optimization terminated successfully.
 (a,b,c) =  (4.276937260302549, -0.04316694314888798, 0.5848770785457595)
 Launched png viewer for Graphics object consisting of 202 graphics primitives
 Finished fitting logistic model
+
+************************ Analyzing Quercus Propincuity
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 3639552587.523680
+         Iterations: 8
+         Function evaluations: 252
+(a,c) =  (1209.7868936406983, 0.07449651761219812)
+Launched png viewer for Graphics object consisting of 57 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 2052590278.487216
+         Iterations: 8
+         Function evaluations: 440
+(a,b,c) =  (312.02125162768834, -0.04440269463153949, 0.7579201682280498)
+Launched png viewer for Graphics object consisting of 57 graphics primitives
+Finished fitting logistic model
+
+
+************************ Analyzing Lobatae Propincuity
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 523181083549.485413
+         Iterations: 22
+         Function evaluations: 681
+(a,c) =  (22.20353540595392, 0.11258186749211653)
+Launched png viewer for Graphics object consisting of 105 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 715232177514.517212
+         Iterations: 11
+         Function evaluations: 615
+(a,b,c) =  (4231.49094225633, -0.07832306279711768, 0.544825069866491)
+Launched png viewer for Graphics object consisting of 105 graphics primitives
+Finished fitting logistic model
+
+
+
+************************ Analyzing Centro Propincuity
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 4277512544308.622070
+         Iterations: 61
+         Function evaluations: 1822
+(a,c) =  (243.90895079780196, 0.046216589564679875)
+Launched png viewer for Graphics object consisting of 202 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 376772292412.800232
+         Iterations: 6
+         Function evaluations: 340
+(a,b,c) =  (3204.8449265137097, -0.042199206793690144, 0.5928233080229174)
+Launched png viewer for Graphics object consisting of 202 graphics primitives
+Finished fitting logistic model
+
+
+************************ Analyzing USAArea
+Fitting exponential model
+Optimization terminated successfully.
+         Current function value: 3084478.070293
+         Iterations: 3
+         Function evaluations: 146
+(a,c) =  (0.9787070189456889, 0.01280812418985703)
+Launched png viewer for Graphics object consisting of 630 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 6263862.119187
+         Iterations: 8
+         Function evaluations: 464
+(a,b,c) =  (4.571091213360102, -0.04444399925210491, 0.47855049473674627)
+Launched png viewer for Graphics object consisting of 630 graphics primitives
+Finished fitting logistic model
+
+
+************************ Analyzing MountainAreas
+Fitting exponential model
+/home/mraggi/sources/sage-7.0/local/lib/python2.7/site-packages/scipy/optimize/optimize.py:2381: RuntimeWarning: overflow encountered in double_scalars
+  t -= delta*temp*temp
+Optimization terminated successfully.
+         Current function value: 8740290.231598
+         Iterations: 3
+         Function evaluations: 158
+(a,c) =  (0.97871470720111, 0.00260551898195644)
+Launched png viewer for Graphics object consisting of 2389 graphics primitives
+Finished fitting exponential model
+
+
+Fitting logistic model
+Optimization terminated successfully.
+         Current function value: 1427722.746536
+         Iterations: 12
+         Function evaluations: 692
+(a,b,c) =  (0.38962538024165044, -0.047459066860435446, 0.39092777081005226)
+Launched png viewer for Graphics object consisting of 2389 graphics primitives
+Finished fitting logistic model
