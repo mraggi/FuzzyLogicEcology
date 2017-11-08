@@ -5,13 +5,13 @@ Construction of a digraph based on data points from observations of ecological d
  
  See paper (upcoming!) for more details. 
  
- In short, for each species we produce a matrix of probability. Each observation stenghthens the entries of the matrix: each entry goes from 0.0 up to 1.0, depending on how close other points are.
+ In short, for each species we produce a matrix of probability. Each observation *strengthens* the entries of the matrix: each entry goes from 0.0 up to 1.0, depending on how close the observed data are to the points.
  
- Here is a visual representation:
+ Here is a visual representation of what we mean:
  
  ![Fuzzy Logic](https://github.com/mraggi/FuzzyLogicEcology/blob/master/Paper/fuzzyinverted.png "Fuzzy Logic Blobs")
  
- Then, for each pair of species, we calculate the area of overlap and produce a (directed) edge from species A to species B whose weight is the weight of the overlap area over the area of A (*i.e.* how much of A is inside B).
+ Then, for each pair of species, we calculate the area of overlap and produce a (directed) edge from species A to species B whose weight is the weight of the overlap area over the area of A (*i.e.* how much of A is inside B). This is done in a highly efficient manner.
 
 ### Types of fuzzy logic
 
@@ -40,15 +40,19 @@ boost
 cmake
 ```
 
-### Installing dependencies in debian/ubuntu/mint
+Make sure you have a recent version of each. In particular, your `C++` compiler should have `C++14` support (gcc >= 5.2 and clang >= 3.9 should be fine), a recent version of eigen3 (at least 3.2) and a recent version of boost (at least 1.59). Let us know if we can help.
+
+We are in the process of making all this available as a web service. If you are interested, let us know. We'll work faster and we'll be more motivated if we see there is some interest.
+
+#### Installing dependencies in debian/ubuntu/mint
 For example, to install in debian/ubuntu, do `sudo apt-get install build-essentials libboost-all-dev cmake git eigen3`
 
-### Installing dependencies in arch/chakra/manjaro
+#### Installing dependencies in arch/chakra/manjaro
 In a terminal, type:
 `sudo pacman -S cmake boost git eigen3`
 
 ### Installing
-After the dependencies are satisfied, just do the usual:
+After the dependencies are satisfied, just do the usual cmake dance:
 ```bash
 	cd /path/to/wherever
 	git clone https://github.com/mraggi/FuzzyLogicEcology.git
@@ -59,20 +63,20 @@ After the dependencies are satisfied, just do the usual:
 	make
 ```
 
-The file that the program reads needs to be something like this (for a real example, see lobatae.txt or QuercusOaxaca.txt)
+Here is a dummy example text file that the program reads (for a real example, see lobatae.txt or QuercusOaxaca.txt or rojos.txt)
 ```txt
 	Species SomeInfo Latitude Longitude MoreInfo
 	rubra  99	50.3 58.8 blah
 	palustris  99	50.3 58.8 blah
 ```
-Suppose the above file is saved as `myspecies.txt`
+Suppose the above file is saved as `myspecies.txt`. The columns `SomeInfo` and `MoreInfo` will be ignored. Columns are separated by tabs, spaces, or a combination of the two. Columns cannot contain spaces, so for example, if you have a column called `Name` and then in that column an entry is `Abies balsamea`, this will be detected as two different columns (and header row should be adjusted accordingly, for example, by adding `Family` before `Name`).
 
 
 Then run the program as follows:
 ```bash
 	./fuzzylogic -I0 --grid=5000 --memory=2GB myspecies.txt
 ```
-The I1 means that the name with which the species will be identified is in column 1. If there is more than one column with the name, just pass all the columns as arguments (i.e. -I0 -I2). **Note that the columns start at 0, not 1**
+The I0 means that the name with which the species will be identified is in column 0. If there is more than one column with the name, just pass all the columns as arguments (i.e. -I0 -I2). **Note that the columns start at 0, not 1.**
 
 
 ## A more realistic example
@@ -117,11 +121,12 @@ Basic options:
 	-p [ --propincuity ]         Use Propincuity to calculate areas (warning: 
                                  SLOW. Not recommended!).
 
-	-o [ --output-file ] arg     sagemath output file.
+	-o [ --output-file ] arg     sagemath output file. This is in order to analyze 
+    							 the resulting DiGraph in sage mathematics software.
  ```
 
 ### Acknowledgements
 
-This work was done by a group of researchers at *Escuela Nacional de Estudios Superiores unidad Morelia, Universidad Nacional Autónoma de México* with a research grant **PAPIIT IA106316**. For the complete list of authors, see the paper.
+This work was done by a group of researchers at *Escuela Nacional de Estudios Superiores unidad Morelia, Universidad Nacional Autónoma de México* with a research grant **PAPIIT IA106316**. For the complete list of authors, see the (upcoming) paper. All provided data was collected by César Andrés Torres Miranda *(need to fill this!)
 
 If you find it useful, or if you have any comments, suggestions, feature requests, *etc.* feel free to email us at [mraggi@gmail.com](mailto:mraggi@gmail.com).
