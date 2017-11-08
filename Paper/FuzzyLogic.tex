@@ -132,10 +132,10 @@ We wish to define the standard set operations ($\subset,\setminus,\cap,\cup$) on
 	\end{itemize}
 \end{definition}
 
-The above definitions are the only standard definition of $\subset$ and $\setminus$, but the definition of $\cap$ and therefore $\cup$ varies, as there are many ways to do so in a consistent and logical manner. Usually one gives the definition of $\cap$ as $\mu_{A\cap B}(p) := \II(\mu_A(p),\mu_B(p))$, where  $\II : [0,1]^2 \to [0,1]$ is a function that satisfies the same properties as intersection when evaluated in $\{0,1\}$. The definition of $\cup$ follows. \tcr{paperize! Luis Miguel?}. 
+The above definitions are the only standard definition of $\subset$ and $\setminus$, but the definition of $\cap$ and therefore $\cup$ varies, as there are many ways to do so in a consistent and logical manner. Usually one gives the definition of $\cap$ as $\mu_{A\cap B}(p) := \II(\mu_A(p),\mu_B(p))$, where  $\II : [0,1]^2 \to [0,1]$ is a function that satisfies the same properties as intersection when evaluated in $\{0,1\}$. The definition of $\cup$ follows. See \cite{some reference} \tcr{paperize! Add reference! Luis Miguel?}. 
 
 \begin{definition}
-A \emph{consistent} function $\II : [0,1]^2 \to [0,1]$ is one that for all $a,b,c\in[0,1]$
+A \emph{consistent} function $\II : [0,1]^2 \to [0,1]$ is one which for all $a,b,c\in[0,1]$
 \begin{enumerate}
   \item $\II(a,b) = \II(b,a)$. (symmetry)
   \item $\II(0,b) = 0$.
@@ -155,7 +155,7 @@ In this work we will consider two different definitions of $\II$. Both have adva
 
 The first definition we shall consider involves defining the operations akin to when considering independent sets in probability: $\II(a,b) = ab$, so that $A\cap B$ is defined by the membership function $\mu_{A\cap B} (x) := \mu_A(x)\mu_B(x)$, and therefore $A\cup B$ is defined by the membership function $\mu_{A\cup B} (x) := \mu_A(x)+\mu_B(x)-\mu_A(x)\mu_B(x)$.
 
-The second definition, also quite common, is to define $\II(a,b) = \min(a,b)$. In this scenario, we observe that $\mu_{A\cup B}(p) = \max(\mu_A(p),\mu_B(p))$.
+Our second definition is to define $\II(a,b) = \min(a,b)$, also called the \emph{Zadeh} operator. See \tcr{\ref{Zadeh reference}}. In this scenario, we observe that $\mu_{A\cup B}(p) = \max(\mu_A(p),\mu_B(p))$.
 
 \section{Building the network}
 
@@ -245,7 +245,7 @@ $$\mu_A = 1-\prod_{a\in A} (1-f_a)$$
 	We may speed up this computation when $\II$ is the product with the following trick. 
 	
 	Note that 
-		$$n^2\int \mu_A \mu_B \approx \sum_{0\leq x < n} \sum_{0\leq y < n} \mu_A[x,y]\mu_B[x,y]$$
+		$$n^2\int \mu_A \mu_B \approx \sum_{0\leq x < n} \sum_{0\leq y < n} \mu_A[x,y]\mu_B[x,y].$$
 	
 	Let $\nu_A$ and $\nu_B$ denote vectors that result from flattening $\mu_A$ and $\mu_B$. Then the r.h.s. of the previous equation is simply the dot product $\nu_A\cdot \nu_B$.
 	
