@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ctime>
 #include <chrono>
+#include <ctime>
 
 inline double diffclock(clock_t a, clock_t b)
 {

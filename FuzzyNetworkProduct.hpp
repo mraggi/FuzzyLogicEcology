@@ -24,7 +24,7 @@ public:
 			A(species,col) += 1.0;
 	}
 
-	inline void UpdateFunction(double& a, const Point& p, long x, long y, int species) override
+	inline void UpdateFunction(double& a, const Point& p, long x, long y, int  /*species*/) override
 	{
 		double XX = (p.x-x)*(p.x-x);
 		double YY = (p.y-y)*(p.y-y);

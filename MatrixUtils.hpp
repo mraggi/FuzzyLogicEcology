@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 
-#include <eigen3/Eigen/Dense>
 #include "scalar_min.hpp"
+#include <eigen3/Eigen/Dense>
 
 using Matrix = Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic,Eigen::RowMajor>;
 

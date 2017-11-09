@@ -1,16 +1,17 @@
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <boost/program_options.hpp>
 #include "argumentparser.hpp"
+#include <boost/program_options.hpp>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include <vector>
 
-namespace po = boost::program_options;
 
 ArgumentParser::ArgumentParser(int argc, char* argv[])
 {
-	std::string usage = std::string("Usage") + argv[0] + " [OPTION]... FILE";
+	namespace po = boost::program_options;
+
+	std::string usage = std::string("Usage") + std::string(argv[0]) + " [OPTION]... FILE"; //NOLINT //REALLY??
 
 	if (argc == 1)
 	{
@@ -42,7 +43,7 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	po::store(po::command_line_parser(argc, argv).options(basic_options).positional(p).run(), vm);
 	po::notify(vm);
 
-	if (vm.count("help"))
+	if (vm.count("help")) //NOLINT
 	{
 		std::cout << usage << '\n';
 		std::cout << 
@@ -57,8 +58,8 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 		return;
 	}
 	
-	fuzzy_min = vm.count("fuzzy_min");
-	propincuity = vm.count("propincuity");
+	fuzzy_min = static_cast<bool>(vm.count("fuzzy_min"));
+	propincuity = static_cast<bool>(vm.count("propincuity"));
 	
 	if (fuzzy_min && propincuity)
 	{
@@ -69,7 +70,7 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	
 	
 
-	if (vm.count("namecolumns"))
+	if (vm.count("namecolumns")) //NOLINT
 	{
 		NamedColumns = vm["namecolumns"].as< std::vector<int> >();
 		std::cout << "There are " << NamedColumns.size() << " name columns: " << NamedColumns << '\n';
@@ -81,7 +82,7 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 // 		std::cout << "Arcgis file prefix is: " << arcgisfile << '\n';
 // 	}
 	
-	if (vm.count("input-file"))
+	if (vm.count("input-file")) //NOLINT
 	{
 		std::string filename = vm["input-file"].as< std::vector<std::string> >()[0];
 		std::cout << "Input file is: " << filename << '\n';
@@ -99,13 +100,13 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	  std::cout << "No input file given. Will read from STDIN... " << std::endl;
 	}
 	
-	if (vm.count("output-file"))
+	if (vm.count("output-file")) //NOLINT
 	{
 		std::string outfile = vm["output-file"].as<std::string>();
 		std::cout << "Sage output file is: " << outfile << '\n';
 	}
 	
-	if (!vm.count("memory"))
+	if (!vm.count("memory")) //NOLINT
 	{
 		memoryAvailable = getTotalSystemMemory();
 		

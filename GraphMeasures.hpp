@@ -3,7 +3,7 @@
 #include "Graph.hpp"
 #include "GraphConnectedComponents.hpp"
 
-Graph GetGraphFromDiGraph(const DiGraph& D, double umbral)
+inline Graph GetGraphFromDiGraph(const DiGraph& D, double umbral)
 {
 	Graph G(D.num_vertices());
 	
@@ -21,7 +21,7 @@ Graph GetGraphFromDiGraph(const DiGraph& D, double umbral)
 	return G;
 }
 
-std::vector<std::vector<vertex_t>> ReduceToFindEndemism(const DiGraph& D, double umbral)
+inline std::vector<std::vector<vertex_t>> ReduceToFindEndemism(const DiGraph& D, double umbral)
 {
 	Graph G = GetGraphFromDiGraph(D, umbral);
 	

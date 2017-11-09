@@ -1,8 +1,8 @@
 #pragma once
-#include <vector>
-#include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <iostream>
+#include <vector>
 
 #include "Utility.hpp"
 
@@ -59,8 +59,8 @@ struct Point
 	void Rotate(double t);
 	Point Rotated(double t) const;
 	
-	void Rotate(double sint, double cost); //so that you don't calculate sin and cos again.
-	Point Rotated(double sint, double cost) const; //so that you don't calculate sin and cos again.
+	void Rotate(double SIN, double COS); //so that you don't calculate sin and cos again.
+	Point Rotated(double SIN, double COS) const; //so that you don't calculate sin and cos again.
 
 	void Normalize();
 	Point Normalized() const;
@@ -88,7 +88,7 @@ struct Point
 	void SetPolar(double r, double t);
 
 	Point WithLength(double r) const;
-	Point WithLengthSq(double r) const;
+	Point WithLengthSq(double r2) const;
 
 	Point Projection(const Point& H) const;
 	Point ProjectionToLine(const Point& A, const Point& B) const;
@@ -113,7 +113,7 @@ struct Point
 	inline void operator-=(const Point &vec) { x -= vec.x; y -= vec.y;}
 	inline void operator*=(double num)			{ x *= num; y *= num;}
 	inline void operator/=(double num)			{ x /= num; y /= num;}
-	inline Point operator-(void) const { return Point(-x,-y); }
+	inline Point operator-() const { return Point(-x,-y); }
 
 	bool operator!=(const Point &vec) const;
 	bool operator==(const Point& vec) const;
@@ -180,7 +180,5 @@ inline double distance_squared(const Point& A, const Point& B)
 }
 
 std::ostream& operator<<(std::ostream& os, const Point& rhs);
-
-bool operator<(const Point& A, const Point& B);
 
 std::vector<Point> GenerateRandomPoints(int n, int resolution);

@@ -1,28 +1,24 @@
-#include <iostream>
-#include <iomanip>
 #include <fstream>
+#include <iomanip>
+#include <iostream>
 
-#include <boost/program_options.hpp>
-namespace po = boost::program_options;
-
-#include "Utility.hpp"
 #include "Point.hpp"
-#include "TimeHelpers.hpp"
 #include "ReadFile.hpp"
-// #include "GraphCalculator.hpp"
+#include "TimeHelpers.hpp"
+#include "Utility.hpp"
 
-#include "FuzzyNetworkProduct.hpp"
 #include "FuzzyNetworkMin.hpp"
+#include "FuzzyNetworkProduct.hpp"
 #include "FuzzyNetworkPromiscuity.hpp"
 
-#include "argumentparser.hpp"
 #include "Graph.hpp"
 #include "GraphMeasures.hpp"
+#include "argumentparser.hpp"
 
 int main(int argc, char* argv[])
 {
 	std::ios_base::sync_with_stdio(false);
-	srand(time(NULL));
+	srand(time(nullptr));
 	
 	Chronometer chrono;
 	try

@@ -1,9 +1,9 @@
 #include "ReadFile.hpp"
 #include <fstream>
 #include <istream>
+#include <locale>
 #include <sstream>
 #include <string>
-#include <locale>
 
 std::vector<std::vector<std::string>> ReadTable(std::istream& is)
 {
@@ -16,7 +16,7 @@ std::vector<std::vector<std::string>> ReadTable(std::istream& is)
 	{
 		std::stringstream iss(line);
 // 			std::cout << "line = " << line << std::endl;
-		table.push_back({});
+		table.emplace_back(std::vector<std::string>());
 		do
 		{
 			std::string sub;
@@ -38,7 +38,8 @@ std::vector<std::vector<std::string>> ReadTable(std::istream& is)
 	
 	if (table.empty())
 	{
-		throw std::invalid_argument("Empy input stream!");
+		std::cerr << "Empty input stream!" << std::endl;
+		throw;
 	}
 	
 	return table;

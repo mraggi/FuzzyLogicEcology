@@ -1,15 +1,15 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
-#include <array>
-#include <array>
-#include <string>
-#include <queue>
-#include <algorithm>
-#include <cassert>
-#include <unordered_map>
 #include "MatrixUtils.hpp"
+#include <algorithm>
+#include <array>
+#include <array>
+#include <cassert>
+#include <iostream>
+#include <queue>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 using vertex_t = int;
 const vertex_t INVALID_VERTEX = -1;
@@ -26,7 +26,7 @@ struct Neighbor
 	
 	explicit Neighbor(vertex_t v, weight_t w = 1) : vertex(v), m_weight(w) {}
 	
-	inline operator vertex_t() const
+	inline operator vertex_t() const //NOLINT
 	{
 		return vertex;
 	}
@@ -178,22 +178,21 @@ public:
 	inline const std::vector<Neighbor>& inneighbors(vertex_t n) const { return m_graph[n]; }
 	
 	
-	inline const weight_t is_neighbor(vertex_t from, vertex_t to) const
+	inline const bool is_neighbor(vertex_t from, vertex_t to) const
 	{
 		if (degree(from) > degree(to))
 			std::swap(from,to);
+		
 		if (m_neighbors_sorted)
-		{
 			return std::binary_search(neighbors(from).begin(), neighbors(from).end(),to);
-		} else
+			
+		for (auto& a : neighbors(from))
 		{
-			for (auto& a : neighbors(from))
-			{
-				if (a == to)
-					return true;
-			}
-			return false;
+			if (a == to)
+				return true;
 		}
+		return false;
+		
 	}	
 	
 	// Very slow!
@@ -201,6 +200,7 @@ public:
 	{
 		if (degree(from) > degree(to))
 			std::swap(from,to);
+		
 		if (m_neighbors_sorted)
 		{
 			auto it = std::partition_point(neighbors(from).begin(), neighbors(from).end(), [to](const vertex_t& a)
@@ -212,15 +212,15 @@ public:
 			if (*it == to)
 				return it->weight();
 			return 0;
-		} else
-		{
-			for (auto& a : neighbors(from))
-			{
-				if (a == to)
-					return a.weight();
-			}
-			return 0;
 		}
+		
+		for (auto& a : neighbors(from))
+		{
+			if (a == to)
+				return a.weight();
+		}
+		return 0;
+		
 	}
 	
 	Graph& operator+=(const Graph& G)
@@ -253,19 +253,21 @@ public:
 	{
 		if (m_neighbors_sorted)
 		{
-			auto it = std::partition_point(neighbors(from).begin(), neighbors(from).end(), [to](const vertex_t& a)
-			{
-				return a < to;
-			});
+			auto it = std::partition_point(neighbors(from).begin(), 
+										   neighbors(from).end(), 
+										   [to](const vertex_t& a)
+											{
+												return a < to;
+											});
 			return it - neighbors(from).begin();
-		} else
+		} 
+		
+		for (size_t i = 0; i < neighbors(from).size(); ++i)
 		{
-			for (size_t i = 0; i < neighbors(from).size(); ++i)
-			{
-				if (m_graph[from][i] == to)
-					return i;
-			}
+			if (m_graph[from][i] == to)
+				return i;
 		}
+		
 		return m_graph[from].size();
 	}
 	
@@ -410,7 +412,7 @@ public:
 	inline const std::vector<Neighbor>& inneighbors(vertex_t n) const { return m_ingraph[n]; }
 	inline const weight_t edge_value(vertex_t from, vertex_t to) const
 	{
-		return edge_value(from,to,std::less<vertex_t>());
+		return edge_value(from,to,std::less<>());
 	}
 	
 	template<class Compare>

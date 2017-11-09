@@ -1,13 +1,13 @@
 #pragma once
 
-#include <iomanip>
 #include <cassert>
 #include <fstream>
+#include <iomanip>
 
-#include "TimeHelpers.hpp"
-#include "Point.hpp"
-#include "MatrixUtils.hpp"
 #include "Graph.hpp"
+#include "MatrixUtils.hpp"
+#include "Point.hpp"
+#include "TimeHelpers.hpp"
 
 struct Interval
 {
@@ -72,9 +72,9 @@ protected:
 		Point DAA = MaxAffectedArea();
 		double dx = DAA.x;
 		
-		long dxi = long(dx+2);
-		long minX = std::max(0L,long(p.x)-dxi);
-		long maxX = std::min(N, long(p.x)+dxi);
+		auto dxi = static_cast<long>(dx+2);
+		auto minX = std::max(0L,long(p.x)-dxi);
+		auto maxX = std::min(N, long(p.x)+dxi);
 		
 		
 		long offset = block*num_cols_per_block;
@@ -97,12 +97,12 @@ protected:
 		Point DAA = MaxAffectedArea();
 		double dy = DAA.y;
 		
-		long dyi = long(dy+2);
+		auto dyi = static_cast<long>(dy+2);
 		
-		long minY = std::max(0L,long(p.y)-dyi);
-		long maxY = std::min(N, long(p.y)+dyi);
-		long my = minY;
-		long My = maxY;
+		auto minY = std::max(0L,long(p.y)-dyi);
+		auto maxY = std::min(N, long(p.y)+dyi);
+		auto my = minY;
+		auto My = maxY;
 		
 		long offset = block*num_cols_per_block;
 		long myY = offset-x*N;
@@ -118,7 +118,7 @@ protected:
 private:
 	void Normalize();
 	void SetBlockSize(long memoryAvailable);
-	virtual void Realize(Mat& A, long row, long block) = 0;
+	virtual void Realize(Mat& A, long species, long block) = 0;
 	
 	virtual void UpdateArea(const Mat& A, size_t species);
 
@@ -137,8 +137,8 @@ protected: // variables
 
 	std::vector<std::vector<Point>> E;
 	
-	size_t num_cols_per_block;
-	size_t num_full_blocks;
+	size_t num_cols_per_block {1};
+	size_t num_full_blocks {1};
 	size_t num_partial_blocks {0}; //0 or 1
 	size_t num_cols_partial_block {0};
 };
@@ -336,7 +336,7 @@ Mat FuzzyNetworkBase<Mat>::DividedByArea(const Mat& M) const
 			{
 				if (Area[x] > tolerance)
 				{
-					R(x,y) = M(x,y)/Area[x];
+					R(x,y) = M(x,y)/Area[x];  //NOLINT
 				}
 				else
 				{
@@ -357,7 +357,7 @@ void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& name
 	std::cout << std::setprecision(3) << std::fixed;
 
 	std::cout << std::endl << "Adjacency Matrix: " << std::endl;
-	std::cout << M << std::endl;
+	std::cout << M << std::endl; //NOLINT
 
 	DiGraph D = DiGraph::FromAdjacencyMatrix(M);
 	
@@ -374,7 +374,7 @@ void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& name
 	
 	for (const auto& e : edges)
 	{
-		std::cout << '\"' << names[e.from] << "\" ---> \"" << names[e.to]  << '\"' << " with weight " << e.weight() << std::endl;
+		std::cout << '\"' << names[e.from] << R"(" ---> ")" << names[e.to]  << '\"' << " with weight " << e.weight() << std::endl;
 	}
 	
 	if (sageoutfile != "")
@@ -383,7 +383,7 @@ void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& name
 		out << "G = DiGraph()\n";
 		for (auto e : edges)
 		{
-			out << "G.add_edge(\"" << names[e.from] << "\",\"" << names[e.to]  << '\"' << "," << e.weight() << ")\n";
+			out << R"(G.add_edge(")" << names[e.from] << R"(",")" << names[e.to]  << '\"' << "," << e.weight() << ")\n";
 		}
 	}
 

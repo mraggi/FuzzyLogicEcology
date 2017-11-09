@@ -1,6 +1,6 @@
 #include "Point.hpp"
 
-void Point::Normalize(void)
+void Point::Normalize()
 {
 	if(x != 0 || y != 0)
 	{
@@ -65,10 +65,10 @@ void Point::Rotate(double SIN, double COS)
 	x = xprime;
 }
 
-Point Point::Rotated(double sint, double cost) const
+Point Point::Rotated(double SIN, double COS) const
 {
 	Point a = *this;
-	a.Rotate(sint, cost);
+	a.Rotate(SIN, COS);
 	return a;
 }
 
@@ -138,9 +138,7 @@ bool Point::IsToTheLeftOfLine(const Point& A, const Point& B) const
 {
 	Point H = B - A;
 	Point P = (*this) - A;
-	if (H.x*P.y > H.y*P.x)
-		return true;
-	return false;
+	return (H.x*P.y > H.y*P.x);
 }
 
 bool Point::IsOnLine(const Point& A, const Point& B) const
@@ -154,9 +152,7 @@ bool Point::IsToTheRightOfLine(const Point& A, const Point& B) const
 {
 	Point H = B - A;
 	Point P = (*this) - A;
-	if (H.x*P.y < H.y*P.x)
-		return true;
-	return false;
+	return H.x*P.y < H.y*P.x;
 }
 
 bool Point::operator!=(const Point& vec) const
@@ -229,13 +225,4 @@ Point Point::GlobalToLocal(const Point& origin,
 	double locx = (L.x*V.y - L.y*V.x)/determinant;
 	double locy = -(L.x*U.y - L.y*U.x)/determinant;
 	return Point(locx,locy);
-}
-
-bool operator<(const Point& A, const Point& B)
-{
-	if (A.x > B.x)
-		return true;
-	if (A.x < B.x)
-		return false;
-	return (A.y >= B.y);
 }

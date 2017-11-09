@@ -1,9 +1,9 @@
 #pragma once
-#include <string>
-#include <vector>
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "Point.hpp"
 

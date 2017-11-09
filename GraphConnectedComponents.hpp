@@ -1,11 +1,11 @@
 #pragma once
-#include <vector>
-#include <iostream>
+#include "Graph.hpp"
+#include "Utility.hpp"
 #include <algorithm>
+#include <iostream>
 #include <set>
 #include <unordered_set>
-#include "Utility.hpp"
-#include "Graph.hpp"
+#include <vector>
 
 
 void DFSConnectedComponentUtil(const Graph& G, std::vector<int>& coloring, vertex_t v, int color);

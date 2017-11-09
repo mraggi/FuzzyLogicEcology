@@ -18,7 +18,7 @@ public:
 
 	Point CalculateBorder() const override;
 	
-	void Realize(Matrix& A, long row, long block) override;
+	void Realize(Matrix& A, long species, long block) override;
 
 	void ResetFullMatrix(Matrix& A) override
 	{

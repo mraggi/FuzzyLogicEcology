@@ -165,11 +165,10 @@ void FuzzyNetworkPromiscuity::Realize(Matrix& A, long species, long block)
 	long N = grid;
 	long offset = block*num_cols_per_block;
 	
+	
 	auto X = GetXInterval(species);
 	auto Y = GetYInterval(species);
-	
-	
-	for (long x = X.L; x < X.R; ++x)
+		for (long x = X.L; x < X.R; ++x)
 	{
 		for (long y = Y.L; y < Y.R; ++y)
 		{
@@ -188,6 +187,50 @@ void FuzzyNetworkPromiscuity::Realize(Matrix& A, long species, long block)
 				A(species,index) = 0.0;
 		}
 	}
+	
+// 	long r = MaxAffectedArea().x+1.0;
+// 	
+// 	for (const auto& t : m_spanningTree[species])
+// 	{
+// 		Point GA = E[species][t.from];
+// 		Point GB = E[species][t.to];
+// 		
+// 		Segment S(GA,GB);
+// 		
+// 		Point CA = GridToContinuum(A);
+// 		Point CB = GridToContinuum(B);
+// 		
+// 		for (long x = S.minX()-r+1; x < X.maxX()+r; ++x)
+// 		{
+// 			double Y;
+// 			
+// 			if (x > S.maxX())
+// 				Y = , entonces Y = la y del vértice correspondiente (dpende de la inclinación? fuck)
+// 			
+// 			if x < S.minX, entonces Y 
+// 			
+// 			long y = Y;
+// 			
+// 			long index = x*N-offset;
+// 
+// 			while (y < N && distance(Point(x,y),segmento) < r)
+// 			{
+// 				A(species,index) = 1.0;
+// 				++y;
+// 			}
+// 			
+// 			y = Y;
+// 			--y;
+// 			
+// 			while (y >= 0 &&  distance(Point(x,y),segmento) < r)
+// 			{
+// 				A(species,index) = 1.0;
+// 				--y;
+// 			}
+// 		}
+// 	}
+	
+
 	
 }
 

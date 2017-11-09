@@ -13,15 +13,15 @@ public:
 	
 	
 	
-	virtual Point CalculateBorder() const override;
+	Point CalculateBorder() const override;
 
-	virtual void PreInitialize() override;
-	virtual void PostInitialize() override;
+	void PreInitialize() override;
+	void PostInitialize() override;
 	
-	void Realize(Mat& A, long row, long block) override;
+	void Realize(Mat& A, long species, long block) override;
 
 	virtual void UpdateFunction(double& a, const Point& p, long x, long y, int species) = 0;
-	virtual void PostRealizeAction(Mat& A, long species) = 0;
+	virtual void PostRealizeAction(Mat&  /*A*/, long  /*species*/) {}
 
 protected:
 	double Cx {1}; //in continuum
