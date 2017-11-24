@@ -81,7 +81,7 @@ double FuzzyNetworkPromiscuity::get_distancesq_to_spanning_tree(const Point& P, 
 // 	{
 // 		return 0;
 // 	}
-	double d = 99999999.0;
+	double d = 999999999.0;
 	
 	Point p = GridToContinuum(P);
 // 	Point p = P;
@@ -119,14 +119,16 @@ Interval FuzzyNetworkPromiscuity::GetXInterval(long species) const
 	--m;
 	++M;
 	
-	auto W = MaxAffectedArea();
-	m -= W.x;
-	M += W.x;
+// 	auto W = ContinuumToGrid(O+Point(m_radius[species],m_radius[species]));
+// 	auto W = Point(m_radius[species],m_radius[species]);
+	double r = grid*m_radius[species]/F.x;
+	m -= r;
+	M += r;
 	
 	if (m < 0)
 		m = 0;
 	
-	if (M > grid)
+	if (M > static_cast<long>(grid))
 		M = grid;
 	
 	return {m,M};
@@ -147,14 +149,17 @@ Interval FuzzyNetworkPromiscuity::GetYInterval(long species) const
 	--m;
 	++M;
 	
-	auto W = MaxAffectedArea();
-	m -= W.y;
-	M += W.y;
+// 	auto W = ContinuumToGrid(O+Point(m_radius[species],m_radius[species]));
+// 	auto W = Point(m_radius[species],m_radius[species]);
+	double r = grid*m_radius[species]/F.y;
+
+	m -= r;
+	M += r;
 	
 	if (m < 0)
 		m = 0;
 	
-	if (M > grid)
+	if (M > static_cast<long>(grid))
 		M = grid;
 	
 	return {m,M};

@@ -94,24 +94,24 @@ double tolerancia_fisica(double numsigma)
 {
 	return exp(-numsigma*numsigma/2.0);
 }*/
-const uint64_t KB = 1024;
-const uint64_t MB = KB*1024;
-const uint64_t GB = MB*1024;
+const int64_t KB = 1024;
+const int64_t MB = KB*1024;
+const int64_t GB = MB*1024;
 
 
 #if defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))
 	#include <unistd.h>
 
-	inline uint64_t getTotalSystemMemory()
+	inline int64_t getTotalSystemMemory()
 	{
-		uint64_t  pages = sysconf(_SC_PHYS_PAGES);
-		uint64_t  page_size = sysconf(_SC_PAGE_SIZE);
+		int64_t  pages = sysconf(_SC_PHYS_PAGES);
+		int64_t  page_size = sysconf(_SC_PAGE_SIZE);
 		return pages * page_size;
 	}
 #else 
 	#include <windows.h>
 
-	inline uint64_t getTotalSystemMemory()
+	inline int64_t getTotalSystemMemory()
 	{
 		MEMORYSTATUSEX status;
 		status.dwLength = sizeof(status);

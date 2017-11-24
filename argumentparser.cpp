@@ -26,12 +26,13 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	
 	basic_options.add_options()
 	("help,h", "produce help message")
-	("namecolumns,I", po::value< std::vector<int> >(), "Name columns (starting at 0).")
+	("name-columns,I", po::value< std::vector<int> >(), "Name columns (starting at 0).")
 	("grid,g", po::value<int>(&grid)->default_value(grid), "Grid size. A larger grid means more accurate the calculations (but slower).")
 	("memory,m", po::value<std::string>(), "Maximum amount of memory (in bytes) to use. Leave blank or at 0 to use all available memory (not recommended!). Can use KB, MB, GB.")
 	("input-file,i", po::value< std::vector<std::string> >(), "Input file. If not given, the program will read from STDIN")
 	("visibility,v", po::value<double>(&visibility)->default_value(visibility), "Visibility in km. When doing the exponential decay model, coefficient C (in e^(-Cx^2))")
-	("fuzzy_min,f", "Use minimum instead of product as the fuzzy logic model of intersection (warning: SLOW)")
+	("save-image,s", po::value< std::vector<std::string> >(), "In order to create an image, specify the (exact) name of the species.")
+	("fuzzy-min,f", "Use minimum instead of product as the fuzzy logic model of intersection (warning: SLOW)")
 	("propincuity,p", "Use Propincuity to calculate areas instead of exponential decay (warning: SLOW. Not recommended!)")
 	("output-file,o", po::value< std::string >(), "sagemath output file.")	
 	;
@@ -58,22 +59,28 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 		return;
 	}
 	
-	fuzzy_min = static_cast<bool>(vm.count("fuzzy_min"));
+	fuzzy_min = static_cast<bool>(vm.count("fuzzy-min"));
 	propincuity = static_cast<bool>(vm.count("propincuity"));
 	
 	if (fuzzy_min && propincuity)
 	{
-		std::cout << "Cannot use both propincuity and fuzzy_min. Specify one or the other (or, preferably, neither), but not both.\n";
+		std::cout << "Cannot use both propincuity and fuzzy-min. Specify one or the other (or, preferably, neither), but not both.\n";
 		should_exit = true;
 		return;
 	}
 	
 	
 
-	if (vm.count("namecolumns")) //NOLINT
+	if (vm.count("name-columns")) //NOLINT
 	{
-		NamedColumns = vm["namecolumns"].as< std::vector<int> >();
+		NamedColumns = vm["name-columns"].as< std::vector<int> >();
 		std::cout << "There are " << NamedColumns.size() << " name columns: " << NamedColumns << '\n';
+	}
+	
+	if (vm.count("save-image")) //NOLINT
+	{
+		ImageSpecies = vm["save-image"].as< std::vector<std::string> >();
+		std::cout << "Going to save " << ImageSpecies.size() << " images for the following species: " << ImageSpecies << '\n';
 	}
 
 // 	if (vm.count("arcgis-outfile"))

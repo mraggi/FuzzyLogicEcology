@@ -3,6 +3,9 @@
 #include <cassert>
 #include <fstream>
 #include <iomanip>
+#include <map>
+
+#include <png++/png.hpp>
 
 #include "Graph.hpp"
 #include "MatrixUtils.hpp"
@@ -51,6 +54,23 @@ public:
 	{
 		return O + Q.Scaled(F/grid);
 	}
+	
+	inline std::pair<long,long> IndexToMatrix(long index, long block = 0)
+	{
+		long offset = block*num_cols_per_block;
+		long x = (index+offset)/grid;
+		long y = index+offset-grid*x;
+		return {x,y};
+	}
+	
+	inline long MatrixToIndex(long x, long y, long block = 0)
+	{
+		long offset = block*num_cols_per_block;
+		return x*grid+y - offset;
+	}
+	
+	void SetImagesToSave(const std::map<int,std::string>& M);
+
 protected:
 	
 	virtual void ResetFullMatrix(Mat& A) = 0;
@@ -98,7 +118,6 @@ protected:
 		double dy = DAA.y;
 		
 		auto dyi = static_cast<long>(dy+2);
-		
 		auto minY = std::max(0L,long(p.y)-dyi);
 		auto maxY = std::min(N, long(p.y)+dyi);
 		auto my = minY;
@@ -115,6 +134,7 @@ protected:
 		return {my,My};
 	}
 	
+	
 private:
 	void Normalize();
 	void SetBlockSize(long memoryAvailable);
@@ -124,6 +144,9 @@ private:
 
 	Mat DividedByArea(const Mat& M) const;
 
+	void SaveToImages(Mat& A, long block);
+	void SaveImagesToDisk();
+	
 protected: // variables
 	std::vector<double> Area;	
 	size_t grid;
@@ -141,7 +164,20 @@ protected: // variables
 	size_t num_full_blocks {1};
 	size_t num_partial_blocks {0}; //0 or 1
 	size_t num_cols_partial_block {0};
+	
+	using image = png::image<png::rgba_pixel>;
+	
+	std::map<int,std::string> m_speciestoimage{};
+	std::vector<image> m_images{};
+	
 };
+
+template <class Mat>
+void FuzzyNetworkBase<Mat>::SetImagesToSave(const std::map<int,std::string>& M)
+{
+	m_speciestoimage = M;
+	m_images = std::move(std::vector<image>(M.size(), image(grid,grid)));
+}
 
 template <class Mat>
 void FuzzyNetworkBase<Mat>::SetBlockSize(long memoryAvailable)
@@ -206,9 +242,17 @@ void FuzzyNetworkBase<Mat>::Normalize()
 		}
 	}
 	
+	double maxrange = std::max(maxX - minX + 2*bx, maxY - minY + 2*by);
+	
 	O = Point(minX-bx,minY-by);
-	W = Point(maxX+bx,maxY+by);
+// 	W = Point(maxX+bx,maxY+by);
+	W = O + Point(maxrange,maxrange);
 	F = W-O;
+	std::cout << std::setprecision(9) << std::endl;
+	std::cout << "minx,miny = " << O/KmInADegree << std::endl;
+	std::cout << "maxx,maxy = " << W/KmInADegree << std::endl;
+	std::cout << "pixel size: " << (F.x/KmInADegree)/grid << std::endl;
+	std::cout << std::setprecision(3) << std::endl;
 	
 	for (auto& u : E)
 	{
@@ -236,6 +280,7 @@ void FuzzyNetworkBase<Mat>::printAreaVector(std::ostream& os, char sep)
 	os << std::endl;
 }
 
+const long species_to_save = 0;
 
 template <class Mat>
 Mat FuzzyNetworkBase<Mat>::CalculateGraph()
@@ -275,6 +320,8 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 			Realize(A,species, block);
 			UpdateArea(A,species);
 		}
+
+		SaveToImages(A,block);
 		
 		if (grid < 100)
 		{
@@ -300,11 +347,88 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 			<< ". Expected remaining time: " << total_time - running_time << 's' << std::endl;
 	}
 	
+	SaveImagesToDisk();
+
 	std::cout << "Total Time taken to calculate network: " << FromStart.Reset() << std::endl;
 	
 
 	return DividedByArea(M);
 		
+}
+
+template <class Mat>
+void FuzzyNetworkBase<Mat>::SaveToImages(Mat& A, long block)
+{
+	long i = 0;
+	for (auto& m : m_speciestoimage)
+	{
+		long species = m.first;
+		#pragma omp parallel for
+		for (long index = 0; index < A.cols(); ++index)
+		{
+			auto p = IndexToMatrix(index,block);
+			long x = p.first;
+			long y = p.second;
+			
+			double a = A(species,index);
+			auto c = static_cast<png::byte>(a*255.0);
+			
+			auto pixel = png::rgba_pixel(c,c,c);
+			
+			if (c == 4)
+				pixel = png::rgba_pixel(c,150,c);
+			if (c == 5)
+				pixel = png::rgba_pixel(c,255,c);
+			if (c == 6)
+				pixel = png::rgba_pixel(c,200,c);
+			
+			m_images[i][x][y] = pixel;
+		}
+		++i;
+	}
+}
+
+template <class Mat>
+void FuzzyNetworkBase<Mat>::SaveImagesToDisk()
+{
+	long num_image = 0; //needed because m_speciestoimage is a map and I need to traverse it! Hopefully not too large.
+
+	for (const auto& m : m_speciestoimage)
+	{
+		long species = m.first;
+		const auto& name = m.second;
+		
+		//Add points in red
+		for (auto p : E[species])
+		{
+			long x = p.x;
+			long y = p.y;
+			long b = 6;
+
+			for (int i = x-b; i <= x+b; ++i)
+			{
+				for (int j = y-b; j <= y+b; ++j)
+				{
+					double d = distance_squared(Point(i,j),p);
+					double t = std::min(255.0,255.0*d/(b*b));
+					auto c = static_cast<png::byte>(t);
+					
+					auto oldblue = m_images[num_image][i][j].blue;
+					auto oldgreen = m_images[num_image][i][j].green;
+
+					m_images[num_image][i][j].blue = std::min(c,oldblue);
+					m_images[num_image][i][j].green = std::min(c,oldgreen);
+					
+				}
+			}
+		}
+		
+		//
+		
+		m_images[num_image].write(name + ".png");
+		
+		++num_image;
+	}
 }
 
 template <class Mat>

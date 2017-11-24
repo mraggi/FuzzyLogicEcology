@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <map>
 
 #include "Point.hpp"
 #include "ReadFile.hpp"
@@ -42,9 +43,13 @@ int main(int argc, char* argv[])
 		
 		std::cout << std::endl << "********************* Species Found *******************" << std::endl;
 		int num = 0;
+
+		
 		for (const auto& v : V)
 		{
 			std::cout << "# "  << num << ' ' << v.first << " has " << v.second.size() << " observations \n";
+			
+			
 			++num;
 		}
 		std::cout << "***********************************************" << std::endl;
@@ -58,25 +63,41 @@ int main(int argc, char* argv[])
 		{
 			Points.emplace_back(v.second);
 			names.emplace_back(v.first);
+			
 		}
 		
-
+		std::map<int,std::string> savemap;
+		
+		for (size_t i = 0; i < names.size(); ++i)
+		{
+			for (auto& s : AP.ImageSpecies)
+			{
+				if (names[i] == s)
+				{
+					savemap[i] = s;
+				}
+			}
+		}
+		
 		
 		if (AP.propincuity)
 		{
 			FuzzyNetworkPromiscuity GC(AP.grid, Points, AP.memoryAvailable);
+			GC.SetImagesToSave(savemap);
 			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
 			GC.PrintEverything(names, AP.outfile);
 		}
 		else if (AP.fuzzy_min)
 		{
 			FuzzyNetworkMin GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
+			GC.SetImagesToSave(savemap);
 			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
 			GC.PrintEverything(names, AP.outfile);
 		}
 		else
 		{	
 			FuzzyNetworkProduct GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
+			GC.SetImagesToSave(savemap);
 			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
 			GC.PrintEverything(names, AP.outfile);
 		}

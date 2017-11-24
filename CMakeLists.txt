@@ -46,6 +46,7 @@ endif()
 
 message("Extra libs: " ${EXTRA_LIBS})
 
+
 set(MYSOURCES main.cpp Point.cpp ReadFile.cpp argumentparser.cpp FuzzyNetworkPromiscuity.cpp GraphConnectedComponents.cpp PointGraphConverter.cpp)
 
 if (${BUILD_TESTS})
@@ -55,4 +56,6 @@ endif()
 
 
 add_executable(fuzzylogic ${MYSOURCES})
-target_link_libraries(fuzzylogic ${EXTRA_LIBS})
+#set_property(TARGET fuzzylogic PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+
+target_link_libraries(fuzzylogic ${EXTRA_LIBS} png)
