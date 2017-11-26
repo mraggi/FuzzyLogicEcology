@@ -4,7 +4,7 @@
 #include "Graph.hpp"
 #include "PointGraphConverter.hpp"
 
-class FuzzyNetworkPromiscuity : public FuzzyNetworkBase<Matrix>
+class FuzzyNetworkPromiscuity : public FuzzyNetworkBase<Matrix, FuzzyNetworkPromiscuity>
 {
 public:
 	FuzzyNetworkPromiscuity(size_t _grid, 
@@ -12,15 +12,15 @@ public:
 						 size_t memoryAvailable);
 	
 	
-	void PreInitialize() override;
-	void PostInitialize() override;
+	void PreInitialize();
+	void PostInitialize();
 	
 
-	Point CalculateBorder() const override;
+	Point CalculateBorder() const;
 	
-	void Realize(Matrix& A, long species, long block) override;
+	void Realize(Matrix& A, long species, long block);
 
-	void ResetFullMatrix(Matrix& A) override
+	void ResetFullMatrix(Matrix& A) const
 	{
 		A.setZero();
 	}

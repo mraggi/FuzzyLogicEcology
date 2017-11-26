@@ -32,8 +32,6 @@ inline bool isAngleBetweenAngles(double a, double b1, double b2)
 	return c2 <= c ;
 }
 
-
-
 struct Point
 {
 	double x {0};

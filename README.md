@@ -21,8 +21,8 @@ There are many models for fuzzy logic, depending on what one means when talking 
 	* (A and B) is 35% true (product). This mimics independent events in probability.
 	* (A and B) is 50% true (minimum). Also called the Zadeh operators.
 
-From either of those (and many more) we could create a model for fuzzy logic (actually, from any monotone function which satisfies the same properties as crisp intersection and some more).
- 
+From either of those (and many more) we could create a model for fuzzy logic.
+
 ### Propincuity
  The standard way of defining the distribution area of a species is with *propincuity*, which is also available in this program (for comparison only. It's slow, and there are probably faster alternatives out there). 
  
@@ -38,6 +38,8 @@ g++ (or clang++)
 eigen3
 boost
 cmake
+libpng
+png++
 ```
 
 Make sure you have a recent version of each. In particular, your `C++` compiler should have `C++14` support (gcc >= 5.2 and clang >= 3.9 should be fine), a recent version of eigen3 (at least 3.2) and a recent version of boost (at least 1.59). Let us know if we can help.
@@ -45,11 +47,11 @@ Make sure you have a recent version of each. In particular, your `C++` compiler 
 We are in the process of making all this available as a web service. If you are interested, let us know. We'll work faster and we'll be more motivated if we see there is some interest.
 
 #### Installing dependencies in debian/ubuntu/mint
-For example, to install in debian/ubuntu, do `sudo apt-get install build-essentials libboost-all-dev cmake git eigen3`
+For example, to install in debian/ubuntu, do `sudo apt-get install build-essentials libboost-all-dev cmake git eigen3 libpng`
 
 #### Installing dependencies in arch/chakra/manjaro
 In a terminal, type:
-`sudo pacman -S cmake boost git eigen3`
+`sudo pacman -S cmake boost git eigen3 png++`
 
 ### Installing
 After the dependencies are satisfied, just do the usual cmake dance:

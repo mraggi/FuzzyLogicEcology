@@ -19,22 +19,15 @@ struct Interval
 	long R;
 };
 
-template <class Mat>
+template <class Matrix_t, class Derived>
 class FuzzyNetworkBase
 {
 public:
-	FuzzyNetworkBase(size_t _grid, const std::vector<std::vector<Point>>& U, size_t memoryAvailable) : 
-		Area(U.size(),0.0)
-		, grid(_grid)
-		, E(U)
-	{
-		SetBlockSize(memoryAvailable);
-// 		std::cout << "At beginning, Area = " << Area << std::endl;
-	}
+	
 	
 	void PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile);
 	
-	Mat CalculateGraph();
+	Matrix_t CalculateGraph();
 	
 	double GetTotalArea(int species) const
 	{
@@ -73,12 +66,15 @@ public:
 
 protected:
 	
-	virtual void ResetFullMatrix(Mat& A) = 0;
+	void ResetFullMatrix(Matrix_t& A) const { this->underlying().ResetFullMatrix(A);  }
 	
-	virtual void PreInitialize() = 0; //before calling normalize
-	virtual void PostInitialize() = 0; //after calling normalize
+	void PreInitialize() { this->underlying().PreInitialize(); }
+    
+    
+	void PostInitialize() { this->underlying().PostInitialize(); }
+    
 
-	virtual Point CalculateBorder() const = 0;
+	Point CalculateBorder() const { return this->underlying().CalculateBorder(); }
 
 	Point MaxAffectedArea() const
 	{
@@ -136,15 +132,20 @@ protected:
 	
 	
 private:
+    
+    Derived& underlying() { return static_cast<Derived&>(*this); }
+    Derived const& underlying() const { return static_cast<Derived const&>(*this); }
+
+    
 	void Normalize();
 	void SetBlockSize(long memoryAvailable);
-	virtual void Realize(Mat& A, long species, long block) = 0;
+	void Realize(Matrix_t& A, long species, long block) { this->underlying().Realize(A,species,block); }
 	
-	virtual void UpdateArea(const Mat& A, size_t species);
+	virtual void UpdateArea(const Matrix_t& A, size_t species);
 
-	Mat DividedByArea(const Mat& M) const;
+	Matrix_t DividedByArea(const Matrix_t& M) const;
 
-	void SaveToImages(Mat& A, long block);
+	void SaveToImages(Matrix_t& A, long block);
 	void SaveImagesToDisk();
 	
 protected: // variables
@@ -170,17 +171,27 @@ protected: // variables
 	std::map<int,std::string> m_speciestoimage{};
 	std::vector<image> m_images{};
 	
+private:
+    FuzzyNetworkBase(size_t _grid, const std::vector<std::vector<Point>>& U, size_t memoryAvailable) : 
+		Area(U.size(),0.0)
+		, grid(_grid)
+		, E(U)
+	{
+		SetBlockSize(memoryAvailable);
+// 		std::cout << "At beginning, Area = " << Area << std::endl;
+	}
+	friend Derived;
 };
 
-template <class Mat>
-void FuzzyNetworkBase<Mat>::SetImagesToSave(const std::map<int,std::string>& M)
+template <class Matrix_t, class Derived>
+void FuzzyNetworkBase<Matrix_t,Derived>::SetImagesToSave(const std::map<int,std::string>& M)
 {
 	m_speciestoimage = M;
 	m_images = std::move(std::vector<image>(M.size(), image(grid,grid)));
 }
 
-template <class Mat>
-void FuzzyNetworkBase<Mat>::SetBlockSize(long memoryAvailable)
+template <class Matrix_t, class Derived>
+void FuzzyNetworkBase<Matrix_t,Derived>::SetBlockSize(long memoryAvailable)
 {
 	std::cout << std::endl << "***************************** System Information *****************************" << std::endl;
 
@@ -211,8 +222,8 @@ void FuzzyNetworkBase<Mat>::SetBlockSize(long memoryAvailable)
 	std::cout << "******************************************************************\n\n" << std::flush;
 }
 
-template <class Mat>
-void FuzzyNetworkBase<Mat>::Normalize()
+template <class Matrix_t, class Derived>
+void FuzzyNetworkBase<Matrix_t,Derived>::Normalize()
 {
 	Point B = CalculateBorder();
 	bx = B.x;
@@ -263,8 +274,8 @@ void FuzzyNetworkBase<Mat>::Normalize()
 	}
 }
 
-template <class Mat>
-void FuzzyNetworkBase<Mat>::printAreaVector(std::ostream& os, char sep)
+template <class Matrix_t, class Derived>
+void FuzzyNetworkBase<Matrix_t,Derived>::printAreaVector(std::ostream& os, char sep)
 {
 	if (num_species() == 0)
 	{
@@ -282,8 +293,8 @@ void FuzzyNetworkBase<Mat>::printAreaVector(std::ostream& os, char sep)
 
 const long species_to_save = 0;
 
-template <class Mat>
-Mat FuzzyNetworkBase<Mat>::CalculateGraph()
+template <class Matrix_t, class Derived>
+Matrix_t FuzzyNetworkBase<Matrix_t, Derived>::CalculateGraph()
 {
 	Chronometer FromStart;
 
@@ -297,9 +308,9 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 	
 	size_t num_blocks = num_full_blocks + num_partial_blocks;
 
-	Mat A(numspecies,num_cols_per_block);
+	Matrix_t A(numspecies,num_cols_per_block);
 	
-	Mat M = Mat::Zero(numspecies, numspecies);
+	Matrix_t M = Matrix_t::Zero(numspecies, numspecies);
 	
 	std::cout << "Took " << FromStart.Peek() << "s to initialize.\nStarting calculations.\n";
 	
@@ -356,8 +367,8 @@ Mat FuzzyNetworkBase<Mat>::CalculateGraph()
 		
 }
 
-template <class Mat>
-void FuzzyNetworkBase<Mat>::SaveToImages(Mat& A, long block)
+template <class Matrix_t, class Derived>
+void FuzzyNetworkBase<Matrix_t, Derived>::SaveToImages(Matrix_t& A, long block)
 {
 	long i = 0;
 	for (auto& m : m_speciestoimage)
@@ -388,8 +399,8 @@ void FuzzyNetworkBase<Mat>::SaveToImages(Mat& A, long block)
 	}
 }
 
-template <class Mat>
-void FuzzyNetworkBase<Mat>::SaveImagesToDisk()
+template <class Matrix_t, class Derived>
+void FuzzyNetworkBase<Matrix_t, Derived>::SaveImagesToDisk()
 {
 	long num_image = 0; //needed because m_speciestoimage is a map and I need to traverse it! Hopefully not too large.
 
@@ -431,8 +442,8 @@ void FuzzyNetworkBase<Mat>::SaveImagesToDisk()
 	}
 }
 
-template <class Mat>
-void FuzzyNetworkBase<Mat>::UpdateArea(const Mat& A, size_t species)
+template <class Matrix_t, class Derived>
+void FuzzyNetworkBase<Matrix_t, Derived>::UpdateArea(const Matrix_t& A, size_t species)
 {
 	for (long col = 0; col < A.cols(); ++col)
 	{
@@ -441,13 +452,13 @@ void FuzzyNetworkBase<Mat>::UpdateArea(const Mat& A, size_t species)
 // 	std::cout << "After area update, Area = " << Area << std::endl;
 }
 
-template <class Mat>
-Mat FuzzyNetworkBase<Mat>::DividedByArea(const Mat& M) const
+template <class Matrix_t, class Derived>
+Matrix_t FuzzyNetworkBase<Matrix_t, Derived>::DividedByArea(const Matrix_t& M) const
 {
 // 	std::cout << M << std::endl;
 	auto numspecies = num_species();
 	
-	Mat R(numspecies,numspecies);
+	Matrix_t R(numspecies,numspecies);
 	for (size_t x = 0; x < numspecies; ++x)
 	{
 		
@@ -473,15 +484,15 @@ Mat FuzzyNetworkBase<Mat>::DividedByArea(const Mat& M) const
 	return R;
 }
 
-template <class Mat>
-void FuzzyNetworkBase<Mat>::PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile)
+template <class Matrix_t, class Derived>
+void FuzzyNetworkBase<Matrix_t, Derived>::PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile)
 {
 	auto M = CalculateGraph();
 	
 	std::cout << std::setprecision(3) << std::fixed;
 
 	std::cout << std::endl << "Adjacency Matrix: " << std::endl;
-	std::cout << M << std::endl; //NOLINT
+	std::cout << M << std::endl;
 
 	DiGraph D = DiGraph::FromAdjacencyMatrix(M);
 	

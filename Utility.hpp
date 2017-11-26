@@ -81,7 +81,7 @@ int signof(const T& a)
 }
 
 
-const double tolerance = 0.000000153; //en el continuo original
+const double tolerance = 0.00000153; //en el continuo original
 const double inf = 999999999999999.0;
 
 inline double MaxNonZeroDistance(double C)

@@ -4,7 +4,7 @@
 FuzzyNetworkPromiscuity::FuzzyNetworkPromiscuity(size_t _grid, 
 					const std::vector<std::vector<Point>>& U, 
 					size_t memoryAvailable) :
-			FuzzyNetworkBase<Matrix>(_grid,U,memoryAvailable),
+			FuzzyNetworkBase<Matrix,FuzzyNetworkPromiscuity>(_grid,U,memoryAvailable),
 			m_radius(U.size(),0.0),
 			m_spanningTree(U.size())
 {

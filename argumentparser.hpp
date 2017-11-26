@@ -11,7 +11,7 @@ struct ArgumentParser
 	ArgumentParser(int argc, char* argv[]);
 	int latitude{value_not_set};
 	int longitude{value_not_set};
-	double visibility {2};
+	double visibility {2.0};
 	int grid {2000};
 	std::string outfile { "" };
 	std::vector<int> NamedColumns {0};

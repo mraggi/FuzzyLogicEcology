@@ -3,7 +3,7 @@ project(FuzzyLogic)
 
 # set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_BUILD_TYPE Release)
-add_definitions(-std=c++14 -O2 -march=native -pipe -Wall)
+add_definitions(-std=c++14 -march=native -pipe -Wall)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/create_all_results.sh ${CMAKE_CURRENT_BINARY_DIR}/create_all_results.sh COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dummytest.txt ${CMAKE_CURRENT_BINARY_DIR}/dummytest.txt COPYONLY) 
