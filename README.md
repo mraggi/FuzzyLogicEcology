@@ -44,6 +44,8 @@ png++
 
 Make sure you have a recent version of each. In particular, your `C++` compiler should have `C++14` support (gcc >= 5.2 and clang >= 3.9 should be fine), a recent version of eigen3 (at least 3.2) and a recent version of boost (at least 1.59). Let us know if we can help.
 
+There is some evidence that this program performs much better with clang than GCC. It also performs better with clang 5.0 than 4.0.
+
 We are in the process of making all this available as a web service. If you are interested, let us know. We'll work faster and we'll be more motivated if we see there is some interest.
 
 #### Installing dependencies in debian/ubuntu/mint
