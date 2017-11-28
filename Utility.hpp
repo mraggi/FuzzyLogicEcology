@@ -11,13 +11,13 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& X)
 	return os;
 }
 
-template <class T> 
-std::ostream& operator<<(std::ostream& os, const std::vector<std::vector<T>>& X)
-{
-	for (const auto& x : X)
-		os << x << std::endl;
-	return os;
-}
+// template <class T> 
+// std::ostream& operator<<(std::ostream& os, const std::vector<std::vector<T>>& X)
+// {
+// 	for (const auto& x : X)
+// 		os << x << std::endl;
+// 	return os;
+// }
 
 inline std::default_random_engine& random_engine()
 {
