@@ -1,7 +1,8 @@
-#include "GraphCalculator.hpp"
+#include "FuzzyNetworkProduct.hpp"
 
 bool Test11()
 {
+    using std::vector;
 	int grid = 5000;
 	vector<vector<Point>> P;
 	P.push_back({Point(0,0)});
@@ -10,7 +11,7 @@ bool Test11()
 	double C = 0.2;
 	double sigma = sqrt(1/(2*C));
 	
-	GraphCalculator GC(grid, sigma, P, 4*GB);
+	FuzzyNetworkProduct GC(grid, sigma, P, 4*GB);
 	
 	auto M = GC.CalculateGraph();
 	
@@ -30,7 +31,10 @@ bool Test11()
 
 int main()
 {
-	MatrixXd A(2,2);
+    using std::cout;
+    using std::endl;
+    
+	Matrix A(2,2);
 	A(0,0) = scalar_min_t(1);
 	A(0,1) = scalar_min_t(2);
 	A(1,0) = scalar_min_t(3);

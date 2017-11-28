@@ -4,6 +4,8 @@
 #include <fstream>
 #include <iomanip>
 #include <map>
+#include <algorithm>
+#include <vector>
 
 #include <png++/png.hpp>
 
@@ -465,20 +467,20 @@ Matrix_t FuzzyNetworkBase<Matrix_t, Derived>::DividedByArea(const Matrix_t& M) c
 		if (Area[x] <= tolerance)
 		{
 			std::cerr << "Area of X = 0! Increase grid size!" << std::endl;
-		} else
-		{
-			for (size_t y = 0; y < numspecies; ++y)
-			{
-				if (Area[x] > tolerance)
-				{
-					R(x,y) = M(x,y)/Area[x];  //NOLINT
-				}
-				else
-				{
-					R(x,y) = 0.0;
-				}
-			}
-		}
+		} 
+		
+        for (size_t y = 0; y < numspecies; ++y)
+        {
+            if (Area[x] > tolerance)
+            {
+                R(x,y) = M(x,y)/Area[x];
+            }
+            else
+            {
+                R(x,y) = 0.0;
+            }
+        }
+		
 	}
 
 	return R;
@@ -487,7 +489,7 @@ Matrix_t FuzzyNetworkBase<Matrix_t, Derived>::DividedByArea(const Matrix_t& M) c
 template <class Matrix_t, class Derived>
 void FuzzyNetworkBase<Matrix_t, Derived>::PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile)
 {
-	auto M = CalculateGraph();
+	Matrix_t M = CalculateGraph();
 	
 	std::cout << std::setprecision(3) << std::fixed;
 
@@ -503,7 +505,7 @@ void FuzzyNetworkBase<Matrix_t, Derived>::PrintEverything(const std::vector<std:
 		return a.weight() < b.weight();
 	};
 	
-	sort(edges.begin(), edges.end(), by_weight);
+	std::sort(edges.begin(), edges.end(), by_weight);
 	
 	std::cout << "\nThese are the edges (sorted by weight):\n";
 	

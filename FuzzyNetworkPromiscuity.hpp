@@ -7,9 +7,14 @@
 class FuzzyNetworkPromiscuity : public FuzzyNetworkBase<Matrix, FuzzyNetworkPromiscuity>
 {
 public:
+    using Base = FuzzyNetworkBase<Matrix, FuzzyNetworkPromiscuity>;
 	FuzzyNetworkPromiscuity(size_t _grid, 
 						 const std::vector<std::vector<Point>>& U, 
-						 size_t memoryAvailable);
+						 size_t memoryAvailable) :
+			Base(_grid,U,memoryAvailable),
+			m_radius(U.size(),0.0),
+			m_spanningTree(U.size())
+    {}
 	
 	
 	void PreInitialize();

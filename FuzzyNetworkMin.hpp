@@ -5,8 +5,9 @@
 class FuzzyNetworkMin : public FuzzyNetworkExpDecay<MatrixFM, FuzzyNetworkMin>
 {
 public:
+    using BaseED = FuzzyNetworkExpDecay<MatrixFM, FuzzyNetworkMin>;
 	FuzzyNetworkMin(size_t _grid, const std::vector<std::vector<Point>>& U, size_t memoryAvailable, double VisibilityRangeInKm)  :
-		FuzzyNetworkExpDecay<MatrixFM,FuzzyNetworkMin>(_grid, U, memoryAvailable, VisibilityRangeInKm)
+		BaseED(_grid, U, memoryAvailable, VisibilityRangeInKm)
 	{ }
 
 	void ResetFullMatrix(MatrixFM& A) const
