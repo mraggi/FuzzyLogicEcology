@@ -66,41 +66,18 @@ int main(int argc, char* argv[])
 			
 		}
 		
-		std::map<int,std::string> savemap;
+		std::vector<int> tests = {100,500, 1000,2000,2500,3000,4000,5000,7500,10000};
+// 		std::vector<int> tests = {100,500, 1000};
 		
-		for (size_t i = 0; i < names.size(); ++i)
+		Chronometer W;
+		for (int n : tests)
 		{
-			for (auto& s : AP.ImageSpecies)
-			{
-				if (names[i] == s)
-				{
-					savemap[i] = s;
-				}
-			}
+			FuzzyNetworkProduct GC(n, Points, AP.memoryAvailable, AP.visibility);
+			GC.CalculateGraph();
+			
+			std::cout << "GGG: (" << n << "," << W.Reset() << ")" << std::endl;
 		}
-		
-		
-		if (AP.propincuity)
-		{
-			FuzzyNetworkPromiscuity GC(AP.grid, Points, AP.memoryAvailable);
-			GC.SetImagesToSave(savemap);
-			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-			GC.PrintEverything(names, AP.outfile);
-		}
-		else if (AP.fuzzy_min)
-		{
-			FuzzyNetworkMin GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
-			GC.SetImagesToSave(savemap);
-			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-			GC.PrintEverything(names, AP.outfile);
-		}
-		else
-		{	
-			FuzzyNetworkProduct GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
-			GC.SetImagesToSave(savemap);
-			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-			GC.PrintEverything(names, AP.outfile);
-		}
+
 		
 		AP.printMessage();
 

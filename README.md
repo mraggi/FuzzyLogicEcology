@@ -1,4 +1,7 @@
-# FuzzyLogicEcology
+# SpaDiMo-F
+
+Short for SPAcial DIstribution MOdeling with Fuzzy logic.
+
 Construction of a digraph based on data points from observations of ecological distributions to calculate overlaps using fuzzy logic.
 
 ## Some (brief) theory

@@ -3,8 +3,12 @@ project(FuzzyLogic)
 
 # set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_BUILD_TYPE Release)
-add_definitions(-std=c++14 -march=native -pipe -Wall)
 
+# add_definitions(-std=c++14 -march=native -Ofast -pipe -Wall)
+add_definitions(-std=c++14 -march=native -Ofast -pipe -Wall)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/error_tests.sh ${CMAKE_CURRENT_BINARY_DIR}/error_tests.sh COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/time_tests.sh ${CMAKE_CURRENT_BINARY_DIR}/time_tests.sh COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/create_all_results.sh ${CMAKE_CURRENT_BINARY_DIR}/create_all_results.sh COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dummytest.txt ${CMAKE_CURRENT_BINARY_DIR}/dummytest.txt COPYONLY) 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/QuercusOaxaca.txt ${CMAKE_CURRENT_BINARY_DIR}/QuercusOaxaca.txt COPYONLY)
@@ -47,7 +51,7 @@ endif()
 message("Extra libs: " ${EXTRA_LIBS})
 
 
-set(MYSOURCES main.cpp Point.cpp ReadFile.cpp argumentparser.cpp FuzzyNetworkPromiscuity.cpp GraphConnectedComponents.cpp PointGraphConverter.cpp)
+set(MYSOURCES Point.cpp ReadFile.cpp argumentparser.cpp FuzzyNetworkPromiscuity.cpp GraphConnectedComponents.cpp PointGraphConverter.cpp)
 
 if (${BUILD_TESTS})
 	add_executable(utests UTests.cpp Point.cpp GraphCalculator.cpp)
@@ -55,7 +59,11 @@ if (${BUILD_TESTS})
 endif()
 
 
-add_executable(fuzzylogic ${MYSOURCES})
+add_executable(fuzzylogic main.cpp ${MYSOURCES})
+add_executable(timetest maintime.cpp ${MYSOURCES})
+add_executable(errortest mainerror.cpp ${MYSOURCES})
 #set_property(TARGET fuzzylogic PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 target_link_libraries(fuzzylogic ${EXTRA_LIBS} png)
+target_link_libraries(timetest ${EXTRA_LIBS} png)
+target_link_libraries(errortest ${EXTRA_LIBS} png)

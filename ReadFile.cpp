@@ -38,7 +38,7 @@ std::vector<std::vector<std::string>> ReadTable(std::istream& is)
 	
 	if (table.empty())
 	{
-		std::cerr << "Empty input stream!" << std::endl;
+		std::cerr << "Empty input stream! Maybe you need to specify a file?" << std::endl;
 		throw;
 	}
 	

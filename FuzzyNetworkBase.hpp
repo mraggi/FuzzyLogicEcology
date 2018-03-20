@@ -514,7 +514,7 @@ void FuzzyNetworkBase<Matrix_t, Derived>::PrintEverything(const std::vector<std:
 		std::cout << '\"' << names[e.from] << R"(" ---> ")" << names[e.to]  << '\"' << " with weight " << e.weight() << std::endl;
 	}
 	
-	if (sageoutfile != "")
+	if (!sageoutfile.empty())
 	{
 		std::ofstream out(sageoutfile);
 		out << "G = DiGraph()\n";

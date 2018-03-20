@@ -12,7 +12,7 @@ struct ArgumentParser
 	int latitude{value_not_set};
 	int longitude{value_not_set};
 	double visibility {2.0};
-	int grid {2000};
+	int grid {2500};
 	std::string outfile { "" };
 	std::vector<int> NamedColumns {0};
 	std::vector<std::string> ImageSpecies {};

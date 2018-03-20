@@ -16,6 +16,18 @@
 #include "GraphMeasures.hpp"
 #include "argumentparser.hpp"
 
+// template <class Mat>
+double find_maximum(const Eigen::MatrixXd& M)
+{
+	return M.maxCoeff();
+}
+
+double find_average(const Eigen::MatrixXd& M)
+{
+	return M.mean();
+}
+
+
 int main(int argc, char* argv[])
 {
 	std::ios_base::sync_with_stdio(false);
@@ -66,41 +78,29 @@ int main(int argc, char* argv[])
 			
 		}
 		
-		std::map<int,std::string> savemap;
+		FuzzyNetworkProduct big(10000,Points,AP.memoryAvailable,AP.visibility);
+		auto REAL = big.CalculateGraph();
+
+		std::vector<int> tests = {100, 250, 500, 1000, 1500,2000, 2500, 3000, 4000, 5000, 7500};
+// 		std::vector<int> tests = {100, 250, 500,1000};
 		
-		for (size_t i = 0; i < names.size(); ++i)
+		Chronometer W;
+		for (int n : tests)
 		{
-			for (auto& s : AP.ImageSpecies)
-			{
-				if (names[i] == s)
-				{
-					savemap[i] = s;
-				}
-			}
+			FuzzyNetworkProduct GC(n, Points, AP.memoryAvailable, AP.visibility);
+			Eigen::MatrixXd diffMatrix = (REAL - GC.CalculateGraph()).cwiseAbs2();
+			
+// 			std::cout << diffMatrix << std::endl;
+			
+			auto max_error = find_maximum(diffMatrix);
+			
+			std::cout << std::setprecision(9);
+			std::cout << "GGG: (" << n << "," << max_error << ")" << std::endl;
+			
+			auto avg_error = find_average(diffMatrix);
+			std::cout << "GGG: AVERAGE (" << n << "," << avg_error << ")" << std::endl;
 		}
-		
-		
-		if (AP.propincuity)
-		{
-			FuzzyNetworkPromiscuity GC(AP.grid, Points, AP.memoryAvailable);
-			GC.SetImagesToSave(savemap);
-			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-			GC.PrintEverything(names, AP.outfile);
-		}
-		else if (AP.fuzzy_min)
-		{
-			FuzzyNetworkMin GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
-			GC.SetImagesToSave(savemap);
-			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-			GC.PrintEverything(names, AP.outfile);
-		}
-		else
-		{	
-			FuzzyNetworkProduct GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
-			GC.SetImagesToSave(savemap);
-			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-			GC.PrintEverything(names, AP.outfile);
-		}
+
 		
 		AP.printMessage();
 
