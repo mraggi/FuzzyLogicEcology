@@ -36,7 +36,7 @@ From either of those (and many more) we could create a model for fuzzy logic.
  
  In propincuity, one takes a minimum spanning tree of the vertices, sets the *radius* to the average edge length, and then considers the area of distribution by moving a circle with said radius along all the edges of the spanning tree, like the following picture (radius adjusted for clarity).
  
- ![Propincuity](https://github.com/mraggi/FuzzyLogicEcology/blob/master/Paper/prop.png "Propincuity")
+ ![Propincuity](https://github.com/mraggi/FuzzyLogicEcology/blob/master/prop.png "Propincuity")
 
 ## Installing
 
@@ -86,7 +86,7 @@ Suppose the above file is saved as `myspecies.txt`. The columns `SomeInfo` and `
 
 Then run the program as follows:
 ```bash
-	./fuzzylogic -I0 --grid=5000 --memory=2GB myspecies.txt
+	./fuzzylogic -I0 --grid=2500 --memory=2GB myspecies.txt
 ```
 The I0 means that the name with which the species will be identified is in column 0. If there is more than one column with the name, just pass all the columns as arguments (i.e. -I0 -I2). **Note that the columns start at 0, not 1.**
 
@@ -112,7 +112,7 @@ Basic options:
 
 	-I [ --namecolumns ] arg     Name columns (start at 0).
 
-	-g [ --grid ] arg (=2000)    Grid size. A larger grid means more accurate 
+	-g [ --grid ] arg (=2500)    Grid size. A larger grid means more accurate 
                                  the calculations (but slower).
 
 	-m [ --memory ] arg          Maximum amount of memory (in bytes) to use. 
@@ -125,7 +125,8 @@ Basic options:
                                  read from STDIN.
 
 	-v [ --visibility ] arg (=0.5) Visibility in km. When doing the exponential 
-                                 decay model, coefficient C (in e^(-Cx^2))
+                                 decay model, coefficient C (in e^(-Cx^2)) is
+                                 C = 1/(2*v*v*)
 
 	-f [ --fuzzy_min ]           Use minimum instead of product as the fuzzy 
                                  logic model of intersection (warning: SLOW).
