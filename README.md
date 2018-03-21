@@ -1,8 +1,8 @@
-# SpaDiMo-F
+# SpaDisMo-F
 
-Short for SPAcial DIstribution MOdeling with Fuzzy logic.
+Short for SPAcial DIStribution MOdeling with Fuzzy logic.
 
-Construction of a digraph based on data points from observations of ecological distributions to calculate overlaps using fuzzy logic.
+Construction of a sympatry network, which is a digraph based on data points from observations of ecological distributions to calculate overlaps using fuzzy logic.
 
 ## Some (brief) theory
  
@@ -12,7 +12,12 @@ Construction of a digraph based on data points from observations of ecological d
  
  Here is a visual representation of what we mean:
  
- ![Fuzzy Logic](https://github.com/mraggi/FuzzyLogicEcology/blob/master/Paper/fuzzyinverted.png "Fuzzy Logic Blobs")
+ ![Fuzzy Logic](https://github.com/mraggi/FuzzyLogicEcology/blob/master/fuzzyinverted.png "Fuzzy Logic Blobs")
+ 
+ and here is the visual representation of Quercus Glaucoides in Oaxaca, Mexico, using the Zadeh operator.
+ 
+ ![Map overlay](https://github.com/mraggi/FuzzyLogicEcology/blob/master/mapoverlay.png "Quercus Glaucoides in Mexico")
+ Attribution: Google Earth 2018. Image Landsat / Copernicus, Data SIO, NOAA, U.S. Navy, NGA, GEBCO, ©INEGI,DATA LDEO-Columbia, NSF, NOAA.
  
  Then, for each pair of species, we calculate the area of overlap and produce a (directed) edge from species A to species B whose weight is the weight of the overlap area over the area of A (*i.e.* how much of A is inside B). This is done in a highly efficient manner.
 
