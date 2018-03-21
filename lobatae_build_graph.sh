@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./fuzzylogic lobatae.txt -I1 --grid=5000 -o LobataeGraph.sage --memory=1GB
+./fuzzylogic lobatae.txt -I1 --grid=3000 --memory=1GB
