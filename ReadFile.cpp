@@ -71,6 +71,9 @@ std::unordered_map<std::string,std::vector<Point>> ExtractLocations(const std::v
 			}
 		}
 	}
+	
+	std::cout << "x = " << latitude << " and y = " << longitude << std::endl;
+	
 	if (longitude < 0 || latitude < 0)
 	{
 		throw "Latitude or Longitude not specified, and could not deduce from file";

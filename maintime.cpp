@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 			return 0;
 		
 		auto Table = ReadTable(*AP.is);
-		auto SpeciesMap = ExtractLocations(Table,AP.NamedColumns,AP.latitude,AP.longitude);
+		auto SpeciesMap = ExtractLocations(Table, AP.NamedColumns, AP.x, AP.y);
 		int numspecies = SpeciesMap.size();
 
 		using SpeciesRegisters = std::pair<std::string, std::vector<Point>>;
@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
 		Chronometer W;
 		for (int n : tests)
 		{
-			FuzzyNetworkProduct GC(n, Points, AP.memoryAvailable, AP.visibility);
+			FuzzyNetworkProduct GC(n, Points, AP.memoryAvailable, AP.influence);
 			GC.CalculateGraph();
 			
 			std::cout << "GGG: (" << n << "," << W.Reset() << ")" << std::endl;

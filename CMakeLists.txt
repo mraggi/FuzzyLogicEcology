@@ -4,8 +4,13 @@ project(FuzzyLogic)
 # set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_BUILD_TYPE Release)
 
-# add_definitions(-std=c++14 -march=native -Ofast -pipe -Wall)
-add_definitions(-std=c++14 -march=native -Ofast -pipe -Wall)
+add_definitions(-march=native -Ofast -pipe -Wall)
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_definitions(-march=native -Ofast -pipe -Wall)
+endif()
+
+set(CMAKE_CXX_STANDARD 14)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/error_tests.sh ${CMAKE_CURRENT_BINARY_DIR}/error_tests.sh COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/time_tests.sh ${CMAKE_CURRENT_BINARY_DIR}/time_tests.sh COPYONLY)

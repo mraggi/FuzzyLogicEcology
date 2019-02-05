@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 			return 0;
 		
 		auto Table = ReadTable(*AP.is);
-		auto SpeciesMap = ExtractLocations(Table,AP.NamedColumns,AP.latitude,AP.longitude);
+		auto SpeciesMap = ExtractLocations(Table,AP.NamedColumns,AP.x,AP.y);
 		int numspecies = SpeciesMap.size();
 
 		using SpeciesRegisters = std::pair<std::string, std::vector<Point>>;
@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
 			
 		}
 		
-		FuzzyNetworkProduct big(10000,Points,AP.memoryAvailable,AP.visibility);
+		FuzzyNetworkProduct big(10000,Points,AP.memoryAvailable,AP.influence);
 		auto REAL = big.CalculateGraph();
 
 		std::vector<int> tests = {100, 250, 500, 1000, 1500,2000, 2500, 3000, 4000, 5000, 7500};
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 		Chronometer W;
 		for (int n : tests)
 		{
-			FuzzyNetworkProduct GC(n, Points, AP.memoryAvailable, AP.visibility);
+			FuzzyNetworkProduct GC(n, Points, AP.memoryAvailable, AP.influence);
 			Eigen::MatrixXd diffMatrix = (REAL - GC.CalculateGraph()).cwiseAbs2();
 			
 // 			std::cout << diffMatrix << std::endl;

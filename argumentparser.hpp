@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Utility.hpp"
 #include <fstream>
 #include <string>
@@ -9,9 +10,9 @@ const int value_not_set = -1;
 struct ArgumentParser
 {
 	ArgumentParser(int argc, char* argv[]);
-	int latitude{value_not_set};
-	int longitude{value_not_set};
-	double visibility {2.0};
+	int x{value_not_set};
+	int y{value_not_set};
+	double influence {1.0};
 	int grid {2500};
 	std::string outfile { "" };
 	std::vector<int> NamedColumns {0};
@@ -23,4 +24,5 @@ struct ArgumentParser
 	void printMessage() const;
 	bool fuzzy_min {false};
 	bool propincuity {false};
+    std::string matrix_file {""};
 };

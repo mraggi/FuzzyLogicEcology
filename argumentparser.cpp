@@ -26,15 +26,18 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	
 	basic_options.add_options()
 	("help,h", "produce help message")
-	("name-columns,I", po::value< std::vector<int> >(), "Name columns (starting at 0).")
+	("name-columns,I", po::value< std::vector<int> >(), "Name column indexes (starting at 0).")
+	("latitude,x", po::value< int >(), "Latitude (or x) column index. Default: deduce from input.")
+	("longitude,y", po::value< int >(), "Latitude (or y) column index. Default: deduce from input.")
 	("grid,g", po::value<int>(&grid)->default_value(grid), "Grid size. A larger grid means more accurate the calculations (but slower).")
 	("memory,m", po::value<std::string>(), "Maximum amount of memory (in bytes) to use. Leave blank or at 0 to use all available memory (not recommended!). Can use KB, MB, GB.")
 	("input-file,i", po::value< std::vector<std::string> >(), "Input file. If not given, the program will read from STDIN")
-	("visibility,v", po::value<double>(&visibility)->default_value(visibility), "Visibility in km. When doing the exponential decay model, coefficient C (in e^(-Cx^2))")
+	("influence,v", po::value<double>(&influence)->default_value(influence), "Influence radius (in km). When doing the exponential decay model, C=1/(2*v^2) (in e^(-Cx^2))")
 	("save-image,s", po::value< std::vector<std::string> >(), "In order to create an image, specify the (exact) name of the species.")
 	("fuzzy-min,f", "Use minimum instead of product as the fuzzy logic model of intersection (warning: SLOW)")
 	("propincuity,p", "Use Propincuity to calculate areas instead of exponential decay (warning: SLOW. Not recommended!)")
-	("output-file,o", po::value< std::string >(), "sagemath output file.")	
+	("output-file,o", po::value< std::string >(), "sagemath output file name.")	
+	("matrix-file", po::value< std::string >(), "matrix output file name.")	
 	;
 
 	po::positional_options_description p;
@@ -83,6 +86,18 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 		std::cout << "Going to save " << ImageSpecies.size() << " images for the following species: " << ImageSpecies << '\n';
 	}
 
+	if (vm.count("latitude")) //NOLINT
+	{
+		x = vm["latitude"].as< int >();
+		std::cout << "Latitude deduced to be at column with index " << x << '\n';
+	}
+	
+	if (vm.count("longitude")) //NOLINT
+	{
+		y = vm["longitude"].as< int >();
+        std::cout << "Longitude deduced to be at column with index " << y << '\n';
+	}
+	
 // 	if (vm.count("arcgis-outfile"))
 // 	{
 // 		arcgisfile = vm["arcgis-outfile"].as< std::vector<std::string> >()[0];
@@ -107,10 +122,16 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 	  std::cout << "No input file given. Will read from STDIN... " << std::endl;
 	}
 	
-	if (vm.count("output-file")) //NOLINT
+// 	if (vm.count("output-file")) //NOLINT
+// 	{
+// 		std::string outfile = vm["output-file"].as<std::string>();
+// 		std::cout << "Sage output file is: " << outfile << '\n';
+// 	}
+	
+	if (vm.count("matrix-file")) //NOLINT
 	{
-		std::string outfile = vm["output-file"].as<std::string>();
-		std::cout << "Sage output file is: " << outfile << '\n';
+		matrix_file = vm["matrix-file"].as<std::string>();
+		std::cout << "Matrix output file is: " << matrix_file << '\n';
 	}
 	
 	if (!vm.count("memory")) //NOLINT
@@ -165,7 +186,7 @@ void ArgumentParser::printMessage() const
 {
 	std::cout << "Grid: " << grid << std::endl;
 	if (!fuzzy_min && !propincuity)
-		std::cout << "Visibility: " << visibility << std::endl;
+		std::cout << "Visibility: " << influence << std::endl;
 	if (fuzzy_min)
 	{
 		std::cout << "Using FUZZY MIN version of fuzzy logic.\n";

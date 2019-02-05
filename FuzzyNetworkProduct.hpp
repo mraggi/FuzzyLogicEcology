@@ -8,8 +8,8 @@ public:
 	FuzzyNetworkProduct(size_t _grid, 
 						 const std::vector<std::vector<Point>>& U, 
 						 size_t memoryAvailable, 
-						 double VisibilityRangeInKm) :
-			FuzzyNetworkExpDecay<Matrix,FuzzyNetworkProduct>(_grid,U,memoryAvailable,VisibilityRangeInKm)
+						 double InfluenceRangeInKm) :
+			FuzzyNetworkExpDecay<Matrix,FuzzyNetworkProduct>(_grid,U,memoryAvailable,InfluenceRangeInKm)
 	{
 	}
 	

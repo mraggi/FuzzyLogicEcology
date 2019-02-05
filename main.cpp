@@ -29,16 +29,23 @@ int main(int argc, char* argv[])
 		if (AP.should_exit)
 			return 0;
 		
+        std::cout << "Reading table from space-separated file..." << std::flush;
+        
 		auto Table = ReadTable(*AP.is);
-		auto SpeciesMap = ExtractLocations(Table,AP.NamedColumns,AP.latitude,AP.longitude);
+        
+        std::cout << "Success!\nExtracting information from file..." << std::flush;
+		auto SpeciesMap = ExtractLocations(Table, AP.NamedColumns, AP.x, AP.y);
+        std::cout << "Success!" << std::endl;
+        
 		int numspecies = SpeciesMap.size();
 
 		using SpeciesRegisters = std::pair<std::string, std::vector<Point>>;
 		std::vector< SpeciesRegisters > V(SpeciesMap.begin(), SpeciesMap.end());
-		sort(V.begin(), V.end(), [](const auto & L, const auto & R)
+		std::sort(V.begin(), V.end(), [](const auto & L, const auto & R)
 		{
-			//Decreasing order by number of data points
-			return L.second.size() > R.second.size();
+// 			//Decreasing order by number of data points
+// // 			return L.second.size() > R.second.size();
+			return L.first < R.first; // alphabetical
 		});
 		
 		std::cout << std::endl << "********************* Species Found *******************" << std::endl;
@@ -85,21 +92,21 @@ int main(int argc, char* argv[])
 			FuzzyNetworkPromiscuity GC(AP.grid, Points, AP.memoryAvailable);
 			GC.SetImagesToSave(savemap);
 			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-			GC.PrintEverything(names, AP.outfile);
+			GC.PrintEverything(names, AP.outfile, AP.matrix_file);
 		}
 		else if (AP.fuzzy_min)
 		{
-			FuzzyNetworkMin GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
+			FuzzyNetworkMin GC(AP.grid, Points, AP.memoryAvailable, AP.influence);
 			GC.SetImagesToSave(savemap);
 			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-			GC.PrintEverything(names, AP.outfile);
+			GC.PrintEverything(names, AP.outfile, AP.matrix_file);
 		}
 		else
 		{	
-			FuzzyNetworkProduct GC(AP.grid, Points, AP.memoryAvailable, AP.visibility);
+			FuzzyNetworkProduct GC(AP.grid, Points, AP.memoryAvailable, AP.influence);
 			GC.SetImagesToSave(savemap);
 			std::cout << "Done pre-processing in " << chrono.Peek() << "s. Starting calculation..." << std::endl;
-			GC.PrintEverything(names, AP.outfile);
+			GC.PrintEverything(names, AP.outfile, AP.matrix_file);
 		}
 		
 		AP.printMessage();

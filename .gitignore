@@ -1,4 +1,5 @@
 .kdev4
+.ipy*
 redes_centro.txt
 FuzzyLogicEcology.kdev4
 build*
@@ -13,3 +14,4 @@ Paper/FuzzyLogic.synctex.gz
 Paper/FuzzyLogic.tex.backup
 old
 temperates*
+Untitled.ipynb

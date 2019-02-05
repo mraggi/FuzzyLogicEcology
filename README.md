@@ -8,7 +8,7 @@ Construction of a sympatry network, which is a digraph based on data points from
  
  See paper (upcoming!) for more details. 
  
- In short, for each species we produce a matrix of probability. Each observation *strengthens* the entries of the matrix: each entry goes from 0.0 up to 1.0, depending on how close the observed data are to the points.
+In short, for each species we produce a matrix of numbers between 0 and 1. Each observation *strengthens* the entries of the matrix: each entry goes from 0.0 up to 1.0, depending on how close the observed data are to the points.
  
  Here is a visual representation of what we mean:
  

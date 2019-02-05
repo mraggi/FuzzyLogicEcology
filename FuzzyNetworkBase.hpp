@@ -27,8 +27,8 @@ class FuzzyNetworkBase
 public:
 	
 	
-	void PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile);
-	
+	void PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile, const std::string& matrixoutfile);
+
 	Matrix_t CalculateGraph();
 	
 	double GetTotalArea(int species) const
@@ -334,7 +334,7 @@ Matrix_t FuzzyNetworkBase<Matrix_t, Derived>::CalculateGraph()
 			UpdateArea(A,species);
 		}
 
-		SaveToImages(A,block);
+		//SaveToImages(A,block);
 		
 		if (grid < 100)
 		{
@@ -449,7 +449,8 @@ void FuzzyNetworkBase<Matrix_t, Derived>::UpdateArea(const Matrix_t& A, size_t s
 {
 	for (long col = 0; col < A.cols(); ++col)
 	{
-		Area[species] += A(species,col);
+// 		Area[species] += A(species,col);
+		Area[species] += A(species,col)*A(species,col);
 	}
 // 	std::cout << "After area update, Area = " << Area << std::endl;
 }
@@ -487,7 +488,7 @@ Matrix_t FuzzyNetworkBase<Matrix_t, Derived>::DividedByArea(const Matrix_t& M) c
 }
 
 template <class Matrix_t, class Derived>
-void FuzzyNetworkBase<Matrix_t, Derived>::PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile)
+void FuzzyNetworkBase<Matrix_t, Derived>::PrintEverything(const std::vector<std::string>& names, const std::string& sageoutfile, const std::string& matrixoutfile)
 {
 	Matrix_t M = CalculateGraph();
 	
@@ -495,6 +496,12 @@ void FuzzyNetworkBase<Matrix_t, Derived>::PrintEverything(const std::vector<std:
 
 	std::cout << std::endl << "Adjacency Matrix: " << std::endl;
 	std::cout << M << std::endl;
+    if (!matrixoutfile.empty())
+    {
+        std::ofstream out(matrixoutfile);
+		out << M;
+    }
+    
 
 	DiGraph D = DiGraph::FromAdjacencyMatrix(M);
 	
