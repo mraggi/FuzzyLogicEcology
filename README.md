@@ -1,23 +1,14 @@
-# SpaDisMo-F
+# SGraFuLo
 
-Short for SPAcial DIStribution MOdeling with Fuzzy logic.
+Short for Sympatry Graphs with Fuzzy Logic.
 
-Construction of a sympatry network, which is a digraph based on data points from observations of ecological distributions to calculate overlaps using fuzzy logic.
+This is software to automatically construct a sympatry network, which is a digraph based on data points from observations of ecological distributions to calculate overlaps using fuzzy logic.
 
 ## Some (brief) theory
  
  See paper (upcoming!) for more details. 
  
-In short, for each species we produce a matrix of numbers between 0 and 1. Each observation *strengthens* the entries of the matrix: each entry goes from 0.0 up to 1.0, depending on how close the observed data are to the points.
- 
- Here is a visual representation of what we mean:
- 
- ![Fuzzy Logic](https://github.com/mraggi/FuzzyLogicEcology/blob/master/fuzzyinverted.png "Fuzzy Logic Blobs")
- 
- and here is the visual representation of Quercus Glaucoides in Oaxaca, Mexico, using the Zadeh operator.
- 
- ![Map overlay](https://github.com/mraggi/FuzzyLogicEcology/blob/master/mapoverlay.png "Quercus Glaucoides in Mexico")
- Attribution: Google Earth 2018. Image Landsat / Copernicus, Data SIO, NOAA, U.S. Navy, NGA, GEBCO, ©INEGI,DATA LDEO-Columbia, NSF, NOAA.
+In short, for each species we produce a large matrix of numbers between 0 and 1, which denotes the observed *area of influence* of said species. Each observation *strengthens* the entries of the matrix: each entry goes from 0.0 up to 1.0, depending on how close the observed data are to the points.
  
  Then, for each pair of species, we calculate the area of overlap and produce a (directed) edge from species A to species B whose weight is the weight of the overlap area over the area of A (*i.e.* how much of A is inside B). This is done in a highly efficient manner.
 
@@ -50,7 +41,7 @@ libpng
 png++
 ```
 
-Make sure you have a recent version of each. In particular, your `C++` compiler should have `C++14` support (gcc >= 5.2 and clang >= 3.9 should be fine), a recent version of eigen3 (at least 3.2) and a recent version of boost (at least 1.59). Let us know if we can help.
+Make sure you have a recent version of each. In particular, your `C++` compiler should have `C++14` support (gcc >= 5.2 and clang >= 3.9 should be fine), a recent version of eigen3 (at least 3.2) and a recent version of boost (at least 1.59). Let us know if you encounter any issues.
 
 There is some evidence that this program performs much better with clang than GCC. It also performs better with clang 5.0 than 4.0.
 
@@ -137,6 +128,10 @@ Basic options:
 	-o [ --output-file ] arg     sagemath output file. This is in order to analyze 
     							 the resulting DiGraph in sage mathematics software.
  ```
+ 
+### Incorporating environmental variables.
+
+One way would be to use not only geographical information, but to apply a PCA reduction to your environmental variables in order to produce output of dimension 3. See the example notebook PCA.ipynb (requires scikit-learn) to convert your data before feeding it to the software.
 
 ### Acknowledgements
 
