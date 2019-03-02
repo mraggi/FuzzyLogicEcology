@@ -99,34 +99,31 @@ Of course, more detailed options can be found by typing
 ```tex
 Basic options:
 
-	-h [ --help ]                Produce this help message.
-
-	-I [ --namecolumns ] arg     Name columns (start at 0).
-
-	-g [ --grid ] arg (=2500)    Grid size. A larger grid means more accurate 
-                                 the calculations (but slower).
-
-	-m [ --memory ] arg          Maximum amount of memory (in bytes) to use. 
-                                 Leave blank or at 0 to use all available 
-                                 memory (not recommended!). Can use KB, MB, GB.
-                                 A value of about 2GB is recommended, depending 
-                                 on how much you have available.
-
-	-i [ --input-file ] arg      Input file. If not given, the program will 
-                                 read from STDIN.
-
-	-v [ --visibility ] arg (=0.5) Visibility in km. When doing the exponential 
-                                 decay model, coefficient C (in e^(-Cx^2)) is
-                                 C = 1/(2*v*v*)
-
-	-f [ --fuzzy_min ]           Use minimum instead of product as the fuzzy 
-                                 logic model of intersection (warning: SLOW).
-
-	-p [ --propincuity ]         Use Propincuity to calculate areas (warning: 
-                                 SLOW. Not recommended!).
-
-	-o [ --output-file ] arg     sagemath output file. This is in order to analyze 
-    							 the resulting DiGraph in sage mathematics software.
+  -h [ --help ]               produce help message
+  -I [ --name-columns ] arg   Name column indexes (starting at 0).
+  -x [ --latitude ] arg       Latitude (or x) column index. Default: deduce 
+                              from input.
+  -y [ --longitude ] arg      Latitude (or y) column index. Default: deduce 
+                              from input.
+  -g [ --grid ] arg (=2500)   Grid size. A larger grid means more accurate the 
+                              calculations (but slower).
+  -m [ --memory ] arg         Maximum amount of memory (in bytes) to use. Leave
+                              blank or at 0 to use all available memory (not 
+                              recommended!). Can use KB, MB, GB.
+  -i [ --input-file ] arg     Input file. If not given, the program will read 
+                              from STDIN
+  -v [ --influence ] arg (=1) Influence radius (in km). When doing the 
+                              exponential decay model, C=1/(2*v^2) (in 
+                              e^(-Cx^2))
+  -s [ --save-image ] arg     In order to create an image, specify the (exact) 
+                              name of the species.
+  -f [ --fuzzy-min ]          Use minimum instead of product as the fuzzy logic
+                              model of intersection (warning: SLOW)
+  -p [ --propincuity ]        Use Propincuity to calculate areas instead of 
+                              exponential decay (warning: SLOW. Not 
+                              recommended!)
+  -o [ --output-file ] arg    sagemath output file name.
+  --matrix-file arg           matrix output file name.
  ```
  
 ### Incorporating environmental variables.
@@ -135,6 +132,6 @@ One way would be to use not only geographical information, but to apply a PCA re
 
 ### Acknowledgements
 
-This work was done by a group of researchers at *Escuela Nacional de Estudios Superiores unidad Morelia, Universidad Nacional Autónoma de México* with a research grant **PAPIIT IA106316**. For the complete list of authors, see the (upcoming) paper. All provided data was collected by César Andrés Torres Miranda *(need to fill this!)
+This work was done by a group of researchers at *Escuela Nacional de Estudios Superiores unidad Morelia, Universidad Nacional Autónoma de México* with a research grant **PAPIIT IA106316**. For the complete list of authors, see the (upcoming) paper. All provided data was provided by César Andrés Torres Miranda.
 
 If you find it useful, or if you have any comments, suggestions, feature requests, *etc.* feel free to email us at [mraggi@gmail.com](mailto:mraggi@gmail.com).
